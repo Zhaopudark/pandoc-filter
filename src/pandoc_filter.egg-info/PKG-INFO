@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: pandoc_filter
+Version: 0.0.2
+Author-email: Pu Zhao <zhaopudark@outlook.com>
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests
+Requires-Dist: typeguard
+Requires-Dist: packaging
+Requires-Dist: alive-progress
+Requires-Dist: panflute
+Requires-Dist: oss2
+Requires-Dist: bs4
+Requires-Dist: oauth2client
