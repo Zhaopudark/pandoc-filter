@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1
+id="fbf0b5c90527e8a9dd9607effa892937b6395152c108878118104590c3f9e362-1">引用链接</h1>
+<h2
+id="4a63f752884096b557e2080b0ee0750ed524d5bcf766b68e583b69a670abe7a1-1">超链接</h2>
+<p>语法：<code>[Link Text](link-address)</code></p>
+<p>效果：<a href="https://support.typoraio.cn/Links/">Links - Typora
+Support (typoraio.cn)</a></p>
+<h2
+id="e33eb0a20e706fad034eff0b75744373919dcde27765bd863f9f215207d675be-1">参考链接</h2>
+<p>语法：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Link Text</span><span class="co">][Ref2]</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">[Ref2]: https://support.typoraio.cn/Links/  &quot;typora links&quot;</span></span></code></pre></div>
+<p>效果（自动转为普通超链接）：</p>
+<p><a href="https://support.typoraio.cn/Links/"
+title="typora links">Link Text</a></p>
+<h2
+id="bd35eead251dc61c6dfb3ef11792211ea152f91378add9d60a809fa60f57691a-1">自动链接和网址</h2>
+<p>语法：<code>&lt;http://typora.io&gt;</code></p>
+<p>效果：<a href="http://typora.io"
+class="uri"><span>http://typora.io</span></a></p>
+<p>语法：<code>This is a link: http://typora.io</code></p>
+<p>效果：This is a link: <a
+href="http://typora.io">http://typora.io</a></p>
+<h2
+id="264101a13c49c0740702b6312c1a5bd9f3e9e976089ad711d460ed10529627b0-1">本地资源链接</h2>
+<p>语法：参考<a
+href="https://support.typoraio.cn/Links/#link-to-local-files">Links -
+Typora Support (typoraio.cn)</a></p>
+<ul>
+<li><p>不确保非站内资源可行。</p></li>
+<li><p>不应该支持非站内资源，但是难以排除这些目的之外的资源。</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">404_page</span><span class="co">](../404.html)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">this_page</span><span class="co">](../posts/d36d5fbd.html)</span></span></code></pre></div>
+<p><a href="../404.html">404_page</a></p>
+<p><a href="../posts/d36d5fbd.html">this_page</a></p>
+<h2
+id="1620841b21c25ccdfa3d8fdd74321f0a85170db8c04330f5b2b372fddb6cabb1-1">页内链接(链接到headings锚点和raw-HTML锚点)</h2>
+<ul>
+<li><p>当headings中含有大小写时，允许链接不区分大小写</p>
+<h4
+id="4a5f06ec672e3c2321239ec81dd50afa8a8059e0a55fb93607ac1e43a2bae990-1">A.1</h4>
+<h2
+id="c5ee560f6ab57c00d0e869ba0ec9ec9adde6fa5393e8291efe0f40b642d5ef3b-1">Second_level</h2>
+<p><a
+href="#c5ee560f6ab57c00d0e869ba0ec9ec9adde6fa5393e8291efe0f40b642d5ef3b-1">跳转到Second_level,#Second_level</a></p>
+<p><a
+href="#c5ee560f6ab57c00d0e869ba0ec9ec9adde6fa5393e8291efe0f40b642d5ef3b-1">跳转到Second_level,#second_level</a></p>
+<h2
+id="2c016825b481eae5b01451017adde9fd573469fede2b576b6c65ef5f376d38c3-1">ErJi目lu</h2>
+<p><a
+href="#2c016825b481eae5b01451017adde9fd573469fede2b576b6c65ef5f376d38c3-1">跳转到ErJi目lu,#ErJi目lu</a></p>
+<p><a
+href="#2c016825b481eae5b01451017adde9fd573469fede2b576b6c65ef5f376d38c3-1">跳转到ErJi目lu,#erji目lu</a></p>
+<p><a
+href="#4a5f06ec672e3c2321239ec81dd50afa8a8059e0a55fb93607ac1e43a2bae990-1">#a.1</a></p></li>
+<li><p>raw-HTML锚点与raw-HTML跳转</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;anchor1&quot;</span><span class="kw">&gt;&lt;/a&gt;</span> Anchor</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;#anchor1&quot;</span><span class="kw">&gt;</span>Link to Anchor<span class="kw">&lt;/a&gt;</span></span></code></pre></div>
+<p>定义raw-HTML锚点<a id="67fd18683bd3aa690916ed314fc0fca355d32d47c8221a765fd2fe8c3967a9df-1">anchor1</a></p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p><a href="#67fd18683bd3aa690916ed314fc0fca355d32d47c8221a765fd2fe8c3967a9df-1">raw-HTML跳转到
+anchor1</a></p></li>
+<li><p>带有特殊字符时，简化并改变了一般的Markdown渲染html的规则</p>
+<ul>
+<li>不遵从Typora的<a
+href="https://support.typoraio.cn/Links/#internal-links">internal-links</a>语法</li>
+<li>直接将原内容复制到<code>[]()</code>的<code>()</code>内即可</li>
+<li>推荐使用上述方式，也只保证上述方式是可行的</li>
+<li>其余方式可能会出现意外结果</li>
+</ul>
+<h2
+id="6865c5c8dc7862478d3c251a684a1a6a09594521713d3c81a91a988932f1cef8-1">带空格
+和<code>特殊字符</code> <a href="http://typora.io">链接</a>
+用于%%%%￥￥￥￥跳转测试 空格</h2>
+<h3
+id="4ed057d8cb9bb706509ec393bbef1c95cb64b853ad08c35b6c7a5c3ae43a4206-1">aAa-b
+cC <code>Dd</code>, a#%&amp;<a href="yyy">xxx</a> Zzz [xx] (yy)</h3>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<p>留白测试跳转</p>
+<ul>
+<li>使用markdown语法的链接到headings锚点
+<ul>
+<li><a
+href="#6865c5c8dc7862478d3c251a684a1a6a09594521713d3c81a91a988932f1cef8-1">带空格
+和<code>特殊字符</code> [链接](http://typora.io)
+用于%%%%￥￥￥￥跳转测试 空格</a></li>
+<li><a
+href="#4ed057d8cb9bb706509ec393bbef1c95cb64b853ad08c35b6c7a5c3ae43a4206-1">aAa-b
+cC <code>Dd</code>, a#%&amp;[xxx](yyy) Zzz [xx] (yy)</a></li>
+</ul></li>
+<li>使用raw-HTML链接到headings锚点
+<ul>
+<li><a href="#6865c5c8dc7862478d3c251a684a1a6a09594521713d3c81a91a988932f1cef8-1">带空格
+和<code>特殊字符</code>…</a></li>
+<li><a href="#4ed057d8cb9bb706509ec393bbef1c95cb64b853ad08c35b6c7a5c3ae43a4206-1">aAa-b…</a></li>
+</ul></li>
+</ul></li>
+<li><p>链接允许多重#号</p>
+<h1
+id="a64ef18ab49bdc3ddeb76c73ef9a93c20a8edfc0737ebb4f11017c46672ff21b-1">一级目录</h1>
+<h2
+id="d5335a84faaada3830bdd6b4cb3068c010d5c6f266d214a0ef9a7571bea8daad-1">二级目录</h2>
+<h3
+id="646dd7daa0ffcf85d48e0b11bac57bb541226d8391a1ccff3136fcce78d48d6f-1">三级目录</h3>
+<h4
+id="4f4ceee94c6d268a19c37bae4a43edc691b00675bf3dae1f60a56a4e43d2c00e-1">四级目录</h4>
+<h5
+id="a831cf5aa06ec2c00e1d4823da9bea585a61792000a0e399f636e58791a469c3-1">五级目录</h5>
+<h6
+id="e4a73c34f1669424113083143c44b4924fbe2c0ba8e4acddc3216592fbfda653-1">六级目录</h6>
+<p><a
+href="#a64ef18ab49bdc3ddeb76c73ef9a93c20a8edfc0737ebb4f11017c46672ff21b-1">跳转到一级目录,且是单个#号,#一级目录</a></p>
+<p><a
+href="#a64ef18ab49bdc3ddeb76c73ef9a93c20a8edfc0737ebb4f11017c46672ff21b-1">跳转到一级目录但是2个#号,##一级目录</a></p>
+<p><a
+href="#d5335a84faaada3830bdd6b4cb3068c010d5c6f266d214a0ef9a7571bea8daad-1">跳转到二级目录但是单个#号,#二级目录</a></p>
+<p><a
+href="#d5335a84faaada3830bdd6b4cb3068c010d5c6f266d214a0ef9a7571bea8daad-1">跳转到二级目录但是2个#号,##二级目录</a></p>
+<p><a
+href="#646dd7daa0ffcf85d48e0b11bac57bb541226d8391a1ccff3136fcce78d48d6f-1">跳转到三级目录但是单个#号,#三级目录</a></p>
+<p><a
+href="#646dd7daa0ffcf85d48e0b11bac57bb541226d8391a1ccff3136fcce78d48d6f-1">跳转到三级目录但是3个#号,###三级目录</a></p>
+<p><a
+href="#4f4ceee94c6d268a19c37bae4a43edc691b00675bf3dae1f60a56a4e43d2c00e-1">跳转到四级目录但是单个#号,#四级目录</a></p>
+<p><a
+href="#4f4ceee94c6d268a19c37bae4a43edc691b00675bf3dae1f60a56a4e43d2c00e-1">跳转到四级目录但是4个#号,####四级目录</a></p>
+<p><a
+href="#a831cf5aa06ec2c00e1d4823da9bea585a61792000a0e399f636e58791a469c3-1">跳转到五级目录但是单个#号,#五级目录</a></p>
+<p><a
+href="#a831cf5aa06ec2c00e1d4823da9bea585a61792000a0e399f636e58791a469c3-1">跳转到五级目录但是5个#号,#####五级目录</a></p>
+<p><a
+href="#e4a73c34f1669424113083143c44b4924fbe2c0ba8e4acddc3216592fbfda653-1">跳转到六级目录但是单个#号,#六级目录</a></p>
+<p><a
+href="#e4a73c34f1669424113083143c44b4924fbe2c0ba8e4acddc3216592fbfda653-1">跳转到六级目录但是6个#号,######六级目录</a></p>
+<p><a href="#e4a73c34f1669424113083143c44b4924fbe2c0ba8e4acddc3216592fbfda653-1">raw-HTML跳转到六级目录但是6个#号</a></p></li>
+<li><p>锚点自动追加<code>-x</code>,
+<code>x</code>为数字以区分。从<code>-1</code>开始，重复时数字+1。链接可能带有<code>-x</code>结尾，当存在与链接内容(包括<code>-x</code>)完全一致的锚点时，跳转到该锚点，不存在这样的锚点时，跳转到与链接剔除<code>-x</code>后的内容完全一致的第<code>x</code>个锚点。即：</p>
+<ul>
+<li>优先全文匹配</li>
+<li>其次按序号匹配</li>
+<li>需要确保上述匹配过程，至少有一个锚点是存在的。若这样的锚点不存在，渲染器手动抛出异常提醒。</li>
+</ul>
+<h2
+id="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-1">hello</h2>
+<p>二级目录 hello</p>
+<h1
+id="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-2">hello</h1>
+<p>一级目录 hello</p>
+<h1
+id="f6ddc1bf7d9ef5b2a8d41329728d9c0c3a7a88a59413e8c282204ad4b111d1d1-1">hello-2</h1>
+<p>一级目录 hello</p>
+<h3
+id="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-3">hello</h3>
+<p>三级目录 hello</p>
+<h5
+id="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-4">hello</h5>
+<p>五级目录 hello</p>
+<h3
+id="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-5">hello</h3>
+<p>三级目录 hello</p>
+<p><a id="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-6">hello</a></p>
+<p>自定义锚点 hello</p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-1">跳转到第1次出现的二级目录hello,#hello</a></p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-1">跳转到第1次出现的二级目录hello,#hello-0</a></p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-1">跳转到第1次出现的一级目录hello,#hello-1</a></p>
+<p><a
+href="#f6ddc1bf7d9ef5b2a8d41329728d9c0c3a7a88a59413e8c282204ad4b111d1d1-1">跳转到一级目录hello-2,#hello-2</a></p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-3">跳转到第3次出现的三级目录hello,#hello-3</a></p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-4">跳转到第4次出现的五级目录hello,#hello-4</a></p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-5">跳转到第5次出现的三级目录hello,#hello-5</a></p>
+<p><a
+href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-6">跳转到第6次出现的hello，自定义锚点也算在内,#hello-6</a></p>
+<p><a href="#2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824-6">raw-HTML跳转到第6次出现的hello</a></p></li>
+</ul>
+</body>
+</html>

@@ -50,7 +50,7 @@ def math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     A filter to process math formula when converting markdown to markdown.
     To realize:
         - Adapt AMS rule for math formula
-            - auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora
+            - Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora
         - Allow multiple tags, but only take the first one.
         - Allow multiple labels, but only take the first one.
         
@@ -135,7 +135,7 @@ def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
 @typeguard.typechecked
 def footnote_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Note|None: # Repleace
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A filter to process footnotes.
+    A filter to process footnotes. Remove `\n` in the footnote content.
     """
     tracing_logger:TracingLogger = kwargs['tracing_logger']
     if isinstance(elem, pf.Note):
