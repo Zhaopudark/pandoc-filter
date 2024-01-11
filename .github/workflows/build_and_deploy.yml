@@ -1,0 +1,29 @@
+name: Build And Deploy
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r python/requirements.txt
+      - run: pip install -U setuptools build pytest twine
+      - run: python -m build
+      - run: pip install ./dist/*.whl
+      - run: pytest
+      # - run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+      # - name: Upload coverage reports to Codecov
+      - uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
