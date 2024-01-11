@@ -53,7 +53,7 @@ Here are 2 basic examples
 
 Normalize internal link
 
-- Inputs(`./input.md`):
+- Inputs(`./input.md`): refer to [`test_md2md_internal_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/test_md2md_internal_link.md).
 
   ```markdown
   ## 带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试        空格
@@ -94,7 +94,7 @@ Normalize internal link
       f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
   ```
 
-- Outputs(`./output.md`):
+- Outputs(`./output.md`): refer to [`test_md2md_internal_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/temp/test_md2md_internal_link.md).
 
   ```markdown
   ## 带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试 空格
@@ -115,7 +115,7 @@ Normalize internal link
 
 ### Normalize footnotes
 
-- Inputs(`./input.md`):
+- Inputs(`./input.md`): refer to [`test_md2md_footnote.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/test_md2md_footnote.md).
 
   ```markdown
   which1.[^1]
@@ -158,7 +158,7 @@ Normalize internal link
       f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
   ```
 
-- Outputs(`./output.md`):
+- Outputs(`./output.md`): refer to [`test_md2md_footnote.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/temp/test_md2md_footnote.md).
 
   ```markdown
   which1.[^1]
@@ -176,7 +176,7 @@ Normalize internal link
 
 ### Adapt AMS rule for math formula
 
-- Inputs(`./input.md`):
+- Inputs(`./input.md`): refer to [`test_md2md_math.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/test_md2md_math.md).
 
   ```markdown
   $$
@@ -228,7 +228,7 @@ Normalize internal link
       f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
   ```
 
-- Outputs(`./output.md`):
+- Outputs(`./output.md`): refer to [`test_md2md_math.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/temp/test_md2md_math.md).
 
   ```markdown
   $$
@@ -270,7 +270,7 @@ Normalize internal link
 
   - Consider images located in `./input.assets/`
 
-- Inputs(`./input.md`):
+- Inputs(`./input.md`): refer to [`test_md2md_figure.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/test_md2md_figure.md).
 
   ```markdown
   ![自定义头像](./input.assets/自定义头像.png)
@@ -312,7 +312,7 @@ Normalize internal link
       f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
   ```
 
-- Outputs(`./output.md`):
+- Outputs(`./output.md`): refer to [`test_md2md_figure.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/temp/test_md2md_figure.md).
 
   ```markdown
   <figure>
