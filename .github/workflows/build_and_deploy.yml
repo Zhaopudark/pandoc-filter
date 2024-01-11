@@ -25,7 +25,7 @@ jobs:
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
         run: |
-          . "/build/build_and_test.ps1"
+          . "./build/build_and_test.ps1"
           
       # - run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
       # - name: Upload coverage reports to Codecov
