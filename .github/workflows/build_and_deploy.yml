@@ -17,11 +17,16 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip' # caching pip dependencies
-      - run: pip install -r python/requirements.txt
-      - run: pip install -U setuptools build pytest twine
-      - run: python -m build
-      - run: pip install ./dist/*.whl
-      - run: pytest
+      - name: Build and Test
+        env:
+          OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
+          OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+        shell: pwsh
+        run: |
+          $env:PATH += "/build/build_and_test.ps1"
+          
       # - run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
       # - name: Upload coverage reports to Codecov
       - uses: codecov/codecov-action@v3
