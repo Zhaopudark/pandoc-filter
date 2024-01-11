@@ -28,10 +28,10 @@ jobs:
           sudo dpkg -i pandoc-3.1.11-1-amd64.deb
           pandoc -v
           pip install -r "./build/requirements.txt"
-          pip install -U setuptools build pytest twine
+          pip install -U setuptools build pytest pytest-codecov twine
           python -m build
           pip install ./dist/*.whl
-          pytest ./tests
+          pytest ./tests --codecov
           
       # - run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
       # - name: Upload coverage reports to Codecov
