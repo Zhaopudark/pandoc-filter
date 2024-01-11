@@ -23,9 +23,15 @@ jobs:
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
           OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
-        shell: pwsh
         run: |
-          . "./build/build_and_test.ps1"
+          wget https://github.com/jgm/pandoc/releases/download/3.1.11/pandoc-3.1.11-1-amd64.deb
+          sudo dpkg -i pandoc-3.1.11-1-amd64.deb
+          pandoc -v
+          pip install -r "./build/requirements.txt"
+          pip install -U setuptools build pytest twine
+          python -m build
+          pip install ./dist/*.whl
+          pytest ./tests
           
       # - run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
       # - name: Upload coverage reports to Codecov
