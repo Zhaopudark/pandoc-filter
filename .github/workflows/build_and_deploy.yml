@@ -32,7 +32,7 @@ jobs:
           python -m build
           pip install ./dist/*.whl
           # https://docs.codecov.com/docs/code-coverage-with-python
-          pytest ./tests --cov ./src
+          pytest ./tests --cov ./src/pandoc_filter
           
       # - run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
       # - name: Upload coverage reports to Codecov
