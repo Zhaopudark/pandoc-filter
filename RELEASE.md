@@ -1,2 +1,2 @@
 # Version 0.0.5
-The first release of the project.
+The basic release of the project.
