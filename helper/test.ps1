@@ -1,7 +1,5 @@
-conda activate pandoc
-pip install pytest pytest-cov
-# get-item "${PSScriptRoot}/dist/*.whl"
-pip install (Get-Item "${PSScriptRoot}/../dist/*.whl").FullName --force
-# https://docs.codecov.com/docs/code-coverage-with-python
-$package_location = (pip show pip | Select-String -Pattern 'Location: (.+)' | ForEach-Object { $_.Matches.Groups[1].Value }).Trim()
-pytest ./tests --cov "${package_location}/pandoc_filter"
+pip install -U pytest pytest-cov
+$root_path = (Get-Item "$PSScriptRoot/..").FullName
+$Env:PYTHONPATH="$root_path/src"
+Write-Host "Python path:" $Env:PYTHONPATH
+pytest .\tests\  --log-level=INFO --cov $Env:PYTHONPATH --cov-report=xml
