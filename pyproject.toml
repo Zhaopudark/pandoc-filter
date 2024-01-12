@@ -10,7 +10,7 @@ authors = [
 ]
 description = "A customized pandoc filters set that can be used to generate a useful pandoc python filter."
 readme = "README.md"
-version = "0.0.1"
+version = "0.0.3"
 requires-python = ">=3.12"
 dependencies = [
     "requests",
