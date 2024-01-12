@@ -17,6 +17,9 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip' # caching pip dependencies
+      - name: Build
+        shell: pwsh
+        run: . ./helper/build.ps1
       - name: Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
@@ -25,9 +28,6 @@ jobs:
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
         run: . ./helper/test.ps1
-      - name: Build
-        shell: pwsh
-        run: . ./helper/build.ps1
       # - name: Deploy  
       #   run: twine upload dist/*.whl -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
       - uses: codecov/codecov-action@v3
