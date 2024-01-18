@@ -3,4 +3,4 @@ from . import md2md_filters
 from . import pandoc_checker
 from . import utils
 
-__version__ = '0.0.2b0'
+__version__ = '0.1.0b0'
