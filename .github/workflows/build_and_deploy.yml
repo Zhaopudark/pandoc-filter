@@ -13,13 +13,11 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.12
-      - name: Configurations
-        shell: pwsh
-        run: . ./scripts/config.ps1
+          activate-environment: pandoc_filter_dev
+          environment-file: ./scripts/etc/conda_env_dev_linux.yml
       - name: Build package
         shell: pwsh
         run: |
-          conda activate pandoc_filter_dev
           python -m build
       - name: Publish package (release or prerelease)
         run: |

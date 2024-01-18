@@ -16,9 +16,6 @@ jobs:
           python-version: 3.12
           activate-environment: pandoc_filter_dev
           environment-file: ./scripts/etc/conda_env_dev_linux.yml
-      # - name: Conda Configurations
-      #   shell: pwsh
-      #   run: . ./scripts/conda_config.ps1
       - name: Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
@@ -27,10 +24,6 @@ jobs:
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
         run: |
-          conda activate pandoc_filter_dev
-          # pip install -r "${PSScriptRoot}/requirements.txt" --quiet
-          # pip install -U setuptools build --quiet
-          # pip install -U pytest pytest-cov --quiet
           $src_path = (Get-Item "./src").FullName
           $Env:PYTHONPATH = $src_path
           Write-Host "Python path:" $Env:PYTHONPATH
