@@ -12,20 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v3
-        env:
-          # Increase this value to reset cache if etc/example-environment.yml has not changed
-          CACHE_NUMBER: 0
-        with:
-          path: ~/conda_pkgs_dir
-          key:
-            ${{runner.os}}-conda-${{env.CACHE_NUMBER}}-${{hashFiles('./scripts/etc/conda_env_dev_linux.yml')}}
       - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
           python-version: 3.12
           activate-environment: pandoc_filter_dev
-          environment-file: ./scripts/etc/conda_env_dev_linux.yml
+          environment-file: ./scripts/etc/environment.yml
       - env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}

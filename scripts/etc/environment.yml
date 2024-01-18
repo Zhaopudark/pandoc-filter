@@ -1,0 +1,6 @@
+name: pandoc_filter_dev
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pandoc>=3.1 -c conda-forge
