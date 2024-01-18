@@ -1,4 +1,13 @@
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandoc-filter)
+[![PyPI version](https://badge.fury.io/py/pandoc-filter.svg)](https://badge.fury.io/py/pandoc-filter)
 [![codecov](https://codecov.io/gh/Zhaopudark/pandoc-filter/graph/badge.svg?token=lb3cLoh3e5)](https://codecov.io/gh/Zhaopudark/pandoc-filter)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/local_test.yml?label=Local%20Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/local_test.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/build_and_deploy.yml?label=Build)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/build_and_deploy.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/post_deploy_test.yml?label=Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/post_deploy_test.yml)
+[![GitHub License](https://img.shields.io/github/license/Zhaopudark/pandoc-filter)](https://github.com/Zhaopudark/pandoc-filter?tab=GPL-3.0-1-ov-file#readme)
+
+
+
 # pandoc-filter
 
 This project is a customized [pandoc](https://pandoc.org) filters set that can be used to generate a useful [pandoc python filter](https://pandoc.org/filters.html). Recently, it only supports some features of `markdown-to-markdown` (normalizing markdown files) and `markdown-to-html` (generating web pages). But more features will be added later as my scenario and the user's feedback.
