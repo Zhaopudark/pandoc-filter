@@ -1,17 +1,17 @@
 name: Test
+
 on: 
   workflow_dispatch:
   push:
     branches:
       - main
+
 jobs:
   test_and_build_job:
     runs-on: ubuntu-latest
-    name: Test
     steps:
       - uses: actions/checkout@v4
-      - name: Cache conda
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         env:
           # Increase this value to reset cache if etc/example-environment.yml has not changed
           CACHE_NUMBER: 0
@@ -25,8 +25,7 @@ jobs:
           python-version: 3.12
           activate-environment: pandoc_filter_dev
           environment-file: ./scripts/etc/conda_env_dev_linux.yml
-      - name: Test
-        env:
+      - env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
           OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
