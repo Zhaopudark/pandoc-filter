@@ -1,4 +1,6 @@
 # Pandoc-Filter 0.0.1
+## Release 0.0.2b0
+
 ## Release 0.0.1
 The first normal release.
 ## Release 0.0.1b2

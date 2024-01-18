@@ -4,3 +4,52 @@ channels:
   - defaults
 dependencies:
   - pandoc>=3.1 -c conda-forge
+  - pip:
+      - requests
+      - typeguard
+      - packaging
+      - alive-progress
+      - panflute
+      - oss2
+      - bs4
+      - oauth2client
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
