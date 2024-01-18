@@ -5,17 +5,17 @@ on:
     branches:
       - main
 jobs:
-  local_test:
+  test_and_build_job:
     runs-on: ubuntu-latest
-    name: Local Test
+    name: Test and Build
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: true
-          python-version: 3.12
+      # - uses: conda-incubator/setup-miniconda@v3
+      #   with:
+      #     auto-update-conda: true
+      #     python-version: 3.12
       - name: Local Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}

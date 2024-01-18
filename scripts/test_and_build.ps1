@@ -1,7 +1,5 @@
 $ErrorActionPreference = 'Stop'
 
-
-
 if (Get-Command conda -ErrorAction SilentlyContinue) {
     Write-Host "Conda detected, use conda."
     $conda_env_name = "pandoc_filter_dev"
