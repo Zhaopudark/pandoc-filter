@@ -29,6 +29,7 @@ if __name__ == '__main__':
                     else:
                         assert max_version > current_version, f"Version number is not in a descending order in file: {release_note_path}"
         assert version == max_version, f"Version number {version} is not equal to the latest version {max_version} in file: {release_note_path}"
+        print(version)
     except Exception as e:
         print(e)
         sys.exit(1) 

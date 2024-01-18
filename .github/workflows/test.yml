@@ -1,4 +1,4 @@
-name: Test and Build
+name: Test
 on: 
   workflow_dispatch:
   push:
@@ -7,17 +7,17 @@ on:
 jobs:
   test_and_build_job:
     runs-on: ubuntu-latest
-    name: Test and Build
+    name: Test
     steps:
       - uses: actions/checkout@v4
       - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
           python-version: 3.12
-      - name: Configurations
+      - name: Configure
         shell: pwsh
         run: . ./scripts/config.ps1
-      - name: Local Test
+      - name: Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
