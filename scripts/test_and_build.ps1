@@ -28,6 +28,7 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
     }
 }
 
+pip install -r "${PSScriptRoot}/requirements.txt" --quiet
 # check version
 $root_path = (Get-Item "$PSScriptRoot/..").FullName
 $src_path = "$root_path/src"
@@ -35,7 +36,6 @@ $release_note_path = "$root_path/RELEASE.md"
 python "${PSScriptRoot}/check_release_version.py" $src_path $release_note_path
 
 # test
-pip install -r "${PSScriptRoot}/requirements.txt" --quiet
 pip install -U pytest pytest-cov --quiet
 $Env:PYTHONPATH=$src_path
 Write-Host "Python path:" $Env:PYTHONPATH
