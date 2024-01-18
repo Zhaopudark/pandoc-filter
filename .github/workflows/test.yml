@@ -16,7 +16,7 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.12
-      - name: config
+      - name: Configurations
         shell: pwsh
         run: . ./scripts/config.ps1
       - name: Local Test
@@ -27,7 +27,7 @@ jobs:
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
         run: |
-          $src_path = "./src"
+          $src_path = (Get-Item "./src").FullName
           $Env:PYTHONPATH = $src_path
           Write-Host "Python path:" $Env:PYTHONPATH
           pytest "$root_path/tests" --log-level=INFO --cov $Env:PYTHONPATH --cov-report=xml
