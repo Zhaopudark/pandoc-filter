@@ -1,4 +1,7 @@
 $ErrorActionPreference = 'Stop'
+
+
+
 if (Get-Command conda -ErrorAction SilentlyContinue) {
     Write-Host "Conda detected, use conda."
     $conda_env_name = "pandoc_filter_dev"
@@ -6,7 +9,7 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         conda create --name $conda_env_name python=3.12 --yes
     } 
     conda activate $conda_env_name
-    conda install --update-deps pandoc=3.11 -c conda-forge --yes
+    conda install --update-deps pandoc=3.1 -c conda-forge --yes
 } else {
     Write-Host "Conda not detected."
     if (Get-Command pandoc -ErrorAction SilentlyContinue) {
@@ -24,11 +27,20 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         }
     }
 }
+
+# check version
+$root_path = (Get-Item "$PSScriptRoot/..").FullName
+$src_path = "$root_path/src"
+$release_note_path = "$root_path/RELEASE.md"
+python "${PSScriptRoot}/check_release_version.py" $src_path $release_note_path
+
+# test
 pip install -r "${PSScriptRoot}/requirements.txt"
 pip install -U pytest pytest-cov
-$root_path = (Get-Item "$PSScriptRoot/..").FullName
-$Env:PYTHONPATH="$root_path/src"
+$Env:PYTHONPATH=$src_path
 Write-Host "Python path:" $Env:PYTHONPATH
-pytest "$root_path/tests"  --log-level=INFO --cov $Env:PYTHONPATH --cov-report=xml
+pytest "$root_path/tests"  --exitfirst --log-level=INFO --cov $Env:PYTHONPATH --cov-report=xml
 
-
+# build
+pip install -U setuptools build
+python -m build

@@ -1,5 +1,5 @@
 # Pandoc-Filter 0.0.6
-## Release 0.0.6b0
+## Release 0.0.6b10
 Version 0.0.6
 
 # Pandoc-Filter 0.0.5

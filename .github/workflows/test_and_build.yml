@@ -1,4 +1,4 @@
-name: Local Test
+name: Test and Build
 on: 
   workflow_dispatch:
   push:
@@ -23,7 +23,7 @@ jobs:
           OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
-        run: . ./scripts/test.ps1
+        run: . ./scripts/test_and_build.ps1
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
