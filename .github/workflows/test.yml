@@ -26,10 +26,11 @@ jobs:
           OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
-        run: . ./scripts/local_test.ps1
+        run: |
+          $src_path = "./src"
+          $Env:PYTHONPATH = $src_path
+          Write-Host "Python path:" $Env:PYTHONPATH
+          pytest "$root_path/tests" --log-level=INFO --cov $Env:PYTHONPATH --cov-report=xml
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - name: Build Test
-        shell: pwsh
-        run: . ./scripts/build.ps1

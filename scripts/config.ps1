@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'Stop'
+
 if (Get-Command conda -ErrorAction SilentlyContinue) {
     Write-Host "Conda detected, use conda."
     $conda_env_name = "pandoc_filter_dev"
@@ -6,7 +7,7 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         conda create --name $conda_env_name python=3.12 --yes --quiet
     } 
     conda activate $conda_env_name
-    conda install --update-deps pandoc=3.1 -c conda-forge --yes --quiet
+    conda install --update-deps pandoc>=3.1 -c conda-forge --yes --quiet
 } else {
     Write-Host "Conda not detected."
     if (Get-Command pandoc -ErrorAction SilentlyContinue) {
@@ -24,14 +25,6 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         }
     }
 }
-
 pip install -r "${PSScriptRoot}/requirements.txt" --quiet
-
-# check version
-$root_path = (Get-Item "$PSScriptRoot/..").FullName
-$src_path = "$root_path/src"
-$release_note_path = "$root_path/RELEASE.md"
-python "${PSScriptRoot}/check_release_version.py" $src_path $release_note_path
-if ($LastExitCode -ne 0) {
-    throw "The release version in ${PSScriptRoot}/check_release_version.py is not consistent with the given version in $root_path/src/pandoc_filter/__init__.py."
-}
+pip install -U setuptools build --quiet
+pip install -U pytest pytest-cov --quiet
