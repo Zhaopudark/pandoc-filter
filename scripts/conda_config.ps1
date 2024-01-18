@@ -25,6 +25,3 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         }
     }
 }
-pip install -r "${PSScriptRoot}/requirements.txt" --quiet
-pip install -U setuptools build --quiet
-pip install -U pytest pytest-cov --quiet

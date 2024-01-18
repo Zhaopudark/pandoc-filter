@@ -40,10 +40,8 @@ Note: The division of filters is just my opinion on code organization, it doesn'
 
 # Installation
 
-Currently, this project is only available in [TestPyPI](https://test.pypi.org/) but not [PyPI](https://pypi.org/). So the installation is as the following:
-
 ```
-pip install -i https://test.pypi.org/simple/ pandoc-filter --extra-index-url https://pypi.org/simple/
+pip install -i https://pypi.org/simple/ --pre -U pandoc-filter
 ```
 
 # Usage
