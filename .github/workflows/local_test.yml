@@ -14,9 +14,11 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.12
-      - name: Conda Configurations
-        shell: pwsh
-        run: . ./scripts/conda_config.ps1
+          activate-environment: pandoc_filter_dev
+          environment-file: environment.yml
+      # - name: Conda Configurations
+      #   shell: pwsh
+      #   run: . ./scripts/conda_config.ps1
       - name: Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
@@ -26,9 +28,9 @@ jobs:
         shell: pwsh
         run: |
           conda activate pandoc_filter_dev
-          pip install -r "${PSScriptRoot}/requirements.txt" --quiet
-          pip install -U setuptools build --quiet
-          pip install -U pytest pytest-cov --quiet
+          # pip install -r "${PSScriptRoot}/requirements.txt" --quiet
+          # pip install -U setuptools build --quiet
+          # pip install -U pytest pytest-cov --quiet
           $src_path = (Get-Item "./src").FullName
           $Env:PYTHONPATH = $src_path
           Write-Host "Python path:" $Env:PYTHONPATH
