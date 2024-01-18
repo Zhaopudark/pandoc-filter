@@ -1,4 +1,3 @@
-name: pandoc_filter_dev
 channels:
   - conda-forge
   - defaults
