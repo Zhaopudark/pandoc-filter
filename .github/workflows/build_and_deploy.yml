@@ -9,13 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: '3.12'
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: 3.12
+      - name: Configurations
+        shell: pwsh
+        run: . ./scripts/config.ps1
       - name: Build package
         shell: pwsh
-        run: . ./scripts/build.ps1
+        run: |
+          conda activate pandoc_filter_dev
+          python -m build
       - name: Publish package (prerelease)
         if: ${{ github.event.release.prerelease }}
         run: |
