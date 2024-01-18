@@ -6,7 +6,7 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         conda create --name $conda_env_name python=3.12 --yes
     } 
     conda activate $conda_env_name
-    conda install --update-deps pandoc -c conda-forge --yes
+    conda install --update-deps pandoc=3.11 -c conda-forge --yes
 } else {
     Write-Host "Conda not detected."
     if (Get-Command pandoc -ErrorAction SilentlyContinue) {
@@ -24,7 +24,6 @@ if (Get-Command conda -ErrorAction SilentlyContinue) {
         }
     }
 }
-
 pip install -r "${PSScriptRoot}/requirements.txt"
 pip install -U pytest pytest-cov
 $root_path = (Get-Item "$PSScriptRoot/..").FullName
