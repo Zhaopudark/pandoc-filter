@@ -12,6 +12,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: 3.12
       - name: Local Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}

@@ -3,7 +3,7 @@ on:
   workflow_run:
     workflows: ["Local Test"]
     types:
-      - completed
+      - success
 jobs:
   build:
     runs-on: ubuntu-latest
