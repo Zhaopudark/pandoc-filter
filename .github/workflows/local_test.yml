@@ -15,7 +15,7 @@ jobs:
           auto-update-conda: true
           python-version: 3.12
           activate-environment: pandoc_filter_dev
-          environment-file: ./scripts/environment.yml
+          environment-file: ./scripts/etc/conda_env_dev_linux.yml
       # - name: Conda Configurations
       #   shell: pwsh
       #   run: . ./scripts/conda_config.ps1
