@@ -7,7 +7,6 @@
 [![GitHub License](https://img.shields.io/github/license/Zhaopudark/pandoc-filter)](https://github.com/Zhaopudark/pandoc-filter?tab=GPL-3.0-1-ov-file#readme)
 
 
-
 # pandoc-filter
 
 This project is a customized [pandoc](https://pandoc.org) filters set that can be used to generate a useful [pandoc python filter](https://pandoc.org/filters.html). Recently, it only supports some features of `markdown-to-markdown` (normalizing markdown files) and `markdown-to-html` (generating web pages). But more features will be added later as my scenario and the user's feedback.
