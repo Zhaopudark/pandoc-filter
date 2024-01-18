@@ -1,6 +1,6 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandoc-filter)](https://badge.fury.io/py/pandoc-filter)
 [![PyPI version](https://badge.fury.io/py/pandoc-filter.svg)](https://badge.fury.io/py/pandoc-filter)
-<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4724125.svg)](https://doi.org/10.5281/zenodo.4724125) -->
+[![DOI](https://zenodo.org/badge/741871139.svg)](https://zenodo.org/doi/10.5281/zenodo.10528322)
 [![codecov](https://codecov.io/gh/Zhaopudark/pandoc-filter/graph/badge.svg?token=lb3cLoh3e5)](https://codecov.io/gh/Zhaopudark/pandoc-filter)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/local_test.yml?label=Local%20Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/local_test.yml)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/build_and_deploy.yml?label=Build)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/build_and_deploy.yml)
