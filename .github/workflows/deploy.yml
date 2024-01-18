@@ -15,7 +15,7 @@ jobs:
           python-version: '3.12'
       - name: Build package
         shell: pwsh
-        run: . ./helper/build.ps1
+        run: . ./scripts/build.ps1
       - name: Publish package (prerelease)
         if: ${{ github.event.release.prerelease }}
         run: |

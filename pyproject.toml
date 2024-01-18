@@ -4,14 +4,20 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "pandoc_filter"
+name = "pandoc-filter"
 authors = [
     {name = "Pu Zhao", email = "zhaopudark@outlook.com"},
 ]
 description = "A customized pandoc filters set that can be used to generate a useful pandoc python filter."
+keywords = ["pandoc", "pandoc-filter", "python", "pandoc-python-filter","markdown","html"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
 readme = "README.md"
-version = "0.0.6"
-requires-python = ">=3.12"
+license = {file = "LICENSE"}
+dynamic = ["version"]
+requires-python = ">= 3.12"
 dependencies = [
     "requests",
     "typeguard",
@@ -31,4 +37,10 @@ exclude = ["__pycache__"]  # empty by default 都是相对于where的路径的pa
 # namespaces = false  # true by default  禁用命名空间包会组织识别到不带有__init__.py的包
 [project.urls]
 Homepage = "https://github.com/Zhaopudark/pandoc-filter"
+Documentation = "https://github.com/Zhaopudark/pandoc-filter/blob/main/README.md"
+Repository = "https://github.com/Zhaopudark/pandoc-filter.git"
 Issues = "https://github.com/Zhaopudark/pandoc-filter/issues"
+Changelog = "https://github.com/Zhaopudark/pandoc-filter/blob/main/RELEASE.md"
+
+[tool.setuptools.dynamic]
+version = {attr = "pandoc_filter.__version__"}

@@ -1,14 +1,13 @@
-name: Build And Deploy
-
+name: Local Test
 on: 
   workflow_dispatch:
   push:
     branches:
       - main
 jobs:
-  build_and_deploy_job:
+  local_test:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Local Test
     steps:
       - uses: actions/checkout@v4
         with:
@@ -16,18 +15,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip' # caching pip dependencies
-      - name: Build
-        shell: pwsh
-        run: . ./helper/build.ps1
-      - name: Test
+          cache: 'pip'
+      - name: Local Test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
           OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
-        run: . ./helper/test.ps1
+        run: . ./scripts/test.ps1
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

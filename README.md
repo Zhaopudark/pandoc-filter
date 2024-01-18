@@ -17,7 +17,7 @@ Please see [Usage](#usage) for the recommend usage.
 
 Mainly for converting markdown to html, I divided this process into two processes, i.e., `markdown-to-markdown` (normalizing markdown files) and `markdown-to-html` (generating web pages).
 
--  `markdown-to-markdown` supports:
+- `markdown-to-markdown` supports:
   - [x] math filter
     - [x]  Adapt AMS rule for math formula. (Auto numbering markdown formulations within `\begin{equation} \end{equation}`, as in Typora)
     - [x] Allow multiple tags, but only take the first one.
