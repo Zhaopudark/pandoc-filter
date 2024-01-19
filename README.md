@@ -2,8 +2,8 @@
 <strong>
 <samp>
 
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandoc-filter)](https://badge.fury.io/py/pandoc-filter)
-[![PyPI - Version](https://img.shields.io/pypi/v/pandoc-filter)](https://pypi.org/project/pandoc-filter)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandoc-filter?logo=python)](https://badge.fury.io/py/pandoc-filter)
+[![PyPI - Version](https://img.shields.io/pypi/v/pandoc-filter?logo=pypi)](https://pypi.org/project/pandoc-filter)
 [![DOI](https://zenodo.org/badge/741871139.svg)](https://zenodo.org/doi/10.5281/zenodo.10528322)
 [![GitHub License](https://img.shields.io/github/license/Zhaopudark/pandoc-filter)](https://github.com/Zhaopudark/pandoc-filter?tab=GPL-3.0-1-ov-file#readme)</samp>
 
