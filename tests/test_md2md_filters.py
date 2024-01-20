@@ -63,6 +63,8 @@ def test_md2md_math_filter():
     with open(file_path,'r',encoding='utf-8') as f:
         markdown_content = f.read()
     output_path = pathlib.Path(f"./temp/{file_path.name}")
+    answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
+    
     doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
     doc = pf.run_filter(action=math_filter,doc=doc,tracing_logger=tracing_logger)
     with open(output_path, "w", encoding="utf-8") as f:
