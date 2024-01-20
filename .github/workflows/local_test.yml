@@ -17,21 +17,6 @@ jobs:
           python-version: 3.12
           activate-environment: pandoc_filter_dev
           environment-file: ./scripts/etc/environment.yml
-      # - name: import package test
-      #   env:
-      #     OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
-      #     OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
-      #     OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
-      #     OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
-      #   shell: pwsh
-      #   run: |
-      #     $src_path = (Get-Item "./src").FullName
-      #     $Env:PYTHONPATH = $src_path
-      #     Write-Host "Python path:" $Env:PYTHONPATH
-      #     pytest (Get-Item "./tests").FullName --log-level=INFO --cov $Env:PYTHONPATH --cov-report=xml
-      - uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: distribution package test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
@@ -40,8 +25,12 @@ jobs:
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
         run: |
-          $Env:PYTHONPATH = ""
+          # $Env:PYTHONPATH = ""
           $Env:PYTHONIOENCODING='utf-8'
           python -m build
           pip install (Get-Item "./dist/*.whl").FullName
-          pytest (Get-Item "./tests").FullName --log-level=INFO
+          pytest (Get-Item "./tests").FullName --log-level=INFO --cov ((pip show pandoc_filter) -match 'Location:' -replace 'Location:\s+') --cov-report=xml
+      - uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          
