@@ -32,7 +32,7 @@ jobs:
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - name: install package test
+      - name: build package test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
@@ -41,5 +41,6 @@ jobs:
         shell: pwsh
         run: |
           $Env:PYTHONPATH = ""
+          python -m build
           pip install (Get-Item "./dist/*.whl").FullName
           pytest (Get-Item "./tests").FullName --log-level=INFO
