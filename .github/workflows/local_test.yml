@@ -17,7 +17,7 @@ jobs:
           python-version: 3.12
           activate-environment: pandoc_filter_dev
           environment-file: ./scripts/etc/environment.yml
-      - name: namespace package test
+      - name: import package test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
@@ -32,7 +32,7 @@ jobs:
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - name: build package test
+      - name: distribution package test
         env:
           OSS_ENDPOINT_NAME: ${{ secrets.OSS_ENDPOINT_NAME }}
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
