@@ -4,6 +4,8 @@ channels:
 dependencies:
   - pandoc>=3.1 -c conda-forge
   - pip:
+      - setuptools
+      - build
       - pytest
       - pytest-cov
       - requests
