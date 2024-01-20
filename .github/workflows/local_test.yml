@@ -41,5 +41,5 @@ jobs:
         shell: pwsh
         run: |
           $Env:PYTHONPATH = ""
-          pip install ./dist/*.whl
+          pip install (Get-Item "./dist/*.whl").FullName
           pytest (Get-Item "./tests").FullName --log-level=INFO
