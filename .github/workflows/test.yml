@@ -25,11 +25,11 @@ jobs:
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
         shell: pwsh
         run: |
-          # $Env:PYTHONPATH = ""
-          $Env:PYTHONIOENCODING='utf-8'
           python -m build
           pip install (Get-Item "./dist/*.whl").FullName
-          pytest (Get-Item "./tests").FullName --log-level=INFO --cov ((pip show pandoc_filter) -match 'Location:' -replace 'Location:\s+') --cov-report=xml
+          $package_path = "$(pip show pandoc_filter) -match 'Location:' -replace 'Location:\s+')/pandoc_filter"
+          $Env:PYTHONIOENCODING='utf-8'
+          pytest (Get-Item "./tests").FullName --log-level=INFO --cov $package_path --cov-report=xml
       - uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
