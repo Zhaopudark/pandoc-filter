@@ -7,7 +7,7 @@
 [![DOI](https://zenodo.org/badge/741871139.svg)](https://zenodo.org/doi/10.5281/zenodo.10528322)
 [![GitHub License](https://img.shields.io/github/license/Zhaopudark/pandoc-filter)](https://github.com/Zhaopudark/pandoc-filter?tab=GPL-3.0-1-ov-file#readme)</samp>
 
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/local_test.yml?label=Local%20Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/local_test.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/test.yml?label=Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/test.yml)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/build_and_deploy.yml?event=release&label=Build%20and%20Deploy)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/build_and_deploy.yml)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/post_deploy_test.yml?event=workflow_run&label=End%20Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/post_deploy_test.yml)
 [![codecov](https://codecov.io/gh/Zhaopudark/pandoc-filter/graph/badge.svg?token=lb3cLoh3e5)](https://codecov.io/gh/Zhaopudark/pandoc-filter)
