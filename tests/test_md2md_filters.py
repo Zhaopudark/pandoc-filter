@@ -1,5 +1,6 @@
 import difflib
 import pathlib
+import logging 
 import subprocess
 
 def _check_file_path(file_path:str)->pathlib.Path:
@@ -18,6 +19,8 @@ def _compare_files(file1_path, file2_path):
     if not any(line.startswith('- ') or line.startswith('+ ') for line in diff):
         return True
     else:
+        for line in diff:
+            logging.warning(line)
         return False
 
 def test_md2md_footnote_filter():
