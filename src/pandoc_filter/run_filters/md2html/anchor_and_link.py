@@ -5,7 +5,7 @@ import logging
 import panflute as pf
 
 from ...utils import TracingLogger
-from ...utils import get_html_href,sub_html_href,get_html_id,sub_html_id,get_hash,check_pandoc_version
+from ...utils import get_html_href,sub_html_href,get_html_id,sub_html_id,get_text_hash,check_pandoc_version
 from ..md2md.link import _decode_internal_link_url
 
 r"""Defination
@@ -29,7 +29,7 @@ def _anchor_filter(elem:pf.Element,doc,**kwargs)->None: # Modify In Place:
     if not(hasattr(doc,'anchor_count') and isinstance(doc.anchor_count,dict)):
         doc.anchor_count = {}
     def _text_hash_count(text:str)->str:
-        text_hash = get_hash(text)
+        text_hash = get_text_hash(text)
         if text_hash in doc.anchor_count: # 按照text_hash值计数, 重复则加1
             doc.anchor_count[text_hash] += 1
         else:
@@ -78,13 +78,13 @@ def _internal_link_recorder(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do no
         doc.internal_link_record = []
     def _url_hash_guess(text:str)->str:
         old_url = text.lstrip('#')
-        url = get_hash(old_url)
+        url = get_text_hash(old_url)
         if match:= re.search(r'-(?P<guessed_index>\d+)$', old_url):
             guessed_index = int(match.groupdict()['guessed_index'])  # 从匹配结果中提取数字部分
             if guessed_index == 0:
                 guessed_index = 1
             url_striped = old_url[:match.start()]  # 从匹配结果中提取数字前面的部分
-            guessed_url_with_num = get_hash(url_striped) + f"-{guessed_index}"
+            guessed_url_with_num = get_text_hash(url_striped) + f"-{guessed_index}"
         else:
             guessed_url_with_num = None
         return url,guessed_url_with_num

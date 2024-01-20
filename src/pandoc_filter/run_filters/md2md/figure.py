@@ -25,13 +25,6 @@ def _figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     if not doc.doc_path.exists():
         tracing_logger.logger.warning(f"doc.doc_path {doc.doc_path} does not exist.")
         return None
-        
-    # if doc.doc_path
-           
-           
-    #        and isinstance(doc.doc_path,pathlib.Path)):
-        
-    #     return None
     
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
         new_src = oss_helper.maybe_upload_file_and_get_src(doc.doc_path.parent/old_src)
