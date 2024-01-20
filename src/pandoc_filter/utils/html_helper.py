@@ -12,25 +12,25 @@ def __sub_attribute(text:str,attribute:str,sub_string:str)->str:
 
 # href
 @typeguard.typechecked
-def get_href(text:str)->str|None:
+def get_html_href(text:str)->str|None:
     return __get_attribute(text,"href")
     
 @typeguard.typechecked
-def sub_href(text:str,sub_string:str)->str:
+def sub_html_href(text:str,sub_string:str)->str:
     return __sub_attribute(text,"href",sub_string)
 
 # id
 @typeguard.typechecked
-def get_id(text:str)->str|None:
+def get_html_id(text:str)->str|None:
     return __get_attribute(text,"id")
 @typeguard.typechecked
-def sub_id(text:str,sub_string:str)->str:
+def sub_html_id(text:str,sub_string:str)->str:
     return __sub_attribute(text,"id",sub_string)
 
 # src
 @typeguard.typechecked
-def get_src(text:str)->str|None:
+def get_html_src(text:str)->str|None:
     return __get_attribute(text,"src")
 @typeguard.typechecked
-def sub_src(text:str,sub_string:str)->str:
+def sub_html_src(text:str,sub_string:str)->str:
     return __sub_attribute(text,"src",sub_string)

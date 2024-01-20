@@ -30,6 +30,14 @@ dependencies = [
     "bs4",
     "oauth2client"
 ]
+[project.scripts]
+md2md-figure = "pandoc_filter.run_filters.md2md.figure:main"
+md2md-footnote = "pandoc_filter.run_filters.md2md.footnote:main"
+md2md-link = "pandoc_filter.run_filters.md2md.link:main"
+md2md-math = "pandoc_filter.run_filters.md2md.math:main"
+md2html-figure = "pandoc_filter.run_filters.md2html.figure:main"
+md2html-anchor-and-link = "pandoc_filter.run_filters.md2html.anchor_and_link:main"
+
 # OR
 [tool.setuptools.packages.find]
 # # All the following settings are optional:

@@ -1,4 +1,5 @@
 import typeguard
+import pathlib
 import logging
 import logging.handlers
 from typing import Any
@@ -11,6 +12,7 @@ def logger_factory(name:str,level:int=logging.INFO)->logging.Logger:
     Returns:
         logger: an instance of logging.Logger that has been configured
     """
+    pathlib.Path(name).parent.mkdir(parents=True,exist_ok=True)   
     logger = logging.getLogger(name)
     logger.setLevel(level)
     # check if the console handler exists
@@ -40,7 +42,7 @@ def logger_factory(name:str,level:int=logging.INFO)->logging.Logger:
     return logger
 
 class TracingLogger:
-    def __init__(self,name:str,level:int=logging.INFO) -> None:
+    def __init__(self,name:str,level:int=logging.INFO) -> None: 
         self.logger = logger_factory(name=name,level=level)
         self.__buf = None
     def mark(self,buf:Any):
