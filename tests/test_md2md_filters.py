@@ -9,6 +9,7 @@ from pandoc_filter.md2md_filters import math_filter,figure_filter,footnote_filte
 
 
 pathlib.Path("./logs").mkdir(parents=True, exist_ok=True)
+pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
 tracing_logger = TracingLogger(name="./logs/pf_log",level=logging.INFO)
 
 def _check_file_path(file_path:str)->pathlib.Path:
