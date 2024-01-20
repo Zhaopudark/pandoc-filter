@@ -1,7 +1,9 @@
 import hashlib
 import urllib.parse
+import pathlib
+import typeguard
 
-def get_hash(text:str)->str:
+def get_text_hash(text:str)->str:
     """
     Normalize the input text to a hash string. This is the global hash function for this project.
     
@@ -13,3 +15,15 @@ def get_hash(text:str)->str:
     """
     text = urllib.parse.unquote(text).strip(' ').lower() # 需要统一小写以获取更大的兼容性
     return hashlib.sha256(text.encode('utf-8')).hexdigest()
+
+@typeguard.typechecked
+def get_text_file_hash(file_path:pathlib.Path)->str:
+    with open(file_path, "r", encoding="utf-8") as file:
+        file_data  = file.read()
+    return hashlib.sha256(file_data.encode('utf-8')).hexdigest()
+
+@typeguard.typechecked
+def get_raw_file_hash(file_path:pathlib.Path)->str:
+    with open(file_path, "rb") as file:
+        file_data  = file.read()
+    return hashlib.sha256(file_data).hexdigest()

@@ -7,7 +7,7 @@ alt="自定义头像" />
 
 <figure>
 <img
-src="https://raw.little-train.com/20061af9ba13d3b92969dc615b9ba91abb4c32c695f532a70a6159d7b806241c.svg"
+src="https://raw.little-train.com/8c36b5eb0164c69c20441a0cf8cbd2d6ed00faad78c16d30a0abac3a3e1aaa52.svg"
 alt="Level-of-concepts" />
 <figcaption aria-hidden="true">Level-of-concepts</figcaption>
 </figure>
