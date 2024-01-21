@@ -1,5 +1,5 @@
 """
-See 
+See https://github.com/Zhaopudark/pandoc-filter for documentation.
 """
 
 from .scripts import (
