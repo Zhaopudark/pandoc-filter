@@ -38,7 +38,7 @@ def test_md2html_anchor_filter():
         'html',
         '-s',
         '--filter',
-        'md2md-link',
+        'md2md-internal-link',
         '--filter',
         'md2html-anchor-and-link',
     ]
