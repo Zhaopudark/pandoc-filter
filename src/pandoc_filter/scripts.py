@@ -1,7 +1,7 @@
 import functools
+import pathlib
 import os
 import logging
-
 import panflute as pf
 
 from .utils import TracingLogger,OssHelper
@@ -25,8 +25,18 @@ def md2md_figure_filter(doc=None,**kwargs):
     oss_bucket_name = os.environ['OSS_BUCKET_NAME']
     assert os.environ['OSS_ACCESS_KEY_ID']
     assert os.environ['OSS_ACCESS_KEY_SECRET']
+    def prepare(doc:pf.Doc):
+        doc_path = doc.get_metadata('doc_path', default=None)
+        assert doc_path is not None, 'doc_path should be given before calling this filter.'
+        doc.doc_path = pathlib.Path(doc_path)
+    def finalize(doc:pf.Doc):
+        doc.metadata['doc_path'] = ''
+        if all(value == '' for _, value in doc.get_metadata().items()):
+            doc.metadata = pf.MetaMap()
+        del doc.doc_path
+        
     oss_helper = OssHelper(oss_endpoint_name,oss_bucket_name)
-    return pf.run_filters(actions=[md2md.figure.figure_filter],doc=doc,oss_helper=oss_helper,**kwargs)
+    return pf.run_filters(actions=[md2md.figure.figure_filter],prepare=prepare,finalize=finalize,doc=doc,oss_helper=oss_helper,**kwargs)
 
 @pandoc_filer_wrapper
 def md2md_footnote_filter(doc=None,**kwargs):

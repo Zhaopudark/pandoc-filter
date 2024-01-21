@@ -1,4 +1,3 @@
-import os
 import typeguard
 import pathlib
 import panflute as pf
@@ -14,16 +13,15 @@ def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     NOTE
         The `doc.doc_path` should be set before calling this filter.
         The `doc.doc_path` should be a pathlib.Path object.
+        The `doc.doc_path` should exist.
         The local pictures should be within the same directory as the doc file.
     """
     oss_helper:OssHelper = kwargs['oss_helper']
     tracing_logger:TracingLogger = kwargs['tracing_logger']
-    if not(hasattr(doc,'doc_path')):
-        doc.doc_path = pathlib.Path(os.environ['CURRENT_DOC_PATH'])
-    if not doc.doc_path.exists():
-        tracing_logger.logger.warning(f"doc.doc_path {doc.doc_path} does not exist.")
+    if not(hasattr(doc,'doc_path') and isinstance(doc.doc_path,pathlib.Path) and doc.doc_path.exists()):
+        tracing_logger.logger.warning(f"doc_path should be given before calling this filter.")
         return None
-    
+
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
         new_src = oss_helper.maybe_upload_file_and_get_src(doc.doc_path.parent/old_src)
         tracing_logger.mark(elem)

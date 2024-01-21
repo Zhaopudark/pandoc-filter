@@ -1,3 +1,7 @@
+---
+math: true
+---
+
 $$
 \begin{equation}\label{lalla}\tag{abcd}
 e=mc^2

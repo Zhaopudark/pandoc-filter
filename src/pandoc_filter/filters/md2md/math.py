@@ -8,7 +8,9 @@ from ...utils import TracingLogger
 def math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A filter to process math formula when converting markdown to markdown.
+    
     To realize:
+        - Add `math: true` to metadata when there is math formula.
         - Adapt AMS rule for math formula
             - Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora
         - Allow multiple tags, but only take the first one.
@@ -34,11 +36,8 @@ def math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     tracing_logger:TracingLogger = kwargs['tracing_logger']
     if not(hasattr(doc,'equations_count') and isinstance(doc.equations_count,int) and (doc.equations_count >= 0)):
         doc.equations_count = 0
-    if not(hasattr(doc,'have_math') and isinstance(doc.have_math,bool)):
-        doc.have_math = False
     if isinstance(elem, pf.elements.Math):
-        if not doc.have_math: # lazy modification
-            doc.have_math = True
+        doc.metadata['math'] = True
         if elem.format == "DisplayMath":
             tracing_logger.mark(elem)
             text = elem.text

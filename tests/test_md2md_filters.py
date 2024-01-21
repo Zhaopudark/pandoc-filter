@@ -103,7 +103,8 @@ def test_md2md_figure_filter():
         'gfm',
         '-s',
         '--filter',
-        'md2md-figure'
+        'md2md-figure',
+        f'--metadata=doc_path:{str(file_path)}'
     ]
-    assert subprocess.run(pandoc_command, check=True,env={'CURRENT_DOC_PATH':str(file_path), **subprocess.os.environ}).returncode == 0
+    assert subprocess.run(pandoc_command, check=True).returncode == 0
     assert _compare_files(output_path,answer_path)
