@@ -1,4 +1,3 @@
-import logging
 import typeguard
 import panflute as pf
 

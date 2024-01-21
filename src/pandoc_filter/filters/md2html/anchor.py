@@ -1,5 +1,3 @@
-import re
-import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger

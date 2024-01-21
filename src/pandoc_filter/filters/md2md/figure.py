@@ -1,11 +1,10 @@
-import logging
 import os
 import typeguard
 import pathlib
 import panflute as pf
 
 from ...utils import TracingLogger,OssHelper
-from ...utils import get_html_src,sub_html_src,check_pandoc_version
+from ...utils import get_html_src,sub_html_src
 
 @typeguard.typechecked     
 def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place

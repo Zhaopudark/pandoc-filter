@@ -1,4 +1,3 @@
-import logging
 import typeguard
 import urllib.parse
 import panflute as pf
