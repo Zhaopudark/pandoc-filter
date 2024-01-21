@@ -31,12 +31,13 @@ dependencies = [
     "oauth2client"
 ]
 [project.scripts]
-md2md-figure = "pandoc_filter.run_filters.md2md.figure:main"
-md2md-footnote = "pandoc_filter.run_filters.md2md.footnote:main"
-md2md-internal-link = "pandoc_filter.run_filters.md2md.internal_link:main"
-md2md-math = "pandoc_filter.run_filters.md2md.math:main"
-md2html-figure = "pandoc_filter.run_filters.md2html.figure:main"
-md2html-anchor-and-link = "pandoc_filter.run_filters.md2html.anchor_and_link:main"
+md2md-figure = "pandoc_filter.scripts:md2md_figure_filter"
+md2md-footnote = "pandoc_filter.scripts:md2md_footnote_filter"
+md2md-internal-link = "pandoc_filter.scripts:md2md_internal_link_filter"
+md2md-math = "pandoc_filter.scripts:md2md_math_filter"
+md2html-anchor-and-internal-link = "pandoc_filter.scripts:md2html_anchor_and_internal_link_filter"
+md2html-figure = "pandoc_filter.scripts:md2html_figure_filter"
+md2html-link-like = "pandoc_filter.scripts:md2html_link_like_filter"
 
 # OR
 [tool.setuptools.packages.find]

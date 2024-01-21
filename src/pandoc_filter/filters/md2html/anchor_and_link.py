@@ -1,11 +1,9 @@
 import re
 import typeguard
-import functools
-import logging
 import panflute as pf
 
 from ...utils import TracingLogger
-from ...utils import get_html_href,sub_html_href,get_html_id,sub_html_id,get_text_hash,check_pandoc_version
+from ...utils import get_html_href,sub_html_href,get_html_id,sub_html_id,get_text_hash
 from ..md2md.internal_link import _decode_internal_link_url
 
 r"""Defination
@@ -21,7 +19,7 @@ In Markdown:
     ...
 """
 
-def _anchor_filter(elem:pf.Element,doc,**kwargs)->None: # Modify In Place:
+def anchor_filter(elem:pf.Element,doc,**kwargs)->None: # Modify In Place:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A filter to normalize anchors when converting markdown to html.
     """
@@ -68,7 +66,7 @@ class _PatchedInternalRawLink:
         self.elem.text = sub_html_href(self.elem.text,f"#{url}")   
         tracing_logger.check_and_log('internal_link',self.elem)
 
-def _internal_link_recorder(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not modify.
+def internal_link_recorder(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not modify.
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A recorder to pre-normalize and record internal links when converting markdown to html.
     Since internal links should match anchors, if we want to normalize internal links better, we should consider global information comprehensively.
@@ -99,7 +97,7 @@ def _internal_link_recorder(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do no
         url,guessed_url_with_num = _url_hash_guess(old_href)
         doc.internal_link_record.append((_PatchedInternalRawLink(elem),url,guessed_url_with_num))
 
-def _link_like_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Link|None: # Repleace
+def link_like_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Link|None: # Repleace
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A filter to process a string that may be like a link. Replace the string with a `Link` element.
     """
@@ -109,30 +107,3 @@ def _link_like_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Link|None: # Repl
         link = pf.Link(elem,url=elem.text)
         tracing_logger.check_and_log('link_like',elem)
         return link
-    
-@typeguard.typechecked
-def _finalize(doc:pf.Doc,**kwargs):
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
-    id_set = set()
-    for k,v in doc.anchor_count.items():
-        for i in range(1,v+1):
-            id_set.add(f"{k}-{i}")
-    for patched_elem,url,guessed_url_with_num in doc.internal_link_record:
-        if f"{url}-1" in id_set:
-            patched_elem.sub(f"{url}-1",tracing_logger)
-        elif guessed_url_with_num in id_set: # None is not in id_set
-            patched_elem.sub(f"{guessed_url_with_num}",tracing_logger)
-        else:
-            tracing_logger.logger.warning(f"{patched_elem.elem}")
-            tracing_logger.logger.warning(f"The internal link `{url}` is invalid and will not be changed because no target header is found.")
-
-def main(doc=None,**kwargs):
-    check_pandoc_version(required_version='3.1.0')
-    tracing_logger = TracingLogger(name='logs/pf_log',level=logging.WARNING)
-    __finalize = functools.partial(_finalize,tracing_logger=tracing_logger,**kwargs)
-    return pf.run_filters(
-        actions= [_anchor_filter,_internal_link_recorder,_link_like_filter],
-        finalize=__finalize,
-        doc=doc,
-        tracing_logger=tracing_logger,
-        **kwargs)

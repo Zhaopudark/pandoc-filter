@@ -4,10 +4,9 @@ import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger
-from ...utils import check_pandoc_version
 
 @typeguard.typechecked
-def _math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
+def math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A filter to process math formula when converting markdown to markdown.
     To realize:
@@ -67,12 +66,3 @@ def _math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
                 text = f"{text}\n{first_label}{first_tag}"
             elem.text = f"\n{text.strip(" \n")}\n"
             tracing_logger.check_and_log('equation',elem)
-
-def main(doc=None,**kwargs):
-    check_pandoc_version(required_version='3.1.0')
-    tracing_logger = TracingLogger(name='logs/pf_log',level=logging.WARNING)
-    return pf.run_filters(
-        actions=[_math_filter],
-        doc=doc,
-        tracing_logger=tracing_logger,
-        **kwargs)

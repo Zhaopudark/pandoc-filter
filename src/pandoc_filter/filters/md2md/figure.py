@@ -8,7 +8,7 @@ from ...utils import TracingLogger,OssHelper
 from ...utils import get_html_src,sub_html_src,check_pandoc_version
 
 @typeguard.typechecked     
-def _figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
+def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A filter to process images of local pictures when converting markdown to markdown.
     Manager local pictures, sync them to Aliyun OSS, and replace the original src with the new one.
@@ -35,19 +35,3 @@ def _figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
             tracing_logger.mark(elem)
             elem.text = sub_html_src(elem.text,new_src)
             tracing_logger.check_and_log('raw_html_img',elem)
-
-def main(doc=None,**kwargs):
-    check_pandoc_version(required_version='3.1.0')
-    oss_endpoint_name = os.environ['OSS_ENDPOINT_NAME']
-    oss_bucket_name = os.environ['OSS_BUCKET_NAME']
-    assert os.environ['OSS_ACCESS_KEY_ID']
-    assert os.environ['OSS_ACCESS_KEY_SECRET']
-
-    oss_helper = OssHelper(oss_endpoint_name,oss_bucket_name)
-    tracing_logger = TracingLogger(name='logs/pf_log',level=logging.WARNING)
-    return pf.run_filters(
-        actions=[_figure_filter],
-        doc=doc,
-        oss_helper=oss_helper,
-        tracing_logger=tracing_logger,
-        **kwargs)

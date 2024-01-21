@@ -4,7 +4,7 @@ import urllib.parse
 import panflute as pf
 
 from ...utils import TracingLogger
-from ...utils import get_html_href,sub_html_href,check_pandoc_version
+from ...utils import get_html_href,sub_html_href
 
 r"""Defination
 In Markdown:
@@ -29,7 +29,7 @@ def _decode_internal_link_url(url:str)->str:
     return f"#{header_mimic.lstrip('# ')}"
 
 @typeguard.typechecked
-def _internal_link_filter(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not modify.
+def internal_link_filter(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not modify.
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A filter to normalize internal links when converting markdown to markdown.
     """
@@ -42,12 +42,3 @@ def _internal_link_filter(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not 
         tracing_logger.mark(elem)
         elem.text = sub_html_href(elem.text,_decode_internal_link_url(old_href))
         tracing_logger.check_and_log('raw_anchor_links',elem)
-
-def main(doc=None,**kwargs):
-    check_pandoc_version(required_version='3.1.0')
-    tracing_logger = TracingLogger(name='logs/pf_log',level=logging.WARNING)
-    return pf.run_filters(
-        actions=[_internal_link_filter],
-        doc=doc,
-        tracing_logger=tracing_logger,
-        **kwargs)

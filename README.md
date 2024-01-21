@@ -56,7 +56,7 @@ Note: The division of filters is just my opinion on code organization, it doesn'
 # Installation
 
 ```
-pip install -i https://pypi.org/simple/ --pre -U pandoc-filter
+pip install -i https://pypi.org/simple/ -U pandoc-filter
 ```
 
 # Usage

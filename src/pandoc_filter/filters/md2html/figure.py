@@ -3,10 +3,9 @@ import logging
 import panflute as pf
 
 from ...utils import TracingLogger
-from ...utils import check_pandoc_version
 
 @typeguard.typechecked     
-def _figure_filter_v1(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
+def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     Deprecated. 
     The best way is to use CSS files to define global styles and use them by `--css <css_files>`,
@@ -59,12 +58,3 @@ def _figure_filter_v1(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Pl
         centered_div = pf.Div(*elem.caption.content,attributes={'style':"color:#858585;"})
         elem.caption = pf.Caption(centered_div)
         tracing_logger.check_and_log('figure',elem)
-
-def main(doc=None,**kwargs):
-    check_pandoc_version(required_version='3.1.0')
-    tracing_logger = TracingLogger(name='logs/pf_log',level=logging.WARNING)
-    return pf.run_filters(
-        actions= [_figure_filter_v1],
-        doc=doc,
-        tracing_logger=tracing_logger,
-        **kwargs)
