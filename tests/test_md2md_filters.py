@@ -60,7 +60,7 @@ def test_md2md_internal_link_filter():
         'gfm',
         '-s',
         '--filter',
-        'md2md-link'
+        'md2md-internal-link'
     ]
     assert subprocess.run(pandoc_command, check=True).returncode == 0
     assert _compare_files(output_path,answer_path)

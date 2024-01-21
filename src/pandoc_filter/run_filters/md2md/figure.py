@@ -1,7 +1,6 @@
 import logging
 import os
 import typeguard
-import urllib.parse
 import pathlib
 import panflute as pf
 

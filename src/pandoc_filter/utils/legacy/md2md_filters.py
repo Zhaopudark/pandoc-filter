@@ -143,4 +143,3 @@ def footnote_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Note|None: # Replea
         elem = pf.Note(pf.Para(pf.Str(pf.stringify(elem.content).strip(" \n"))))
         tracing_logger.check_and_log('footnote',elem)
         return elem
-
