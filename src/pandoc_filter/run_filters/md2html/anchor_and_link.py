@@ -6,7 +6,7 @@ import panflute as pf
 
 from ...utils import TracingLogger
 from ...utils import get_html_href,sub_html_href,get_html_id,sub_html_id,get_text_hash,check_pandoc_version
-from ..md2md.link import _decode_internal_link_url
+from ..md2md.internal_link import _decode_internal_link_url
 
 r"""Defination
 In Markdown:
