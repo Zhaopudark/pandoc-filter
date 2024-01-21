@@ -36,20 +36,9 @@ class OssHelper:
             4. Return the url of the file.
         """
         obj_name = self.get_hashed_file_name(file_path)
-        # local_file_path = self.local_cache_dir/obj_name
-        # if local_file_path.exists():
-        #     return '/'+str(local_file_path.relative_to(self.local_relative_root))
-        # else:
-        #     shutil.copy2(file_path, local_file_path)
-        #     return '/'+str(local_file_path.relative_to(self.local_relative_root))
-        
         if self.bucket.object_exists(obj_name):
             self.logger.info(f"The object {obj_name} has already existed.")
         else:
             self.bucket.put_object_from_file(obj_name, file_path)
             self.logger.info(f"The object {obj_name} has been uploaded.")
         return f"https://{self.domain}/{obj_name}"
-    
-if __name__ == "__main__":
-    oss_helper = OssHelper(endpoint_name='oss-cn-nanjing.aliyuncs.com',bucket_name='raw-blog')
-    print(oss_helper.domain)
