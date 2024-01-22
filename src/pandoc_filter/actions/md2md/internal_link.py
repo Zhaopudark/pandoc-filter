@@ -28,9 +28,9 @@ def _decode_internal_link_url(url:str)->str:
     return f"#{header_mimic.lstrip('# ')}"
 
 @typeguard.typechecked
-def internal_link_filter(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not modify.
+def internal_link_action(elem:pf.Element, doc:pf.Doc,**kwargs)->None: # Do not modify.
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A filter to normalize internal links when converting markdown to markdown.
+    An action to normalize internal links when converting markdown to markdown.
     """
     tracing_logger:TracingLogger = kwargs['tracing_logger']
     if isinstance(elem, pf.Link) and elem.url.startswith('#'):

@@ -16,9 +16,9 @@ In Markdown:
     ...
 """
 
-def anchor_filter(elem:pf.Element,doc,**kwargs)->None: # Modify In Place:
+def anchor_action(elem:pf.Element,doc,**kwargs)->None: # Modify In Place:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A filter to normalize anchors when converting markdown to html.
+    An action to normalize anchors when converting markdown to html.
     """
     tracing_logger:TracingLogger = kwargs['tracing_logger']
     if not(hasattr(doc,'anchor_count') and isinstance(doc.anchor_count,dict)):

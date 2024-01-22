@@ -5,9 +5,9 @@ import panflute as pf
 from ...utils import TracingLogger
 
 @typeguard.typechecked
-def math_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
+def math_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A filter to process math formula when converting markdown to markdown.
+    An action to process math formula when converting markdown to markdown.
     
     To realize:
         - Add `math: true` to metadata when there is math formula.

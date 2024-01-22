@@ -6,9 +6,9 @@ from ...utils import TracingLogger,OssHelper
 from ...utils import get_html_src,sub_html_src
 
 @typeguard.typechecked     
-def figure_filter(elem:pf.Element,doc:pf.Doc,doc_path:pathlib.Path,oss_helper:OssHelper,**kwargs)->None: # Modify In Place
+def figure_action(elem:pf.Element,doc:pf.Doc,doc_path:pathlib.Path,oss_helper:OssHelper,**kwargs)->None: # Modify In Place
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A filter to process images of local pictures when converting markdown to markdown.
+    An action to process images of local pictures when converting markdown to markdown.
     Manager local pictures, sync them to Aliyun OSS, and replace the original src with the new one.
     NOTE
         The argument `doc_path` and `oss_helper` should be given.

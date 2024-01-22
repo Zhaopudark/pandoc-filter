@@ -96,12 +96,8 @@ def test_md2md_figure_filter():
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
     answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    
-    with open(file_path, "r", encoding='utf-8') as f:
-        markdown_content = f.read()
-    doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
-    doc = pandoc_filter.md2md_figure_filter(doc,doc_path=file_path)
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
+    import functools
+    md2md_figure_filter = functools.partial(pandoc_filter.md2md_figure_filter,doc_path=file_path)
+    pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[md2md_figure_filter])
     assert _check_the_same_content(output_path,answer_path)
 

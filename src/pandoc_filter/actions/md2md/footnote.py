@@ -4,9 +4,9 @@ import panflute as pf
 from ...utils import TracingLogger
 
 @typeguard.typechecked
-def footnote_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Note|None: # Repleace
+def footnote_action(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Note|None: # Repleace
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A filter to process footnotes. Remove `\n` in the footnote content.
+    An action to process footnotes. Remove `\n` in the footnote content.
     """
     tracing_logger:TracingLogger = kwargs['tracing_logger']
     if isinstance(elem, pf.Note):

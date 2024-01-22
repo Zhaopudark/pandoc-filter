@@ -5,11 +5,11 @@ import panflute as pf
 from ...utils import TracingLogger
 
 @typeguard.typechecked     
-def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
+def figure_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     Deprecated. 
     The best way is to use CSS files to define global styles and use them by `--css <css_files>`,
-    instead of make a filter here.
+    instead of make an action here.
     So, this method is deprecated.        
     
     When converting markdown to html, Pandoc will generate a `Figure` element for each image,
@@ -42,8 +42,8 @@ def figure_filter(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
         - replace the original `Caption` element with the new one.
     """
     logging.warning("""
-    The figure filter is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
-    See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/run_filters/md2html/figure.py#L9 for more details.
+    The figure action is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
+    See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/action/md2html/figure.py#L8 for more details.
     """)
     tracing_logger:TracingLogger = kwargs['tracing_logger']
     if isinstance(elem, pf.Figure):
