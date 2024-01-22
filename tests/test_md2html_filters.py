@@ -1,7 +1,8 @@
 import difflib
 import pathlib
 import subprocess
-
+import functools
+import pandoc_filter
 def _check_file_path(file_path:str)->pathlib.Path:
     file_path:pathlib.Path = pathlib.Path(file_path)
     assert file_path.exists()
@@ -45,4 +46,19 @@ def test_md2html_anchor_link_filter():
         'md2html-link-like',
     ]
     assert subprocess.run(pandoc_command, check=True).returncode == 0
+    assert _compare_files(output_path,answer_path)
+    
+def test_md2html_anchor_link_filter_pyio():
+    file_path = _check_file_path("./resources/inputs/test_md2html_anchor_and_link.md")
+    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
+    output_path = pathlib.Path(f"./temp/{file_path.stem}.html")
+    answer_path = pathlib.Path(f"./resources/outputs/{file_path.stem}.html")
+    
+    pandoc_filter.run_filters_pyio(
+        file_path,
+        output_path,
+        'markdown','html',
+        [pandoc_filter.md2md_internal_link_filter,
+         pandoc_filter.md2html_anchor_and_internal_link_filter,
+         pandoc_filter.md2html_link_like_filter])
     assert _compare_files(output_path,answer_path)
