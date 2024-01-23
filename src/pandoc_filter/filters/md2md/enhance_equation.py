@@ -4,38 +4,43 @@ import panflute as pf
 
 from ...utils import TracingLogger
 
-@typeguard.typechecked
-def math_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
-    r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    An action to process math formula when converting markdown to markdown.
-    
-    To realize:
-        - Add `math: true` to metadata when there is math formula.
-        - Adapt AMS rule for math formula
-            - Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora
-        - Allow multiple tags, but only take the first one.
-        - Allow multiple labels, but only take the first one.
-        
-    To make equations recognized correctly, content like the following irregular syntax should to be avoided:
-    
-        ```markdown
-        \begin{equation}\tag{33124124}
-        e=mc^2 \\
-        e=mc^2 \\
+r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
+Enhance math equations.
+Specifically, this filter will:
+    - Add `math: true` to metadata when there is math formula.
+    - Adapt AMS rule for math formula.
+        - Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora.
+    - Allow multiple tags, but only take the first one.
+    - Allow multiple labels, but only take the first one.
+"""
 
-        \begin{aligned}
-        \\
-        \\
-        \\
-        e=mc^2 \\
-        e=mc^2 \\
-        \end{aligned}
-        \end{equation}
-        ```
+def _prepare_enhance_equation(doc:pf.Doc)->None:
+    doc.equations_count = 0
+
+@typeguard.typechecked
+def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
+    r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
+    An action to enhance math equations.
+    [modify elements in place]
+    
+    To make equations recognized correctly, 
+        content like the following irregular syntax should to be avoided (unnecessary line breaks):
+    ```markdown
+    \begin{equation}\tag{33124124}
+    e=mc^2 \\
+    e=mc^2 \\
+
+    \begin{aligned}
+    \\
+    \\
+    \\
+    e=mc^2 \\
+    e=mc^2 \\
+    \end{aligned}
+    \end{equation}
+    ```
     """
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
-    if not(hasattr(doc,'equations_count') and isinstance(doc.equations_count,int) and (doc.equations_count >= 0)):
-        doc.equations_count = 0
+    tracing_logger = TracingLogger()
     if isinstance(elem, pf.elements.Math):
         doc.metadata['math'] = True
         if elem.format == "DisplayMath":
@@ -64,3 +69,9 @@ def math_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place
                 text = f"{text}\n{first_label}{first_tag}"
             elem.text = f"\n{text.strip(" \n")}\n"
             tracing_logger.check_and_log('equation',elem)
+
+def _finalize_enhance_equation(doc:pf.Doc)->None:
+    del doc.equations_count
+
+def enhance_equation_filter(doc:pf.Doc=None):
+    return pf.run_filters(actions=[_enhance_equation],prepare=_prepare_enhance_equation,finalize=_finalize_enhance_equation,doc=doc)

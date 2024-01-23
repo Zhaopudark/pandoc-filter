@@ -1,6 +1,6 @@
 import pathlib
 import logging
-from .logging_helper import logger_factory
+from .logging_helper import _logger_factory
 from .hash_helper import get_text_file_hash,get_raw_file_hash
 import oss2
 from oss2.credentials import EnvironmentVariableCredentialsProvider
@@ -9,7 +9,7 @@ from oss2.models import BucketReferer
 class OssHelper:
     
     def __init__(self,endpoint_name:str,bucket_name:str) -> None:
-        self.logger = logger_factory('logs/oss_log',logging.INFO)
+        self.logger = _logger_factory('logs/oss_log',logging.INFO)
         # self.local_cache_dir = pathlib.Path(local_cache_dir)
         # self.local_relative_root = pathlib.Path(local_relative_root)
         # 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET。

@@ -39,11 +39,11 @@ def test_md2html_anchor_link_filter():
         'html',
         '-s',
         '--filter',
-        'md2md-internal-link',
+        'md2md-norm-internal-link-filter',
         '--filter',
-        'md2html-anchor-and-internal-link',
+        'md2html-hash-anchor-and-internal-link-filter',
         '--filter',
-        'md2html-link-like',
+        'md2html-enhance-link-like-filter',
     ]
     assert subprocess.run(pandoc_command, check=True).returncode == 0
     assert _compare_files(output_path,answer_path)
@@ -58,7 +58,7 @@ def test_md2html_anchor_link_filter_pyio():
         file_path,
         output_path,
         'markdown','html',
-        [pandoc_filter.md2md_internal_link_filter,
-         pandoc_filter.md2html_anchor_and_internal_link_filter,
-         pandoc_filter.md2html_link_like_filter])
+        [pandoc_filter.md2md_norm_internal_link_filter,
+         pandoc_filter.md2html_hash_anchor_and_internal_link_filter,
+         pandoc_filter.md2html_enhance_link_like_filter])
     assert _compare_files(output_path,answer_path)

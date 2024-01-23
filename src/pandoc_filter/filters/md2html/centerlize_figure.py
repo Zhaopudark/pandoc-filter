@@ -4,10 +4,14 @@ import panflute as pf
 
 from ...utils import TracingLogger
 
-@typeguard.typechecked     
-def figure_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
-    r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    Deprecated. 
+r"""A pandoc filter that mainly for converting `markdown` to `html`.
+Centerlize the `figure` element by setting inline styles.
+
+Specifically:
+    set `figure` attribute to `text-align:center;`
+    set `figure`'s `caption` attribute to `color:#858585;`
+ 
+Deprecated.
     The best way is to use CSS files to define global styles and use them by `--css <css_files>`,
     instead of make an action here.
     So, this method is deprecated.        
@@ -40,12 +44,18 @@ def figure_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
         - new a `Caption` element, which includes a new `Div` element that contains the original `alt_text`
         - add `color:#858585;` to the `style` attribute of the `Div` element
         - replace the original `Caption` element with the new one.
+"""
+
+def _centerlize_figure(elem:pf.Element,doc:pf.Doc)->None:
+    r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
+    An `action` function to centerlize the `Figure` element.
+    [modify elements in place]
     """
     logging.warning("""
-    The figure action is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
-    See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/action/md2html/figure.py#L8 for more details.
+    The `centerlize_figure` filter is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
+    See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/filters/md2html/centerlize_figure.py#L13 for more details.
     """)
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
+    tracing_logger = TracingLogger()
     if isinstance(elem, pf.Figure):
         tracing_logger.mark(elem)
         for img in elem.content:
@@ -58,3 +68,6 @@ def figure_action(elem:pf.Element,doc:pf.Doc,**kwargs)->None: # Modify In Place:
         centered_div = pf.Div(*elem.caption.content,attributes={'style':"color:#858585;"})
         elem.caption = pf.Caption(centered_div)
         tracing_logger.check_and_log('figure',elem)
+
+def centerlize_figure_filter(doc:pf.Doc=None):
+    return pf.run_filters(actions= [_centerlize_figure],doc=doc)
