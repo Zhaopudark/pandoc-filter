@@ -5,53 +5,34 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pandoc-filter?logo=python)](https://badge.fury.io/py/pandoc-filter)
 [![PyPI - Version](https://img.shields.io/pypi/v/pandoc-filter?logo=pypi)](https://pypi.org/project/pandoc-filter)
 [![DOI](https://zenodo.org/badge/741871139.svg)](https://zenodo.org/doi/10.5281/zenodo.10528322)
-[![GitHub License](https://img.shields.io/github/license/Zhaopudark/pandoc-filter)](https://github.com/Zhaopudark/pandoc-filter?tab=GPL-3.0-1-ov-file#readme)</samp>
-
+[![GitHub License](https://img.shields.io/github/license/Zhaopudark/pandoc-filter)](https://github.com/Zhaopudark/pandoc-filter?tab=GPL-3.0-1-ov-file#readme)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/test.yml?label=Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/test.yml)
+
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/build_and_deploy.yml?event=release&label=Build%20and%20Deploy)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/build_and_deploy.yml)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Zhaopudark/pandoc-filter/post_deploy_test.yml?event=workflow_run&label=End%20Test)](https://github.com/Zhaopudark/pandoc-filter/actions/workflows/post_deploy_test.yml)
 [![codecov](https://codecov.io/gh/Zhaopudark/pandoc-filter/graph/badge.svg?token=lb3cLoh3e5)](https://codecov.io/gh/Zhaopudark/pandoc-filter)
+
+</samp>
 </strong>
 </div>
 
 # pandoc-filter
 
-This project is a customized [pandoc](https://pandoc.org) filters set that can be used to generate a useful [pandoc python filter](https://pandoc.org/filters.html). Recently, it only supports some features of `markdown-to-markdown` (normalizing markdown files) and `markdown-to-html` (generating web pages). But more features will be added later as my scenario and the user's feedback.
+This project supports some useful and highly customized [pandoc python filters](https://pandoc.org/filters.html) that based on [panflute](http://scorreia.com/software/panflute/). They can meet some special requests when using [pandoc](https://pandoc.org) to
+
+- [x] convert files from `markdown` to `gfm`
+- [x] convert files from `markdown` to `html`
+- [ ] convert other formats (In the future)
+
+Please see [Main Features](#main-features) for the concrete features.
+
+Please see [Samples](#Samples) for the recommend usage.
 
 # Backgrounds
 
 I'm used to taking notes with markdown and clean markdown syntax. Then, I usually post these notes on [my site](https://little-train.com/) as web pages. So, I need to convert markdown to html. There were many tools to achieve the converting and  I chose [pandoc](https://pandoc.org) at last due to its powerful features.
 
-But sometimes, I need many more features when converting from `md` to `html`, where pandoc filters are needed. I have written some pandoc python filters with some advanced features by [panflute](https://github.com/sergiocorreia/panflute) and many other tools. And now, I think it's time to gather these filters into a combined toolset as this project. 
-
-Please see [Main Features](#main-features) for the concrete features.
-
-Please see [Usage](#usage) for the recommend usage.
-
-## Main Features
-
-Mainly for converting markdown to html, I divided this process into two processes, i.e., `markdown-to-markdown` (normalizing markdown files) and `markdown-to-html` (generating web pages).
-
-- `markdown-to-markdown` supports:
-  - [x] math filter
-    - [x]  Adapt AMS rule for math formula. (Auto numbering markdown formulations within `\begin{equation} \end{equation}`, as in Typora)
-    - [x] Allow multiple tags, but only take the first one.
-    - [x] Allow multiple labels, but only take the first one.
-  - [x] figure filter
-    - [x] Manager local pictures, sync them to `Aliyun OSS`, and replace the original `src` with the new one.
-  - [x] footnote filter
-    - [x] Normalize footnotes. (Remove `\n` in the footnote content.)
-  - [x] internal link filter
-    - [x] Normalize internal links with a very special rule. (Decode the URL-encoded links)
-- `markdown-to-html`
-  - [x] anchor filter
-    - [x] Normalize anchors with a very special rule. (replace its `id` with its `hash` as [Notion](https://www.notion.so/) does, and numbering it with `-x`)
-  - [x] internal link recorder and filter
-    - [x] Globally manage and normalize internal links. (Make it match the behavior of `anchor filter`)
-  - [x] link like filter
-    - [x] Process a string that may be like a link. (Make it a link)
-
-Note: The division of filters is just my opinion on code organization, it doesn't mean they can only be used for a certain class. As long as the user understands the effect of the filter, all filters are not restricted to use in any scenario. So, it is recommended to read a filter's [source codes](https://github.com/Zhaopudark/pandoc-filter) directly when using it.
+But sometimes, I need many more features when converting from `markdown` to `html`, where pandoc filters are needed. I have written some pandoc python filters with some advanced features by [panflute](https://github.com/sergiocorreia/panflute) and many other tools. And now, I think it's time to gather these filters into a combined toolset as this project. 
 
 # Installation
 
@@ -59,7 +40,49 @@ Note: The division of filters is just my opinion on code organization, it doesn'
 pip install -i https://pypi.org/simple/ -U pandoc-filter
 ```
 
-# Usage
+# Main Features
+
+There are 2 support ways:
+
+-  **command-line-mode**: use non-parametric filters in command-lines with [pandoc](https://pandoc.org).
+- **python-mode**: use `run_filters_pyio`  function in python.
+
+For an example, `md2md_enhance_equation_filter` in [enhance_equation.py](https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/filters/md2md/enhance_equation.py) is a filter function as [panflute-user-guide ](http://scorreia.com/software/panflute/guide.html). And its registered command-line script is `md2md-enhance-equation-filter`. 
+
+- So, after the installation, one can use it in **command-line-mode**:
+
+  ```powershell
+  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-enhance-equation-filter
+  ```
+
+- Or, use in **python mode**
+
+  ```python
+  import pandoc_filter
+  file_path = pathlib.Path("./input.md")
+  output_path = pathlib.Path("./output.md")
+  pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_enhance_equation_filter])
+  ```
+
+All filters with corresponding  registered command-line scripts and the specific features are recorded in the following table:
+
+> [!NOTE]
+>
+> Since some filters need additional arguments, not all filter functions support **command-line-mode**, even though they all support **python-mode** indeed.
+>
+> All filters support cascaded invoking.
+
+| Filter Functions                             | Command Line                                 | Additional Arguments | Features                                                     |
+| -------------------------------------------- | -------------------------------------------- | -------------------- | ------------------------------------------------------------ |
+| md2md_enhance_equation_filter                | md2md-enhance-equation-filter                | -                    | Enhance math equations. Specifically, this filter will: Add `math: true` to metadata when there is math formula.  Adapt AMS rule for math formula.  Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora. Allow multiple tags, but only take the first one. Allow multiple labels, but only take the first one. |
+| md2md_norm_footnote_filter                   | md2md-norm-footnote-filter                   | -                    | Normalize the footnotes. Remove unnecessary `\n` in the footnote content. |
+| md2md_norm_internal_link_filter              | md2md-norm-internal-link-filter              | -                    | Normalize internal links' URLs. Decode the URL if it is URL-encoded. |
+| md2md_upload_figure_to_aliyun_filter         | -                                            | doc_path             | Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one. The following environment variables should be given in advance:  `$Env:OSS_ENDPOINT_NAME`, `$Env:OSS_BUCKET_NAME`,  `$Env:OSS_ACCESS_KEY_ID` , and `$Env:OSS_ACCESS_KEY_SECRET`. The doc_path should be given in advance. |
+| md2html_centralize_figure_filter             | md2html-centralize-figure-filter             | -                    | ==Deprecated==                                               |
+| md2html_enhance_link_like_filter             | md2html-enhance-link-like-filter             | -                    | Enhance the link-like string to a `link` element.            |
+| md2html_hash_anchor_and_internal_link_filter | md2html-hash-anchor-and-internal-link-filter | -                    | Hash both the anchor's `id` and the internal-link's `url ` simultaneously. |
+
+# Samples
 
 Here are 2 basic examples
 
@@ -85,29 +108,10 @@ Normalize internal link
 
 - Coding:
 
-  ```python
-  import pathlib
-  import logging
-  import panflute as pf
-  
-  from pandoc_filter.utils import TracingLogger
-  from pandoc_filter.md2md_filters import internal_link_filter
-  
-  pathlib.Path("./logs").mkdir(parents=True, exist_ok=True)
-  tracing_logger = TracingLogger(name="./logs/pf_log",level=logging.INFO)
-  
-  file_path = pathlib.Path("./input.md")
-  with open(file_path,'r',encoding='utf-8') as f:
-      markdown_content = f.read()
-  output_path = pathlib.Path("./output.md")
-  
-  doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
-  doc = pf.run_filter(action=internal_link_filter,doc=doc,tracing_logger=tracing_logger)
-  
-  with open(output_path, "w", encoding="utf-8") as f:
-      f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
+  ```PowerShell
+  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-norm-internal-link-filter
   ```
-
+  
 - Outputs(`./output.md`): refer to [`test_md2md_internal_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2md_internal_link.md).
 
   ```markdown
@@ -149,29 +153,10 @@ Normalize internal link
 
 - Coding:
 
-  ```python
-  import pathlib
-  import logging
-  import panflute as pf
-  
-  from pandoc_filter.utils import TracingLogger
-  from pandoc_filter.md2md_filters import footnote_filter
-  
-  pathlib.Path("./logs").mkdir(parents=True, exist_ok=True)
-  tracing_logger = TracingLogger(name="./logs/pf_log",level=logging.INFO)
-  
-  file_path = pathlib.Path("./input.md")
-  with open(file_path,'r',encoding='utf-8') as f:
-      markdown_content = f.read()
-  output_path = pathlib.Path("./output.md")
-  
-  doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
-  doc = pf.run_filter(action=footnote_filter,doc=doc,tracing_logger=tracing_logger)
-  
-  with open(output_path, "w", encoding="utf-8") as f:
-      f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
+  ```powershell
+  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-norm-footnote-filter
   ```
-
+  
 - Outputs(`./output.md`): refer to [`test_md2md_footnote.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outpts/test_md2md_footnote.md).
 
   ```markdown
@@ -218,30 +203,10 @@ Normalize internal link
 
 - Coding:
 
-  ```python
-  import pathlib
-  import logging
-  import panflute as pf
-  
-  from pandoc_filter.utils import TracingLogger
-  from pandoc_filter.md2md_filters import math_filter
-  
-  
-  pathlib.Path("./logs").mkdir(parents=True, exist_ok=True)
-  tracing_logger = TracingLogger(name="./logs/pf_log",level=logging.INFO)
-  
-  file_path = pathlib.Path("./input.md")
-  with open(file_path,'r',encoding='utf-8') as f:
-      markdown_content = f.read()
-  output_path = pathlib.Path("./output.md")
-  
-  doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
-  doc = pf.run_filter(action=math_filter,doc=doc,tracing_logger=tracing_logger)
-  
-  with open(output_path, "w", encoding="utf-8") as f:
-      f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
+  ```PowerShell
+  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-enhance-equation-filter
   ```
-
+  
 - Outputs(`./output.md`): refer to [`test_md2md_math.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2md_math.md).
 
   ```markdown
@@ -295,37 +260,16 @@ Normalize internal link
 - Coding:
 
   ```python
-  import pathlib
-  import logging
-  import panflute as pf
+  import pandoc_filter
   
-  from pandoc_filter.utils import TracingLogger
-  from pandoc_filter.utils import OssHelper
-  from pandoc_filter.md2md_filters import figure_filter
-  
-  pathlib.Path("./logs").mkdir(parents=True, exist_ok=True)
-  tracing_logger = TracingLogger(name="./logs/pf_log",level=logging.INFO)
-  
-  file_path = pathlib.Path("./input.md")
-  with open(file_path,'r',encoding='utf-8') as f:
-      markdown_content = f.read()
-  output_path = pathlib.Path("./output.md")
-  
-  import os
-  oss_endpoint_name = os.environ['OSS_ENDPOINT_NAME']
-  oss_bucket_name = os.environ['OSS_BUCKET_NAME']
-  assert os.environ['OSS_ACCESS_KEY_ID']
-  assert os.environ['OSS_ACCESS_KEY_SECRET']
-  oss_helper = OssHelper(oss_endpoint_name,oss_bucket_name)
-  
-  doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
-  doc.doc_path = file_path
-  doc = pf.run_filter(action=figure_filter,doc=doc,tracing_logger=tracing_logger,oss_helper=oss_helper)
-  
-  with open(output_path, "w", encoding="utf-8") as f:
-      f.write(pf.convert_text(doc,input_format='panflute',output_format='gfm',standalone=True))
+  file_path = _check_file_path("./input.md")
+  output_path = pathlib.Path(f"./output.md")
+  answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
+  pandoc_filter.run_filters_pyio(
+      file_path,output_path,'markdown','gfm',
+      [pandoc_filter.md2md_upload_figure_to_aliyun_filter],doc_path=file_path)
   ```
-
+  
 - Outputs(`./output.md`): refer to [`test_md2md_figure.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2md_figure.md).
 
   ```markdown
@@ -354,49 +298,10 @@ Normalize internal link
 
 - Coding:
 
-  ```python
-  import pathlib
-  import logging
-  import functools
-  import panflute as pf
-  
-  from pandoc_filter.utils import TracingLogger
-  from pandoc_filter.md2html_filters import anchor_filter,internal_link_recorder,link_like_filter
-  from pandoc_filter.md2md_filters import internal_link_filter
-  
-  pathlib.Path(f"./logs").mkdir(parents=True, exist_ok=True)
-  tracing_logger = TracingLogger(name="./logs/pf_log",level=logging.INFO)
-  
-  def finalize(doc:pf.Doc,**kwargs):
-      tracing_logger = kwargs['tracing_logger']
-      id_set = set()
-      for k,v in doc.anchor_count.items():
-          for i in range(1,v+1):
-              id_set.add(f"{k}-{i}")
-      for patched_elem,url,guessed_url_with_num in doc.internal_link_record:
-          if f"{url}-1" in id_set:
-              patched_elem.sub(f"{url}-1",tracing_logger)
-          elif guessed_url_with_num in id_set: # None is not in id_set
-              patched_elem.sub(f"{guessed_url_with_num}",tracing_logger)
-          else:
-              tracing_logger.logger.warning(f"{patched_elem.elem}")
-              tracing_logger.logger.warning(f"The internal link `{url}` is invalid and will not be changed because no target header is found.")
-  
-  file_path = pathlib.Path("./input.md")
-  with open(file_path,'r',encoding='utf-8') as f:
-      markdown_content = f.read()
-  output_path = pathlib.Path("./output.html")
-  
-  doc = pf.convert_text(markdown_content,input_format='markdown',output_format='panflute',standalone=True)
-  doc = pf.run_filter(action=internal_link_filter,doc=doc,tracing_logger=tracing_logger)
-  
-  _finalize = functools.partial(finalize,tracing_logger=tracing_logger)
-  doc = pf.run_filters(actions=[anchor_filter,internal_link_recorder,link_like_filter],doc=doc,finalize=_finalize,tracing_logger=tracing_logger)
-  
-  with open(output_path, "w", encoding="utf-8") as f:
-      f.write(pf.convert_text(doc,input_format='panflute',output_format='html',standalone=True))
+  ```powershell
+  pandoc ./input.md -o ./output.html -f markdown -t html -s --filter md2md-norm-internal-link-filter --filtermd2html-hash-anchor-and-internal-link-filter --filter md2html-enhance-link-like-filter
   ```
-
+  
 - Outputs(`./output.html`):
 
   Refer to [`test_md2html_anchor_and_link.html`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2html_anchor_and_link.html).

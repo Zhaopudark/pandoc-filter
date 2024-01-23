@@ -9,7 +9,7 @@ from ...utils import TracingLogger,OssHelper
 from ...utils import get_html_src,sub_html_src
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
-Auto upload local pictures to Aliyun OSS. Replace the original src with the new one.
+Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one.
 
 NOTE:
     The following environment variables should be given in advance:

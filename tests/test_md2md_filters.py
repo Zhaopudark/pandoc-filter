@@ -27,7 +27,7 @@ def _check_the_same_content(file1_path, file2_path):
             logging.warning(line)
         return False
 
-def test_md2md_footnote_filter():
+def test_md2md_norm_footnote_filter():
     file_path = _check_file_path("./resources/inputs/test_md2md_footnote.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
@@ -48,7 +48,7 @@ def test_md2md_footnote_filter():
     assert subprocess.run(pandoc_command, check=True).returncode == 0
     assert _check_the_same_content(output_path,answer_path)
 
-def test_md2md_footnote_filter_pyio():
+def test_md2md_norm_footnote_filter_pyio():
     file_path = _check_file_path("./resources/inputs/test_md2md_footnote.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
@@ -56,7 +56,7 @@ def test_md2md_footnote_filter_pyio():
     pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_norm_footnote_filter])
     assert _check_the_same_content(output_path,answer_path)
 
-def test_md2md_internal_link_filter():
+def test_md2md_norm_internal_link_filter():
     file_path = _check_file_path("./resources/inputs/test_md2md_internal_link.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
@@ -77,7 +77,7 @@ def test_md2md_internal_link_filter():
     assert subprocess.run(pandoc_command, check=True).returncode == 0
     assert _check_the_same_content(output_path,answer_path)
 
-def test_md2md_internal_link_filter_pyio():
+def test_md2md_norm_internal_link_filter_pyio():
     file_path = _check_file_path("./resources/inputs/test_md2md_internal_link.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
@@ -86,7 +86,7 @@ def test_md2md_internal_link_filter_pyio():
     assert _check_the_same_content(output_path,answer_path)
 
 
-def test_md2md_math_filter():
+def test_md2md_enhance_equation_filter():
     file_path = _check_file_path("./resources/inputs/test_md2md_math.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
@@ -107,7 +107,7 @@ def test_md2md_math_filter():
     assert subprocess.run(pandoc_command, check=True).returncode == 0
     assert _check_the_same_content(output_path,answer_path)
 
-def test_md2md_math_filter_pyio():
+def test_md2md_enhance_equation_filter_pyio():
     file_path = _check_file_path("./resources/inputs/test_md2md_math.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
@@ -115,7 +115,7 @@ def test_md2md_math_filter_pyio():
     pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_enhance_equation_filter])
     assert _check_the_same_content(output_path,answer_path)
     
-def test_md2md_figure_filter():
+def test_md2md_upload_figure_to_aliyun_filter():
     file_path = _check_file_path("./resources/inputs/test_md2md_figure.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")

@@ -46,7 +46,7 @@ dependencies = [
 md2md-enhance-equation-filter = "pandoc_filter:md2md_enhance_equation_filter"
 md2md-norm-footnote-filter = "pandoc_filter:md2md_norm_footnote_filter"
 md2md-norm-internal-link-filter = "pandoc_filter:md2md_norm_internal_link_filter"
-md2html-centerlize-figure-filter = "pandoc_filter:md2html_centerlize_figure_filter"
+md2html-centralize-figure-filter = "pandoc_filter:md2html_centralize_figure_filter"
 md2html-enhance-link-like-filter = "pandoc_filter:md2html_enhance_link_like_filter"
 md2html-hash-anchor-and-internal-link-filter = "pandoc_filter:md2html_hash_anchor_and_internal_link_filter"
 

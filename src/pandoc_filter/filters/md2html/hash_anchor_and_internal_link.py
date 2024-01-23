@@ -9,7 +9,7 @@ from ..md2md.norm_internal_link import _decode_internal_link_url
 
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
-Hash both the anchor's id and the internal-link's url simultaneously.
+Hash both the anchor's `id` and the internal-link's `url` simultaneously.
 
 Anchor:
     An anchor represents a section of a document.
@@ -60,7 +60,7 @@ def _prepare_hash_anchor_and_internal_link(doc:pf.Doc)->pf.Doc:
 
 def _hash_anchor_id(elem:pf.Element,doc:pf.Doc)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    An `action` function to normalize any anchor's id to its hash.
+    An `action` function to normalize any anchor's `id` to its hash.
     [modify elements in place]
     """
     tracing_logger = TracingLogger()
@@ -106,7 +106,7 @@ class _PatchedInternalRawLink:
 
 def _internal_link_recorder(elem:pf.Element,doc:pf.Doc)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    A action to pre-normalize and record internal links's url.
+    A action to pre-normalize and record internal links's `url`.
     [modify nothing]
     """    
     def _url_hash_guess(text:str)->str:

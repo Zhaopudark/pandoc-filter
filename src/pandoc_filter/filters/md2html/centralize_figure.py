@@ -5,7 +5,7 @@ import panflute as pf
 from ...utils import TracingLogger
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
-Centerlize the `figure` element by setting inline styles.
+Centralize the `figure` element by setting inline styles.
 
 Specifically:
     set `figure` attribute to `text-align:center;`
@@ -46,14 +46,14 @@ Deprecated.
         - replace the original `Caption` element with the new one.
 """
 
-def _centerlize_figure(elem:pf.Element,doc:pf.Doc)->None:
+def _centralize_figure(elem:pf.Element,doc:pf.Doc)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
-    An `action` function to centerlize the `Figure` element.
+    An `action` function to centralize the `Figure` element.
     [modify elements in place]
     """
     logging.warning("""
-    The `centerlize_figure` filter is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
-    See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/filters/md2html/centerlize_figure.py#L13 for more details.
+    The `centralize_figure` filter is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
+    See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/filters/md2html/centralize_figure.py#L13 for more details.
     """)
     tracing_logger = TracingLogger()
     if isinstance(elem, pf.Figure):
@@ -69,5 +69,5 @@ def _centerlize_figure(elem:pf.Element,doc:pf.Doc)->None:
         elem.caption = pf.Caption(centered_div)
         tracing_logger.check_and_log('figure',elem)
 
-def centerlize_figure_filter(doc:pf.Doc=None):
-    return pf.run_filters(actions= [_centerlize_figure],doc=doc)
+def centralize_figure_filter(doc:pf.Doc=None):
+    return pf.run_filters(actions= [_centralize_figure],doc=doc)
