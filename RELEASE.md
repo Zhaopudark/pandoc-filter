@@ -1,7 +1,10 @@
 # Pandoc-Filter 0.1.0
 
 ## Release 0.1.0b1
-Modify some helping scripts.
+- Simplely APIs.
+- Modify some helping scripts.
+- Support command-line mode.
+
 ## Release 0.1.0b0
 Begin to use semantic version control formally. For this project:
 - We consider CI tests as alpha tests. So there is no alpha release.
