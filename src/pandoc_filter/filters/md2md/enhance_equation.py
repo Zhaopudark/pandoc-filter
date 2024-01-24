@@ -2,7 +2,7 @@ import re
 import typeguard
 import panflute as pf
 
-from ...utils import TracingLogger,RuntimeStatusDict
+from ...utils import TracingLogger,DocRuntimeDict
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Enhance math equations.
@@ -13,10 +13,10 @@ Specifically, this filter will:
     - Allow multiple labels, but only take the first one.
 """
 
-def _prepare_enhance_equation(doc:pf.Doc)->None:
-    doc.runtime_status_dict = RuntimeStatusDict(
-        {'math':False,
-        'equations_count':0})
+def _prepare_enhance_equation(doc:pf.Doc):
+    doc.runtime_dict = DocRuntimeDict(
+        {'equations_count':0,
+        'math':False})
 
 @typeguard.typechecked
 def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
@@ -43,7 +43,7 @@ def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
     """
     tracing_logger = TracingLogger()
     if isinstance(elem, pf.elements.Math):
-        doc.runtime_status_dict.lazy_update(key='math',value=True)
+        doc.runtime_dict['math'] = True
         if elem.format == "DisplayMath":
             tracing_logger.mark(elem)
             text = elem.text
@@ -64,8 +64,8 @@ def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
                 if first_tag != '':
                     text = f"\\begin{{equation}}{first_label}{first_tag}\n{text.strip(" \n")}\n\\end{{equation}}"
                 else:
-                    doc.runtime_status_dict['equations_count'] += 1
-                    text = f"\\begin{{equation}}{first_label}\\tag{{{doc.runtime_status_dict['equations_count']}}}\n{text.strip(" \n")}\n\\end{{equation}}"
+                    doc.runtime_dict['equations_count'] += 1
+                    text = f"\\begin{{equation}}{first_label}\\tag{{{doc.runtime_dict['equations_count']}}}\n{text.strip(" \n")}\n\\end{{equation}}"
             else:
                 text = f"{text}\n{first_label}{first_tag}"
             elem.text = f"\n{text.strip(" \n")}\n"

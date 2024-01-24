@@ -5,7 +5,7 @@ import pathlib
 import typeguard
 import panflute as pf
 
-from ...utils import TracingLogger,OssHelper,RuntimeStatusDict
+from ...utils import TracingLogger,OssHelper,DocRuntimeDict
 from ...utils import get_html_src,sub_html_src
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
@@ -27,7 +27,7 @@ def _prepare_upload_figure_to_aliyun(doc:pf.Doc,*,doc_path:pathlib.Path)->None:
     assert os.environ['OSS_BUCKET_NAME'], "OSS_BUCKET_NAME is not given in environment variables."
     assert os.environ['OSS_ACCESS_KEY_ID'], "OSS_ACCESS_KEY_ID is not given in environment variables."
     assert os.environ['OSS_ACCESS_KEY_SECRET'], "OSS_ACCESS_KEY_SECRET is not given in environment variables."
-    doc.runtime_status_dict = RuntimeStatusDict(
+    doc.runtime_dict = DocRuntimeDict(
         {'doc_path':doc_path,
          'oss_helper':OssHelper(os.environ['OSS_ENDPOINT_NAME'],os.environ['OSS_BUCKET_NAME'])
          })
@@ -38,8 +38,8 @@ def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc)->None:
     [modify elements in place]
     """
     tracing_logger = TracingLogger()
-    oss_helper: OssHelper = doc.runtime_status_dict['oss_helper']
-    doc_path: pathlib.Path = doc.runtime_status_dict['doc_path']
+    oss_helper: OssHelper = doc.runtime_dict['oss_helper']
+    doc_path: pathlib.Path = doc.runtime_dict['doc_path']
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
         new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
         tracing_logger.mark(elem)

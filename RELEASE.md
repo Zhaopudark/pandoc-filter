@@ -1,5 +1,6 @@
 # Pandoc-Filter 0.2.1
 ## Release 0.2.1
+Symplify `runtime_status_dict` to `runtime_dict`.
 
 # Pandoc-Filter 0.2.0
 ## Release 0.2.0

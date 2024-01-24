@@ -64,7 +64,7 @@ For an example, `md2md_enhance_equation_filter` in [enhance_equation.py](https:/
   pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_enhance_equation_filter])
   ```
 
-**Runtime status** can be recorded. In **python mode**, any filter function will return a proposed panflute `Doc`. Some filter functions will add an instance attribute dict `runtime_status_dict` to the returned `Doc`, as a record for **runtime status**, which may be very useful for advanced users.  For an example,  `md2md_enhance_equation_filter`, will add an instance attribute dict `runtime_status_dict` to the returned `Doc`, which may contain a mapping `{'math':True}` if there is any math element in the `Doc`.
+**Runtime status** can be recorded. In **python mode**, any filter function will return a proposed panflute `Doc`. Some filter functions will add an instance attribute dict `runtime_dict` to the returned `Doc`, as a record for **runtime status**, which may be very useful for advanced users.  For an example,  `md2md_enhance_equation_filter`, will add an instance attribute dict `runtime_dict` to the returned `Doc`, which may contain a mapping `{'math':True}` if there is any math element in the `Doc`.
 
 All filters with corresponding  registered command-line scripts, the specific features, and the recorded **runtime status** are recorded in the following table:
 
@@ -74,7 +74,7 @@ All filters with corresponding  registered command-line scripts, the specific fe
 >
 > All filters support cascaded invoking.
 
-| Filter Functions                             | Command Line                                 | Additional Arguments | Features                                                     | Runtime status `doc.runtime_status_dict`                     |
+| Filter Functions                             | Command Line                                 | Additional Arguments | Features                                                     | Runtime status (`doc.runtime_dict`)                          |
 | -------------------------------------------- | -------------------------------------------- | -------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ |
 | md2md_enhance_equation_filter                | md2md-enhance-equation-filter                | -                    | Enhance math equations. Specifically, this filter will:  Adapt AMS rule for math formula.  Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora. Allow multiple tags, but only take the first one. Allow multiple labels, but only take the first one. | {'math':< bool >,'equations_count':<some_number>}            |
 | md2md_norm_footnote_filter                   | md2md-norm-footnote-filter                   | -                    | Normalize the footnotes. Remove unnecessary `\n` in the footnote content. | -                                                            |
