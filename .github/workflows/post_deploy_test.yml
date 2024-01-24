@@ -1,7 +1,6 @@
 name: Post Deploy Test
 
 on:
-  workflow_dispatch:
   workflow_run:
     workflows: ["Build and Deploy"]
     types:
