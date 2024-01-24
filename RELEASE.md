@@ -1,6 +1,7 @@
+# Pandoc-Filter 0.2.1
+## Release 0.2.1
 
 # Pandoc-Filter 0.2.0
-
 ## Release 0.2.0
 - Release 0.2.0.
 
@@ -8,12 +9,11 @@
 - Add runtime status 
 
 ## Release 0.2.0b0
-- Simplely APIs.
+- Simplify APIs.
 - Modify some helping scripts.
 - Support command-line mode.
 
 # Pandoc-Filter 0.1.0
-
 ## Release 0.1.0b1
 Modify some helping scripts.
 
