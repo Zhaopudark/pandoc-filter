@@ -34,12 +34,14 @@ def _decode_internal_link_url(url:str)->str:
     header_mimic = pf.convert_text(f"# {decoded_url}",input_format='markdown',output_format='gfm',standalone=True)
     return f"#{header_mimic.lstrip('# ')}"
 
-def _norm_internal_link(elem:pf.Element, doc:pf.Doc)->None:
+def _norm_internal_link(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to normalize any internal link's url. Decode if it is URL-encoded.
     [modify elements in place]
     """
-    tracing_logger = TracingLogger()
+    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
+    tracing_logger:TracingLogger = kwargs['tracing_logger']
+    
     if isinstance(elem, pf.Link) and elem.url.startswith('#'):
         tracing_logger.mark(elem)       
         elem.url = _decode_internal_link_url(elem.url)
@@ -49,5 +51,5 @@ def _norm_internal_link(elem:pf.Element, doc:pf.Doc)->None:
         elem.text = sub_html_href(elem.text,_decode_internal_link_url(old_href))
         tracing_logger.check_and_log('raw_anchor_links',elem)
 
-def norm_internal_link_filter(doc:pf.Doc=None):
-    return pf.run_filters(actions=[_norm_internal_link],doc=doc)
+def norm_internal_link_filter(doc:pf.Doc=None,**kwargs):
+    return pf.run_filters(actions=[_norm_internal_link],doc=doc,tracing_logger=TracingLogger(),**kwargs)

@@ -7,7 +7,6 @@ from oss2.credentials import EnvironmentVariableCredentialsProvider
 from oss2.models import BucketReferer
 
 class OssHelper:
-    
     def __init__(self,endpoint_name:str,bucket_name:str) -> None:
         self.logger = _logger_factory('logs/oss_log',logging.INFO)
         # self.local_cache_dir = pathlib.Path(local_cache_dir)

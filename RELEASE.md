@@ -1,3 +1,7 @@
+# Pandoc-Filter 0.2.2
+## Release 0.2.2
+Add `**kwargs` to all filter functions for better compatibility.
+
 # Pandoc-Filter 0.2.1
 ## Release 0.2.1
 Symplify `runtime_status_dict` to `runtime_dict`.

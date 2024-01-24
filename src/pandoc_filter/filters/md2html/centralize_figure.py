@@ -46,7 +46,7 @@ Deprecated.
         - replace the original `Caption` element with the new one.
 """
 
-def _centralize_figure(elem:pf.Element,doc:pf.Doc)->None:
+def _centralize_figure(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An `action` function to centralize the `Figure` element.
     [modify elements in place]
@@ -55,7 +55,8 @@ def _centralize_figure(elem:pf.Element,doc:pf.Doc)->None:
     The `centralize_figure` filter is deprecated. Please use CSS files to define global styles and use them by `--css <css_files>`.
     See https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/filters/md2html/centralize_figure.py#L13 for more details.
     """)
-    tracing_logger = TracingLogger()
+    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
+    tracing_logger:TracingLogger = kwargs['tracing_logger']
     if isinstance(elem, pf.Figure):
         tracing_logger.mark(elem)
         for img in elem.content:
@@ -69,5 +70,5 @@ def _centralize_figure(elem:pf.Element,doc:pf.Doc)->None:
         elem.caption = pf.Caption(centered_div)
         tracing_logger.check_and_log('figure',elem)
 
-def centralize_figure_filter(doc:pf.Doc=None):
-    return pf.run_filters(actions= [_centralize_figure],doc=doc)
+def centralize_figure_filter(doc:pf.Doc=None,**kwargs):
+    return pf.run_filters(actions= [_centralize_figure],doc=doc,tracing_logger=TracingLogger()**kwargs)

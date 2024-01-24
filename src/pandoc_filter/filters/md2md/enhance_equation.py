@@ -19,7 +19,7 @@ def _prepare_enhance_equation(doc:pf.Doc):
         'math':False})
 
 @typeguard.typechecked
-def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
+def _enhance_equation(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to enhance math equations.
     [modify elements in place]
@@ -41,7 +41,9 @@ def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
     \end{equation}
     ```
     """
-    tracing_logger = TracingLogger()
+    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
+    tracing_logger:TracingLogger = kwargs['tracing_logger']
+    
     if isinstance(elem, pf.elements.Math):
         doc.runtime_dict['math'] = True
         if elem.format == "DisplayMath":
@@ -71,5 +73,5 @@ def _enhance_equation(elem:pf.Element,doc:pf.Doc)->None:
             elem.text = f"\n{text.strip(" \n")}\n"
             tracing_logger.check_and_log('equation',elem)
 
-def enhance_equation_filter(doc:pf.Doc=None):
-    return pf.run_filters(actions=[_enhance_equation],prepare=_prepare_enhance_equation,doc=doc)
+def enhance_equation_filter(doc:pf.Doc=None,**kwargs):
+    return pf.run_filters(actions=[_enhance_equation],prepare=_prepare_enhance_equation,doc=doc,tracing_logger=TracingLogger(),**kwargs)

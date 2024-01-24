@@ -20,26 +20,17 @@ NOTE:
     The doc_path should be given in advance.
 """
 
-@typeguard.typechecked
-def _prepare_upload_figure_to_aliyun(doc:pf.Doc,*,doc_path:pathlib.Path)->None: 
-    assert doc_path.exists(),f"doc_path: {doc_path} does not exist."
-    assert os.environ['OSS_ENDPOINT_NAME'], "OSS_ENDPOINT_NAME is not given in environment variables."
-    assert os.environ['OSS_BUCKET_NAME'], "OSS_BUCKET_NAME is not given in environment variables."
-    assert os.environ['OSS_ACCESS_KEY_ID'], "OSS_ACCESS_KEY_ID is not given in environment variables."
-    assert os.environ['OSS_ACCESS_KEY_SECRET'], "OSS_ACCESS_KEY_SECRET is not given in environment variables."
-    doc.runtime_dict = DocRuntimeDict(
-        {'doc_path':doc_path,
-         'oss_helper':OssHelper(os.environ['OSS_ENDPOINT_NAME'],os.environ['OSS_BUCKET_NAME'])
-         })
-
-def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc)->None:
+def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An `action` function to upload local pictures to Aliyun OSS. Replace the original src with the new one.
     [modify elements in place]
     """
-    tracing_logger = TracingLogger()
-    oss_helper: OssHelper = doc.runtime_dict['oss_helper']
-    doc_path: pathlib.Path = doc.runtime_dict['doc_path']
+    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
+    tracing_logger:TracingLogger = kwargs['tracing_logger']
+    typeguard.check_type(kwargs['oss_helper'],OssHelper)
+    oss_helper: OssHelper = kwargs['oss_helper']
+    typeguard.check_type(kwargs['doc_path'],pathlib.Path)
+    doc_path: pathlib.Path = kwargs['doc_path']
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
         new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
         tracing_logger.mark(elem)
@@ -52,9 +43,15 @@ def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc)->None:
             tracing_logger.check_and_log('raw_html_img',elem)
 
 @typeguard.typechecked
-def upload_figure_to_aliyun_filter(doc:pf.Doc=None,doc_path:pathlib.Path=None):
-    __prepare_upload_figure_to_aliyun = functools.partial(_prepare_upload_figure_to_aliyun,doc_path=doc_path)
+def upload_figure_to_aliyun_filter(doc:pf.Doc=None,doc_path:pathlib.Path=None,**kwargs):
+    assert doc_path.exists(),f"doc_path: {doc_path} does not exist."
+    assert os.environ['OSS_ENDPOINT_NAME'], "OSS_ENDPOINT_NAME is not given in environment variables."
+    assert os.environ['OSS_BUCKET_NAME'], "OSS_BUCKET_NAME is not given in environment variables."
+    assert os.environ['OSS_ACCESS_KEY_ID'], "OSS_ACCESS_KEY_ID is not given in environment variables."
+    assert os.environ['OSS_ACCESS_KEY_SECRET'], "OSS_ACCESS_KEY_SECRET is not given in environment variables."
     return pf.run_filters(
         actions=[_upload_figure_to_aliyun],
-        prepare=__prepare_upload_figure_to_aliyun,
-        doc=doc)
+        doc=doc,
+        tracing_logger=TracingLogger(),
+        doc_path=doc_path,
+        oss_helper=OssHelper(os.environ['OSS_ENDPOINT_NAME'],os.environ['OSS_BUCKET_NAME']),**kwargs)

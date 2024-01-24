@@ -1,4 +1,5 @@
 import re
+import functools
 
 import typeguard
 import panflute as pf
@@ -59,12 +60,14 @@ def _prepare_hash_anchor_and_internal_link(doc:pf.Doc):
          'internal_link_record':[]
          })
 
-def _hash_anchor_id(elem:pf.Element,doc:pf.Doc)->None:
+def _hash_anchor_id(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An `action` function to normalize any anchor's `id` to its hash.
     [modify elements in place]
     """
-    tracing_logger = TracingLogger()
+    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
+    tracing_logger:TracingLogger = kwargs['tracing_logger']
+
     def _text_hash_count(text:str)->str:
         text_hash = get_text_hash(text)
         if text_hash in doc.runtime_dict['anchor_count']: # 按照text_hash值计数, 重复则加1
@@ -86,7 +89,7 @@ def _hash_anchor_id(elem:pf.Element,doc:pf.Doc)->None:
         tracing_logger.check_and_log('raw-HTML anchor',elem)
 
 
-def _internal_link_recorder(elem:pf.Element,doc:pf.Doc)->None:
+def _internal_link_recorder(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     A action to pre-normalize and record internal links's `url`.
     [modify nothing]
@@ -114,8 +117,10 @@ def _internal_link_recorder(elem:pf.Element,doc:pf.Doc)->None:
         url,guessed_url_with_num = _url_hash_guess(old_href)
         doc.runtime_dict['internal_link_record'].append(InternalLink(elem,url=url,guessed_url=guessed_url_with_num))
 
-def _finalize_hash_anchor_and_internal_link(doc:pf.Doc): 
-    tracing_logger = TracingLogger()
+def _finalize_hash_anchor_and_internal_link(doc:pf.Doc,**kwargs): 
+    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
+    tracing_logger:TracingLogger = kwargs['tracing_logger']
+    
     id_set = set()
     for k,v in doc.runtime_dict['anchor_count'].items():
         for i in range(1,v+1):
@@ -130,9 +135,10 @@ def _finalize_hash_anchor_and_internal_link(doc:pf.Doc):
             tracing_logger.logger.warning(f"{internal_link.elem}")
             tracing_logger.logger.warning(f"The internal link `{internal_link.url}` is invalid and will not be changed because no target header is found.")
 
-def hash_anchor_and_internal_link_filter(doc:pf.Doc=None)->pf.Doc:
+def hash_anchor_and_internal_link_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
+    __finalize_hash_anchor_and_internal_link = functools.partial(_finalize_hash_anchor_and_internal_link,tracing_logger=TracingLogger(),**kwargs)
     return pf.run_filters(
         actions= [_hash_anchor_id,_internal_link_recorder],
         prepare=_prepare_hash_anchor_and_internal_link,
-        finalize=_finalize_hash_anchor_and_internal_link,
-        doc=doc)
+        finalize=__finalize_hash_anchor_and_internal_link,
+        doc=doc,tracing_logger=TracingLogger(),**kwargs)
