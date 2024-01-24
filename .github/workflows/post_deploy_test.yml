@@ -2,7 +2,7 @@ name: Post Deploy Test
 
 on:
   workflow_run:
-    workflows: ["Build and Upload Python Package"]
+    workflows: ["Build and Deploy"]
     types:
       - completed
 
