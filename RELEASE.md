@@ -1,3 +1,7 @@
+# Pandoc-Filter 0.2.3
+## Release 0.2.3
+Fix a bug in `run_filters_pyio` on invoking actions.
+
 # Pandoc-Filter 0.2.2
 ## Release 0.2.2
 Add `**kwargs` to all filter functions for better compatibility.

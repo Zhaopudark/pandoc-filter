@@ -20,7 +20,7 @@ def run_filters_pyio(input_path:pathlib.Path,
     if prepare:
         prepare(doc=doc,**kwargs)
     for action in actions:
-        action = action(doc=doc,**kwargs)
+        doc = action(doc=doc,**kwargs)
     if finalize:
         finalize(doc=doc,**kwargs)
     with open(output_path, "w", encoding="utf-8") as f:
