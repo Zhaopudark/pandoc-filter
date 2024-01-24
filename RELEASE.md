@@ -1,5 +1,9 @@
 
 # Pandoc-Filter 0.2.0
+
+## Release 0.2.0b1
+- Add runtime status 
+
 ## Release 0.2.0b0
 - Simplely APIs.
 - Modify some helping scripts.

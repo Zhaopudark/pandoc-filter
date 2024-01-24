@@ -108,11 +108,15 @@ def test_md2md_enhance_equation_filter():
     assert _check_the_same_content(output_path,answer_path)
 
 def test_md2md_enhance_equation_filter_pyio():
-    file_path = _check_file_path("./resources/inputs/test_md2md_math.md")
+    file_path = _check_file_path("./resources/inputs/test_md2md_math_metadata.md")
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
     answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_enhance_equation_filter])
+    def finalize(doc:pf.Doc,**kwargs):
+        runtime_status_dict:dict = doc.runtime_status_dict
+        if runtime_status_dict.get('math'):
+            doc.metadata['math'] = doc.runtime_status_dict['math']
+    pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_enhance_equation_filter],finalize=finalize)
     assert _check_the_same_content(output_path,answer_path)
     
 def test_md2md_upload_figure_to_aliyun_filter():

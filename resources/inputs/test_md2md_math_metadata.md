@@ -1,11 +1,11 @@
 $$
-\begin{equation}\label{lalla}\tag{abcd}
+\begin{equation}\tag{abcd}\label{lalla}
 e=mc^2
 \end{equation}
 $$
 
 $$
-\begin{equation}\tag{1}
+\begin{equation}
 e=mc^2
 \end{equation}
 $$
@@ -15,7 +15,7 @@ e=mc^2
 $$
 
 $$
-\begin{equation}\label{eq1}\tag{2}
+\begin{equation}\label{eq1}
 e=mc^2
 \end{equation}
 $$

@@ -3,7 +3,7 @@ import re
 import typeguard
 import panflute as pf
 
-from ...utils import TracingLogger
+from ...utils import TracingLogger,RuntimeStatusDict
 from ...utils import get_html_id,sub_html_id,get_html_href,sub_html_href,get_text_hash
 from ..md2md.norm_internal_link import _decode_internal_link_url
 
@@ -54,8 +54,11 @@ Sepcifically, this filter will:
 """
 
 def _prepare_hash_anchor_and_internal_link(doc:pf.Doc)->pf.Doc:
-    doc.anchor_count = {}
-    doc.internal_link_record = []
+    doc.runtime_status_dict = RuntimeStatusDict(
+        {'anchor_count':{},
+         'internal_link_record':[]
+         })
+
 
 
 def _hash_anchor_id(elem:pf.Element,doc:pf.Doc)->None:
@@ -66,22 +69,22 @@ def _hash_anchor_id(elem:pf.Element,doc:pf.Doc)->None:
     tracing_logger = TracingLogger()
     def _text_hash_count(text:str)->str:
         text_hash = get_text_hash(text)
-        if text_hash in doc.anchor_count: # 按照text_hash值计数, 重复则加1
-            doc.anchor_count[text_hash] += 1
+        if text_hash in doc.runtime_status_dict['anchor_count']: # 按照text_hash值计数, 重复则加1
+            doc.runtime_status_dict['anchor_count'][text_hash] += 1
         else:
-            doc.anchor_count[text_hash] = 1
+            doc.runtime_status_dict['anchor_count'][text_hash] = 1
         return text_hash
     if isinstance(elem, pf.Header):
         tracing_logger.mark(elem)
         # 获取header文本内容并剔除#号
         header_text = pf.convert_text(elem,input_format='panflute',output_format='gfm',standalone=True).lstrip('#')
         text_hash = _text_hash_count(header_text)
-        elem.identifier = f"{text_hash}-{doc.anchor_count[text_hash]}"
+        elem.identifier = f"{text_hash}-{doc.runtime_status_dict['anchor_count'][text_hash]}"
         tracing_logger.check_and_log('headings anchor',elem)
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (raw_id_text:=get_html_id(elem.text)): # 获取id文本内容但不做任何剔除
         tracing_logger.mark(elem)
         text_hash = _text_hash_count(raw_id_text)
-        elem.text = sub_html_id(elem.text,f"{text_hash}-{doc.anchor_count[text_hash]}")
+        elem.text = sub_html_id(elem.text,f"{text_hash}-{doc.runtime_status_dict['anchor_count'][text_hash]}")
         tracing_logger.check_and_log('raw-HTML anchor',elem)
 
 class _PatchedInternalLink:
@@ -126,19 +129,19 @@ def _internal_link_recorder(elem:pf.Element,doc:pf.Doc)->None:
         # Olny md internal links need to be decoded since it will be encoded by pandoc before filter.
         decoded_url = _decode_internal_link_url(elem.url) 
         url,guessed_url_with_num = _url_hash_guess(decoded_url)
-        doc.internal_link_record.append((_PatchedInternalLink(elem),url,guessed_url_with_num))
+        doc.runtime_status_dict['internal_link_record'].append((_PatchedInternalLink(elem),url,guessed_url_with_num))
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (old_href:=get_html_href(elem.text)) and old_href.startswith('#'):
         # raw-HTML internal links will not be encoded by pandoc before filter. So there is no need to decode it.
         url,guessed_url_with_num = _url_hash_guess(old_href)
-        doc.internal_link_record.append((_PatchedInternalRawLink(elem),url,guessed_url_with_num))
+        doc.runtime_status_dict['internal_link_record'].append((_PatchedInternalRawLink(elem),url,guessed_url_with_num))
 
 def _finalize_hash_anchor_and_internal_link(doc:pf.Doc)->pf.Doc: 
     tracing_logger = TracingLogger()
     id_set = set()
-    for k,v in doc.anchor_count.items():
+    for k,v in doc.runtime_status_dict['anchor_count'].items():
         for i in range(1,v+1):
             id_set.add(f"{k}-{i}")
-    for patched_elem,url,guessed_url_with_num in doc.internal_link_record:
+    for patched_elem,url,guessed_url_with_num in doc.runtime_status_dict['internal_link_record']:
         if f"{url}-1" in id_set:
             patched_elem.sub(f"{url}-1",tracing_logger)
         elif guessed_url_with_num in id_set: # None is not in id_set
@@ -146,8 +149,6 @@ def _finalize_hash_anchor_and_internal_link(doc:pf.Doc)->pf.Doc:
         else:
             tracing_logger.logger.warning(f"{patched_elem.elem}")
             tracing_logger.logger.warning(f"The internal link `{url}` is invalid and will not be changed because no target header is found.")
-    del doc.anchor_count
-    del doc.internal_link_record
 
 def hash_anchor_and_internal_link_filter(doc:pf.Doc=None)->pf.Doc:
     return pf.run_filters(

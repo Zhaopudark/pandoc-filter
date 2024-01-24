@@ -18,11 +18,11 @@ def run_filters_pyio(input_path:pathlib.Path,
         markdown_content = f.read()
     doc = pf.convert_text(markdown_content,input_format=input_format,output_format='panflute',standalone=True)
     if prepare:
-        doc = prepare(doc=doc,**kwargs)
+        prepare(doc=doc,**kwargs)
     for action in actions:
-        doc = action(doc=doc,**kwargs)
+        action = action(doc=doc,**kwargs)
     if finalize:
-        doc = finalize(doc=doc,**kwargs)
+        finalize(doc=doc,**kwargs)
     with open(output_path, "w", encoding="utf-8") as f:
         text = pf.convert_text(doc,input_format='panflute',output_format=output_format,standalone=True)
         if not text.endswith('\n'):
