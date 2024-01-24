@@ -1,5 +1,4 @@
 
-from .add_date_and_update import add_date_and_update_filter
 from .enhance_equation import enhance_equation_filter
 from .norm_footnote import norm_footnote_filter
 from .norm_internal_link import norm_internal_link_filter

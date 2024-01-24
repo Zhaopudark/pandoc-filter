@@ -124,14 +124,3 @@ def test_md2md_upload_figure_to_aliyun_filter():
         file_path,output_path,'markdown','gfm',
         [pandoc_filter.md2md_upload_figure_to_aliyun_filter],doc_path=file_path)
     assert _check_the_same_content(output_path,answer_path)
-
-
-def test_md2md_upload_figure_to_aliyun_filter():
-    file_path = _check_file_path("./resources/inputs/test_md2md_date_and_update.md")
-    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
-    output_path = pathlib.Path(f"./temp/{file_path.name}")
-    answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    pandoc_filter.run_filters_pyio(
-        file_path,output_path,'markdown','gfm',
-        [pandoc_filter.md2md_add_date_and_update_filter],doc_path=file_path)
-    assert _check_the_same_content(output_path,answer_path)
