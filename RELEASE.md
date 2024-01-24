@@ -1,3 +1,7 @@
+# Pandoc-Filter 0.2.4
+## Release 0.2.4
+Fix a bug in `upload_figure_to_aliyun_filter` when local file path contains spaces.
+
 # Pandoc-Filter 0.2.3
 ## Release 0.2.3
 Fix a bug in `run_filters_pyio` on invoking actions.

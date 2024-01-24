@@ -1,5 +1,5 @@
 import os
-import functools
+import urllib.parse
 import pathlib
 
 import typeguard
@@ -32,15 +32,17 @@ def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     typeguard.check_type(kwargs['doc_path'],pathlib.Path)
     doc_path: pathlib.Path = kwargs['doc_path']
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
+        old_src = urllib.parse.unquote(old_src)
         new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
         tracing_logger.mark(elem)
         elem.url = new_src
         tracing_logger.check_and_log('image',elem)
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (old_src:=get_html_src(elem.text)) and old_src.startswith('.'): # reletive path
-            new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
-            tracing_logger.mark(elem)
-            elem.text = sub_html_src(elem.text,new_src)
-            tracing_logger.check_and_log('raw_html_img',elem)
+        old_src = urllib.parse.unquote(old_src)
+        new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
+        tracing_logger.mark(elem)
+        elem.text = sub_html_src(elem.text,new_src)
+        tracing_logger.check_and_log('raw_html_img',elem)
 
 @typeguard.typechecked
 def upload_figure_to_aliyun_filter(doc:pf.Doc=None,doc_path:pathlib.Path=None,**kwargs):
