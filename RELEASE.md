@@ -1,9 +1,14 @@
-# Pandoc-Filter 0.1.0
 
-## Release 0.1.0b1
+# Pandoc-Filter 0.2.0
+## Release 0.2.0b0
 - Simplely APIs.
 - Modify some helping scripts.
 - Support command-line mode.
+
+# Pandoc-Filter 0.1.0
+
+## Release 0.1.0b1
+Modify some helping scripts.
 
 ## Release 0.1.0b0
 Begin to use semantic version control formally. For this project:
