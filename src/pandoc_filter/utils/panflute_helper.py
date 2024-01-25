@@ -1,4 +1,5 @@
 from typing import Any,TypedDict
+import urllib.parse
 import typeguard
 import pathlib
 from collections import UserDict
@@ -30,3 +31,21 @@ class DocRuntimeDict(TypedDict):
     math:bool|None
     doc_path:pathlib.Path|None
     oss_helper:OssHelper|None
+    
+@typeguard.typechecked
+def decode_internal_link_url(url:str)->str:
+    r"""When converting markdown to any type via pandoc, internal links' URLs may be automatically URL-encoded before any filter works.
+    The encoding is done by default and may not be avoided.
+    This function is used to decode the URL.
+    """
+    decoded_url = urllib.parse.unquote(url.lstrip('#'))
+    header_mimic = pf.convert_text(f"# {decoded_url}",input_format='markdown',output_format='gfm',standalone=True)
+    return f"#{header_mimic.lstrip('# ')}"
+
+@typeguard.typechecked
+def decode_src_url(url:str)->str:
+    r"""When converting markdown to any type via pandoc, some elements' `src` URLs may be automatically URL-encoded before any filter works.
+    The encoding is done by default and may not be avoided.
+    This function is used to decode the URL.
+    """
+    return urllib.parse.unquote(url)

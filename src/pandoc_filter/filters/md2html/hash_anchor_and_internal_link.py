@@ -5,8 +5,7 @@ import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger,DocRuntimeDict,InternalLink
-from ...utils import get_html_id,sub_html_id,get_html_href,get_text_hash
-from ..md2md.norm_internal_link import _decode_internal_link_url
+from ...utils import get_html_id,sub_html_id,get_html_href,get_text_hash,decode_internal_link_url
 
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
@@ -109,7 +108,7 @@ def _internal_link_recorder(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
       
     if isinstance(elem, pf.Link) and elem.url.startswith('#'):
         # Olny md internal links need to be decoded since it will be encoded by pandoc before filter.
-        decoded_url = _decode_internal_link_url(elem.url) 
+        decoded_url = decode_internal_link_url(elem.url) 
         url,guessed_url_with_num = _url_hash_guess(decoded_url)
         doc.runtime_dict['internal_link_record'].append(InternalLink(elem,url=url,guessed_url=guessed_url_with_num))
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (old_href:=get_html_href(elem.text)) and old_href.startswith('#'):

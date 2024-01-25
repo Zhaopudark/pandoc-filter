@@ -5,8 +5,8 @@ import pathlib
 import typeguard
 import panflute as pf
 
-from ...utils import TracingLogger,OssHelper,DocRuntimeDict
-from ...utils import get_html_src,sub_html_src
+from ...utils import TracingLogger,OssHelper
+from ...utils import get_html_src,sub_html_src,decode_src_url
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one.
@@ -32,13 +32,13 @@ def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     typeguard.check_type(kwargs['doc_path'],pathlib.Path)
     doc_path: pathlib.Path = kwargs['doc_path']
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
-        old_src = urllib.parse.unquote(old_src)
+        old_src = decode_src_url(old_src)
         new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
         tracing_logger.mark(elem)
         elem.url = new_src
         tracing_logger.check_and_log('image',elem)
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (old_src:=get_html_src(elem.text)) and old_src.startswith('.'): # reletive path
-        old_src = urllib.parse.unquote(old_src)
+        old_src = decode_src_url(old_src)
         new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
         tracing_logger.mark(elem)
         elem.text = sub_html_src(elem.text,new_src)

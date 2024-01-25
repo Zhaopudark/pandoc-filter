@@ -1,3 +1,7 @@
+# Pandoc-Filter 0.2.5
+## Release 0.2.5
+Re-organize the inner implementation about decoding url.
+
 # Pandoc-Filter 0.2.4
 ## Release 0.2.4
 Fix a bug in `upload_figure_to_aliyun_filter` when local file path contains spaces.
