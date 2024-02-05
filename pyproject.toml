@@ -54,7 +54,7 @@ md2html-hash-anchor-and-internal-link-filter = "pandoc_filter:md2html_hash_ancho
 [tool.setuptools.packages.find]
 # # All the following settings are optional:
 where = ["src"]  # ["."] by default
-include = ["pandoc-filter*"]  # ["*"] by default 都是相对于where的路径的pattern
+include = ["pandoc_filter*"]  # ["*"] by default 都是相对于where的路径的pattern
 exclude = ["__pycache__"]  # empty by default 都是相对于where的路径的pattern
 namespaces = false  # true by default  禁用命名空间包会阻止识别到不带有__init__.py的包
 [project.urls]
@@ -65,4 +65,4 @@ Issues = "https://github.com/Zhaopudark/pandoc-filter/issues"
 Changelog = "https://github.com/Zhaopudark/pandoc-filter/blob/main/RELEASE.md"
 
 [tool.setuptools.dynamic]
-version = {attr = "pandoc-filter.__version__"}
+version = {attr = "pandoc_filter.__version__"}
