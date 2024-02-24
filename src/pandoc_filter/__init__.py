@@ -3,6 +3,7 @@ See https://github.com/Zhaopudark/pandoc-filter for documentation.
 """
 import logging
 
+from .filters.md2md import convert_github_style_alert_to_hexo_style_alert_filter as md2md_convert_github_style_alert_to_hexo_style_alert_filter
 from .filters.md2md import enhance_equation_filter as md2md_enhance_equation_filter
 from .filters.md2md import norm_footnote_filter as md2md_norm_footnote_filter
 from .filters.md2md import norm_internal_link_filter as md2md_norm_internal_link_filter

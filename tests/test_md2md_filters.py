@@ -128,3 +128,32 @@ def test_md2md_upload_figure_to_aliyun_filter():
         file_path,output_path,'markdown','gfm',
         [pandoc_filter.md2md_upload_figure_to_aliyun_filter],doc_path=file_path)
     assert _check_the_same_content(output_path,answer_path)
+
+def test_md2md_convert_github_style_alert_to_hexo_style_alert_filter():
+    file_path = _check_file_path("./resources/inputs/test_md2md_alert.md")
+    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
+    output_path = pathlib.Path(f"./temp/{file_path.name}")
+    answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
+    pandoc_command = [
+        'pandoc',
+        file_path,
+        '-o',
+        output_path,
+        '-f',
+        'markdown',
+        '-t',
+        'gfm',
+        '-s',
+        '--filter',
+        'md2md-convert-github-style-alert-to-hexo-style-alert-filter'
+    ]
+    assert subprocess.run(pandoc_command, check=True).returncode == 0
+    assert _check_the_same_content(output_path,answer_path)
+
+def test_md2md_convert_github_style_alert_to_hexo_style_alert_filter_pyio():
+    file_path = _check_file_path("./resources/inputs/test_md2md_alert.md")
+    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
+    output_path = pathlib.Path(f"./temp/{file_path.name}")
+    answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
+    pandoc_filter.run_filters_pyio(file_path,output_path,'markdown','gfm',[pandoc_filter.md2md_convert_github_style_alert_to_hexo_style_alert_filter])
+    assert _check_the_same_content(output_path,answer_path)
