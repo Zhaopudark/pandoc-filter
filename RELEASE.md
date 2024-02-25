@@ -1,4 +1,6 @@
 # Pandoc-Filter 0.2.x
+## Release 0.2.8
+Change logging modes in `md2md_convert_github_style_alert_to_hexo_style_alert_filter`.
 ## Release 0.2.7
 Fix logging bugs in `md2md_convert_github_style_alert_to_hexo_style_alert_filter`.
 
