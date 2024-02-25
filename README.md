@@ -42,7 +42,7 @@ pip install -i https://pypi.org/simple/ -U pandoc-filter
 
 # Main Features
 
-There are 2 support ways:
+There are 2 supported ways:
 
 -  **command-line-mode**: use non-parametric filters in command-lines with [pandoc](https://pandoc.org).
 - **python-mode**: use `run_filters_pyio`  function in python.
@@ -74,239 +74,32 @@ All filters with corresponding  registered command-line scripts, the specific fe
 >
 > All filters support cascaded invoking.
 
-| Filter Functions                             | Command Line                                 | Additional Arguments | Features                                                     | Runtime status (`doc.runtime_dict`)                          |
-| -------------------------------------------- | -------------------------------------------- | -------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ |
-| md2md_enhance_equation_filter                | md2md-enhance-equation-filter                | -                    | Enhance math equations. Specifically, this filter will:  Adapt AMS rule for math formula.  Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora. Allow multiple tags, but only take the first one. Allow multiple labels, but only take the first one. | {'math':< bool >,'equations_count':<some_number>}            |
-| md2md_norm_footnote_filter                   | md2md-norm-footnote-filter                   | -                    | Normalize the footnotes. Remove unnecessary `\n` in the footnote content. | -                                                            |
-| md2md_norm_internal_link_filter              | md2md-norm-internal-link-filter              | -                    | Normalize internal links' URLs. Decode the URL if it is URL-encoded. | -                                                            |
-| md2md_upload_figure_to_aliyun_filter         | -                                            | doc_path             | Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one. The following environment variables should be given in advance:  `$Env:OSS_ENDPOINT_NAME`, `$Env:OSS_BUCKET_NAME`,  `$Env:OSS_ACCESS_KEY_ID` , and `$Env:OSS_ACCESS_KEY_SECRET`. The doc_path should be given in advance. | {'doc_path':<doc_path>,'oss_helper':<Oss_Helper>}            |
-| md2html_centralize_figure_filter             | md2html-centralize-figure-filter             | -                    | ==Deprecated==                                               | -                                                            |
-| md2html_enhance_link_like_filter             | md2html-enhance-link-like-filter             | -                    | Enhance the link-like string to a `link` element.            | -                                                            |
-| md2html_hash_anchor_and_internal_link_filter | md2html-hash-anchor-and-internal-link-filter | -                    | Hash both the anchor's `id` and the internal-link's `url ` simultaneously. | {'anchor_count':<anchor_count_dict>,'internal_link_record':<internal_link_record_list>} |
+| Filter Functions                                            | Command Line                                                | Additional Arguments | Features                                                     | Runtime status (`doc.runtime_dict`)                          |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | -------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ |
+| md2md_convert_github_style_alert_to_hexo_style_alert_filter | md2md-convert-github-style-alert-to-hexo-style-alert-filter | -                    | Convert the [github-style alert](https://github.com/orgs/community/discussions/16925) to hexo-style alert. | -                                                            |
+| md2md_enhance_equation_filter                               | md2md-enhance-equation-filter                               | -                    | Enhance math equations. Specifically, this filter will:  Adapt AMS rule for math formula.  Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora. Allow multiple tags, but only take the first one. Allow multiple labels, but only take the first one. | {'math':< bool >,'equations_count':<some_number>}            |
+| md2md_norm_footnote_filter                                  | md2md-norm-footnote-filter                                  | -                    | Normalize the footnotes. Remove unnecessary `\n` in the footnote content. | -                                                            |
+| md2md_norm_internal_link_filter                             | md2md-norm-internal-link-filter                             | -                    | Normalize internal links' URLs. Decode the URL if it is URL-encoded. | -                                                            |
+| md2md_upload_figure_to_aliyun_filter                        | -                                                           | doc_path             | Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one. The following environment variables should be given in advance:  `$Env:OSS_ENDPOINT_NAME`, `$Env:OSS_BUCKET_NAME`,  `$Env:OSS_ACCESS_KEY_ID` , and `$Env:OSS_ACCESS_KEY_SECRET`. The doc_path should be given in advance. | {'doc_path':<doc_path>,'oss_helper':<Oss_Helper>}            |
+| md2html_centralize_figure_filter                            | md2html-centralize-figure-filter                            | -                    | ==Deprecated==                                               | -                                                            |
+| md2html_enhance_link_like_filter                            | md2html-enhance-link-like-filter                            | -                    | Enhance the link-like string to a `link` element.            | -                                                            |
+| md2html_hash_anchor_and_internal_link_filter                | md2html-hash-anchor-and-internal-link-filter                | -                    | Hash both the anchor's `id` and the internal-link's `url ` simultaneously. | {'anchor_count':<anchor_count_dict>,'internal_link_record':<internal_link_record_list>} |
 
 # Samples
 
-Here are 2 basic examples
+Here are 2 basic types of examples
 
 ## Convert markdown to markdown (Normalization)
 
-Normalize internal link
-
-- Inputs(`./input.md`): refer to [`test_md2md_internal_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_internal_link.md).
-
-  ```markdown
-  ## 带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试        空格
-  
-  ### aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz [xx]  (yy)
-  
-  [带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试        空格](#####带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试        空格)
-  
-  [aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz [xx]  (yy)](#####aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz [xx]  (yy))
-  
-  <a href="###带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试        空格">带空格 和`特殊字符`...</a>
-  
-  <a href="#aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz [xx]  (yy)">aAa-b...</a>
-  ```
-
-- Coding:
-
-  ```PowerShell
-  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-norm-internal-link-filter
-  ```
-  
-- Outputs(`./output.md`): refer to [`test_md2md_internal_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2md_internal_link.md).
-
-  ```markdown
-  ## 带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试 空格
-  
-  ### aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz \[xx\] (yy)
-  
-  [带空格 和`特殊字符` \[链接\](http://typora.io) 用于%%%%￥￥￥￥跳转测试
-  空格](#带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试 空格)
-  
-  [aAa-b cC `Dd`, a#%&\[xxx\](yyy) Zzz \[xx\]
-  (yy)](#aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz \[xx\] (yy))
-  
-  <a href="#带空格 和`特殊字符` [链接](http://typora.io) 用于%%%%￥￥￥￥跳转测试 空格">带空格
-  和`特殊字符`…</a>
-  
-  <a href="#aAa-b cC `Dd`, a#%&[xxx](yyy) Zzz \[xx\] (yy)">aAa-b…</a>
-  ```
-
-### Normalize footnotes
-
-- Inputs(`./input.md`): refer to [`test_md2md_footnote.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_footnote.md).
-
-  ```markdown
-  which1.[^1]
-  
-  which2.[^2]
-  
-  which3.[^3]
-  
-  [^1]: Deep Learning with Intel® AVX-512 and Intel® DL Boost
-  https://www.intel.cn/content/www/cn/zh/developer/articles/guide/deep-learning-with-avx512-and-dl-boost.html
-  www.intel.cn
-  
-  [^2]: Deep Learning with Intel® AVX-512222 and Intel® DL Boost https://www.intel.cn/content/www/cn/zh/developer/articles/guide/deep-learning-with-avx512-and-dl-boost.html www.intel.cn
-  
-  [^3]: Deep Learning with Intel®     AVX-512 and Intel® DL Boost https://www.intel.cn/content/www/cn/zh/developer/articles/guide/deep-learning-with-avx512-and-dl-boost.html www.intel.cn
-  ```
-
-- Coding:
-
-  ```powershell
-  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-norm-footnote-filter
-  ```
-  
-- Outputs(`./output.md`): refer to [`test_md2md_footnote.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outpts/test_md2md_footnote.md).
-
-  ```markdown
-  which1.[^1]
-  
-  which2.[^2]
-  
-  which3.[^3]
-  
-  [^1]: Deep Learning with Intel® AVX-512 and Intel® DL Boost https://www.intel.cn/content/www/cn/zh/developer/articles/guide/deep-learning-with-avx512-and-dl-boost.html www.intel.cn
-  
-  [^2]: Deep Learning with Intel® AVX-512222 and Intel® DL Boost https://www.intel.cn/content/www/cn/zh/developer/articles/guide/deep-learning-with-avx512-and-dl-boost.html www.intel.cn
-  
-  [^3]: Deep Learning with Intel® AVX-512 and Intel® DL Boost https://www.intel.cn/content/www/cn/zh/developer/articles/guide/deep-learning-with-avx512-and-dl-boost.html www.intel.cn
-  ```
-
-### Adapt AMS rule for math formula
-
-- Inputs(`./input.md`): refer to [`test_md2md_math.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_math.md).
-
-  ```markdown
-  $$
-  \begin{equation}\tag{abcd}\label{lalla}
-  e=mc^2
-  \end{equation}
-  $$
-  
-  $$
-  \begin{equation}
-  e=mc^2
-  \end{equation}
-  $$
-  
-  $$
-  e=mc^2
-  $$
-  
-  $$
-  \begin{equation}\label{eq1}
-  e=mc^2
-  \end{equation}
-  $$
-  ```
-
-- Coding:
-
-  ```PowerShell
-  pandoc ./input.md -o ./output.md -f markdown -t gfm -s --filter md2md-enhance-equation-filter
-  ```
-  
-- Outputs(`./output.md`): refer to [`test_md2md_math.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2md_math.md).
-
-  ```markdown
-  $$
-  \begin{equation}\label{lalla}\tag{abcd}
-  e=mc^2
-  \end{equation}
-  $$
-  
-  $$
-  \begin{equation}\tag{1}
-  e=mc^2
-  \end{equation}
-  $$
-  
-  $$
-  e=mc^2
-  $$
-  
-  $$
-  \begin{equation}\label{eq1}\tag{2}
-  e=mc^2
-  \end{equation}
-  $$
-  ```
-
-### Sync local images to `Aliyun OSS`
-
-- Prerequisites:
-
-  - Consider the bucket domain is `raw.little-train.com`
-
-  - Consider the environment variables have been given:
-
-    - OSS_ENDPOINT_NAME = "oss-cn-taiwan.aliyuncs.com"
-    - OSS_BUCKET_NAME = "test"
-    - OSS_ACCESS_KEY_ID = "123456781234567812345678"
-
-    - OSS_ACCESS_KEY_SECRET = "123456123456123456123456123456"
-
-  - Consider images located in `./input.assets/`
-
-- Inputs(`./input.md`): refer to [`test_md2md_figure.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_figure.md).
-
-  ```markdown
-  ![自定义头像](./input.assets/自定义头像.png)
-  
-  ![Level-of-concepts](./input.assets/Level-of-concepts.svg)
-  ```
-
-- Coding:
-
-  ```python
-  import pandoc_filter
-  
-  file_path = _check_file_path("./input.md")
-  output_path = pathlib.Path(f"./output.md")
-  answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-  pandoc_filter.run_filters_pyio(
-      file_path,output_path,'markdown','gfm',
-      [pandoc_filter.md2md_upload_figure_to_aliyun_filter],doc_path=file_path)
-  ```
-  
-- Outputs(`./output.md`): refer to [`test_md2md_figure.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2md_figure.md).
-
-  ```markdown
-  <figure>
-  <img
-  src="https://raw.little-train.com/111199e36daf608352089b12cec935fc5cbda5e3dcba395026d0b8751a013d1d.png"
-  alt="自定义头像" />
-  <figcaption aria-hidden="true">自定义头像</figcaption>
-  </figure>
-  
-  <figure>
-  <img
-  src="https://raw.little-train.com/20061af9ba13d3b92969dc615b9ba91abb4c32c695f532a70a6159d7b806241c.svg"
-  alt="Level-of-concepts" />
-  <figcaption aria-hidden="true">Level-of-concepts</figcaption>
-  </figure>
-  ```
+- [Adapt AMS rule for math formula](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_adapt_ams_rule_for_math_formula.md)
+- [Normalize footnotes](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_footnotes.md)
+- [Normalize internal link](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_internal_link.md)
+- [Sync local images to `Aliyun OSS`](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_sync_local_images_to_`Aliyun OSS`.md)
 
 ## Convert markdown to html
 
-### Normalize anchors, internal links and link-like strings
+- [Normalize anchors, internal links and link-like strings](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2html_normalize_anchors_internal_links_and_link-like_strings.md)
 
-- Inputs(`./input.md`):
-
-  Refer to [`test_md2html_anchor_and_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2html_anchor_and_link.md).
-
-- Coding:
-
-  ```powershell
-  pandoc ./input.md -o ./output.html -f markdown -t html -s --filter md2md-norm-internal-link-filter --filtermd2html-hash-anchor-and-internal-link-filter --filter md2html-enhance-link-like-filter
-  ```
-  
-- Outputs(`./output.html`):
-
-  Refer to [`test_md2html_anchor_and_link.html`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2html_anchor_and_link.html).
 
 # Contribution
 
