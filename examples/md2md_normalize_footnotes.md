@@ -1,4 +1,4 @@
-### Normalize footnotes
+# Normalize footnotes
 
 - Inputs(`./input.md`): refer to [`test_md2md_footnote.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_footnote.md).
 

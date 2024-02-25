@@ -94,7 +94,7 @@ Here are 2 basic types of examples
 - [Adapt AMS rule for math formula](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_adapt_ams_rule_for_math_formula.md)
 - [Normalize footnotes](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_footnotes.md)
 - [Normalize internal link](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_internal_link.md)
-- [Sync local images to `Aliyun OSS`](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_sync_local_images_to_`Aliyun OSS`.md)
+- [Sync local images to `Aliyun OSS`](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_sync_local_images_to_`Aliyun_OSS`.md)
 
 ## Convert markdown to html
 

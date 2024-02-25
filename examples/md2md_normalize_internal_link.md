@@ -1,4 +1,4 @@
-### Normalize internal link
+# Normalize internal link
 
 - Inputs(`./input.md`): refer to [`test_md2md_internal_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_internal_link.md).
 

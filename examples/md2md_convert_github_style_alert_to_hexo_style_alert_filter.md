@@ -1,4 +1,4 @@
-### Convert github-style alert to hexo-style alert
+# Convert github-style alert to hexo-style alert
 
 - Inputs(`./input.md`): refer to [`test_md2md_alert.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2md_alert.md).
 

@@ -1,4 +1,4 @@
-### Normalize anchors, internal links and link-like strings
+# Normalize anchors, internal links and link-like strings
 
 - Inputs(`./input.md`):
 

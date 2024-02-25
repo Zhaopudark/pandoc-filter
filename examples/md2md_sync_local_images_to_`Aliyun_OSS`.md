@@ -1,4 +1,4 @@
-### Sync local images to `Aliyun OSS`
+# Sync local images to `Aliyun OSS`
 
 - Prerequisites:
 
