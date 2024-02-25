@@ -29,7 +29,7 @@ jobs:
           $package_path = "$((pip show pandoc_filter) -match 'Location:' -replace 'Location:\s+')/pandoc_filter"
           $Env:PYTHONIOENCODING='utf-8'
           pytest (Get-Item "./tests").FullName --log-level=INFO --cov=$package_path --cov-report=xml
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4.0.2
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           
