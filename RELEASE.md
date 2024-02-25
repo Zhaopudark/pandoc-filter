@@ -1,4 +1,7 @@
 # Pandoc-Filter 0.2.x
+## Release 0.2.7
+Fix logging bugs in `md2md_convert_github_style_alert_to_hexo_style_alert_filter`.
+
 ## Release 0.2.6
 Add `md2md_convert_github_style_alert_to_hexo_style_alert_filter`, which can convert the [github-style alert](https://github.com/orgs/community/discussions/16925) to hexo-style alert.The github-style alert is based on pandoc's `BlockQuote` element, while the hexo-style alert is based on [hexo tag plugins](https://hexo.io/docs/tag-plugins#Note).We use a general mode to confirm the hexo-style alert type, which are widely used in the hexo community by many themes, such as
 - [hexo-theme-butterfly](https://butterfly.js.org/posts/4aa8abbe/?highlight=%25+endnote#%E6%A8%99%E7%B1%A4%E5%A4%96%E6%8E%9B%EF%BC%88Tag-Plugins%EF%BC%89),

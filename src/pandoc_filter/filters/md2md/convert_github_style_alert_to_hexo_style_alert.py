@@ -58,8 +58,8 @@ def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,*
             case [pf_para,*rest] if isinstance(pf_para,pf.Para) and len(rest)>0 and len(pf_para.content)==1 and isinstance(pf_para.content[0],pf.Str):
                 pf_str:pf.Str = pf_para.content[0]
                 if (maybe_alert_type:=_get_and_map_alerts(pf_str.text)) is not None:
-                    tracing_logger.logger.info(f"---",elem)
-                    tracing_logger.logger.info(f"+++",content)
+                    tracing_logger.logger.info(f"---{elem}")
+                    tracing_logger.logger.info(f"+++{content}")
                     content = [pf.Para(pf.Str(maybe_alert_type[0])),
                                *rest,
                                pf.Para(pf.Str(maybe_alert_type[1]))]
@@ -67,8 +67,8 @@ def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,*
             case [pf_para] if isinstance(pf_para,pf.Para) and isinstance(pf_para.content[0],pf.Str):
                 pf_str:pf.Str = pf_para.content[0]
                 if (maybe_alert_type:=_get_and_map_alerts(pf_str.text)) is not None:
-                    tracing_logger.logger.info(f"---",elem)
-                    tracing_logger.logger.info(f"+++",content)
+                    tracing_logger.logger.info(f"---{elem}")
+                    tracing_logger.logger.info(f"+++{content}")
                     for index,item in enumerate(pf_para.content[1::]):
                         if isinstance(item,pf.LineBreak) or isinstance(item,pf.SoftBreak) or isinstance(item,pf.Space):
                             continue
