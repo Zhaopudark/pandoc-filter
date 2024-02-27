@@ -1,4 +1,6 @@
 # Pandoc-Filter 0.2.x
+## Release 0.2.10
+Fix bugs in `md2md_norm_footnote_filter` to avoid missing links in the footnote content.
 ## Release 0.2.9
 Adjusted organization of README.md and RELEASE.md.
 Examples were separated out.
