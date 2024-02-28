@@ -1,10 +1,8 @@
-import typeguard
 import pathlib
 import logging
 import logging.handlers
 from typing import Any
 
-@typeguard.typechecked
 def _logger_factory(name:str,level:int=logging.INFO)->logging.Logger:
     r"""Generate a logger with file and console handler.
     Args:
