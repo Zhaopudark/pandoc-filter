@@ -2,7 +2,6 @@ import os
 import urllib.parse
 import pathlib
 
-import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger,OssHelper
@@ -20,17 +19,11 @@ NOTE:
     The doc_path should be given in advance.
 """
 
-def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
+def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,oss_helper:OssHelper,doc_path:pathlib.Path,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An `action` function to upload local pictures to Aliyun OSS. Replace the original src with the new one.
     [modify elements in place]
     """
-    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
-    typeguard.check_type(kwargs['oss_helper'],OssHelper)
-    oss_helper: OssHelper = kwargs['oss_helper']
-    typeguard.check_type(kwargs['doc_path'],pathlib.Path)
-    doc_path: pathlib.Path = kwargs['doc_path']
     if isinstance(elem, pf.Image) and (old_src:=str(elem.url)).startswith('.'): # reletive path
         old_src = decode_src_url(old_src)
         new_src = oss_helper.maybe_upload_file_and_get_src(doc_path.parent/old_src)
@@ -44,7 +37,6 @@ def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
         elem.text = sub_html_src(elem.text,new_src)
         tracing_logger.check_and_log('raw_html_img',elem)
 
-@typeguard.typechecked
 def upload_figure_to_aliyun_filter(doc:pf.Doc=None,doc_path:pathlib.Path=None,**kwargs):
     assert doc_path.exists(),f"doc_path: {doc_path} does not exist."
     assert os.environ['OSS_ENDPOINT_NAME'], "OSS_ENDPOINT_NAME is not given in environment variables."

@@ -1,4 +1,3 @@
-import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger
@@ -8,14 +7,12 @@ Enhance the link-like string to a `link` element.
 """
 
 
-def _enhance_link_like(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Link|None:
+def _enhance_link_like(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->pf.Link|None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to process a string that may be like a link.
     Replace the string with a `Link` element.
     [replace elements]
     """
-    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
     if isinstance(elem, pf.Str) and elem.text.lower().startswith('http'):
         tracing_logger.mark(elem)
         link = pf.Link(elem,url=elem.text)

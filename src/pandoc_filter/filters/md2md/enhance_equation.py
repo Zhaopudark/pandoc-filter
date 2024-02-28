@@ -1,5 +1,4 @@
 import re
-import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger,DocRuntimeDict
@@ -18,8 +17,7 @@ def _prepare_enhance_equation(doc:pf.Doc):
         {'equations_count':0,
         'math':False})
 
-@typeguard.typechecked
-def _enhance_equation(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
+def _enhance_equation(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to enhance math equations.
     [modify elements in place]
@@ -41,9 +39,6 @@ def _enhance_equation(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     \end{equation}
     ```
     """
-    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
-    
     if isinstance(elem, pf.elements.Math):
         doc.runtime_dict['math'] = True
         if elem.format == "DisplayMath":

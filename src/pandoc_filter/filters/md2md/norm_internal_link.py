@@ -1,4 +1,3 @@
-import typeguard
 import panflute as pf
 
 from ...utils import TracingLogger
@@ -24,14 +23,11 @@ Internal Link:
         `<a href="#aaa">bbb</a>`
 """
 
-def _norm_internal_link(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
+def _norm_internal_link(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to normalize any internal link's url. Decode if it is URL-encoded.
     [modify elements in place]
     """
-    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
-    
     if isinstance(elem, pf.Link) and elem.url.startswith('#'):
         tracing_logger.mark(elem)       
         elem.url = decode_internal_link_url(elem.url)

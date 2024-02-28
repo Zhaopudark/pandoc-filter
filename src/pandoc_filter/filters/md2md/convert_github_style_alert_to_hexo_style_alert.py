@@ -1,5 +1,3 @@
-
-import typeguard
 import panflute as pf
 import re
 from ...utils import TracingLogger
@@ -19,7 +17,24 @@ The mapping between the github-style alert and hexo-style alert is:
     - [!CAUTION] -> {% note danger %} ... {% endnote %}
 """
 
-def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,**kwargs)->pf.Note|None:
+def __get_and_map_alerts(input_string:str)->tuple[str,str]|None:
+    if matched:=re.match(r'\[\!(?P<alert_string>NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]',input_string.strip().upper()):
+        match matched.group('alert_string'):
+            case 'NOTE':
+                return "{% note info %}","{% endnote %}"
+            case 'TIP':
+                return "{% note success %}","{% endnote %}"
+            case 'IMPORTANT':
+                return "{% note primary %}","{% endnote %}"
+            case 'WARNING':
+                return "{% note warning %}","{% endnote %}"
+            case 'CAUTION':
+                return "{% note danger %}","{% endnote %}"
+            case _:
+                return "{% note default %}","{% endnote %}"
+    else:
+        return None
+def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->pf.Note|None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to process alerts (`BlockQuote` element). Convert github-style alerts, such as:
         > [!NOTE]
@@ -30,34 +45,13 @@ def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,*
         {% endnote %}
     [replace elements]
     """
-    @typeguard.typechecked
-    def _get_and_map_alerts(input_string:str)->tuple[str,str]|None:
-        if matched:=re.match(r'\[\!(?P<alert_string>NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]',input_string.strip().upper()):
-            match matched.group('alert_string'):
-                case 'NOTE':
-                    return "{% note info %}","{% endnote %}"
-                case 'TIP':
-                    return "{% note success %}","{% endnote %}"
-                case 'IMPORTANT':
-                    return "{% note primary %}","{% endnote %}"
-                case 'WARNING':
-                    return "{% note warning %}","{% endnote %}"
-                case 'CAUTION':
-                    return "{% note danger %}","{% endnote %}"
-                case _:
-                    return "{% note default %}","{% endnote %}"
-        else:
-            return None
-    typeguard.check_type(kwargs['tracing_logger'],TracingLogger)
-    tracing_logger:TracingLogger = kwargs['tracing_logger']
-    
     if isinstance(elem, pf.BlockQuote):
         tracing_logger.mark(elem)
         content = []
         match elem.content:
             case [pf_para,*rest] if isinstance(pf_para,pf.Para) and len(rest)>0 and len(pf_para.content)==1 and isinstance(pf_para.content[0],pf.Str):
                 pf_str:pf.Str = pf_para.content[0]
-                if (maybe_alert_type:=_get_and_map_alerts(pf_str.text)) is not None:
+                if (maybe_alert_type:=__get_and_map_alerts(pf_str.text)) is not None:
                     content = [pf.Para(pf.Str(maybe_alert_type[0])),
                                *rest,
                                pf.Para(pf.Str(maybe_alert_type[1]))]
@@ -65,7 +59,7 @@ def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,*
                     return content
             case [pf_para] if isinstance(pf_para,pf.Para) and isinstance(pf_para.content[0],pf.Str):
                 pf_str:pf.Str = pf_para.content[0]
-                if (maybe_alert_type:=_get_and_map_alerts(pf_str.text)) is not None:
+                if (maybe_alert_type:=__get_and_map_alerts(pf_str.text)) is not None:
                     for index,item in enumerate(pf_para.content[1::]):
                         if isinstance(item,pf.LineBreak) or isinstance(item,pf.SoftBreak) or isinstance(item,pf.Space):
                             continue
