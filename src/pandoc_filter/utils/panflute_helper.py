@@ -1,7 +1,6 @@
-from typing import Any,TypedDict
+from typing import TypedDict
 import urllib.parse
 import pathlib
-from collections import UserDict
 import panflute as pf
 
 from .logging_helper import TracingLogger

@@ -1,4 +1,6 @@
 # Pandoc-Filter 0.2.x
+## Release 0.2.13
+
 ## Release 0.2.12
 Remove more unnecessary type-checking clauses for accelerating.
 ## Release 0.2.11
