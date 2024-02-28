@@ -1,6 +1,5 @@
 from typing import Any,TypedDict
 import urllib.parse
-import typeguard
 import pathlib
 from collections import UserDict
 import panflute as pf
@@ -10,12 +9,10 @@ from .html_helper import sub_html_href
 from .oss_helper import OssHelper
         
 class InternalLink():
-    @typeguard.typechecked
     def __init__(self,elem:pf.Link|pf.RawInline,url:str,guessed_url:str|None) -> None:
         self.elem = elem
         self.url = url
         self.guessed_url = guessed_url
-    @typeguard.typechecked
     def sub(self,text:str,tracing_logger:TracingLogger)->None:
         tracing_logger.mark(self.elem)
         if isinstance(self.elem, pf.Link):
@@ -31,8 +28,7 @@ class DocRuntimeDict(TypedDict):
     math:bool|None
     doc_path:pathlib.Path|None
     oss_helper:OssHelper|None
-    
-@typeguard.typechecked
+
 def decode_internal_link_url(url:str)->str:
     r"""When converting markdown to any type via pandoc, internal links' URLs may be automatically URL-encoded before any filter works.
     The encoding is done by default and may not be avoided.
@@ -42,7 +38,6 @@ def decode_internal_link_url(url:str)->str:
     header_mimic = pf.convert_text(f"# {decoded_url}",input_format='markdown',output_format='gfm',standalone=True)
     return f"#{header_mimic.lstrip('# ')}"
 
-@typeguard.typechecked
 def decode_src_url(url:str)->str:
     r"""When converting markdown to any type via pandoc, some elements' `src` URLs may be automatically URL-encoded before any filter works.
     The encoding is done by default and may not be avoided.
