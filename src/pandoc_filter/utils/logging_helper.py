@@ -54,6 +54,8 @@ class TracingLogger(metaclass=SingletonMeta):
         self.__buf = None
     def info(self,indicator,msg:str):
         self.logger.info(f"==={indicator}:{msg}")
+    def warning(self,indicator,msg:str):
+        self.logger.warning(f"==={indicator}:{msg}")
     def mark(self,buf:Any):
         self.__buf = str(buf)
     def check_and_log(self,indicator:str,buf:Any):

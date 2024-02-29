@@ -124,8 +124,8 @@ def _finalize_hash_anchor_and_internal_link(doc:pf.Doc,tracing_logger:TracingLog
         elif internal_link.guessed_url in id_set: # None is not in id_set
             internal_link.sub(f"{internal_link.guessed_url}",tracing_logger)
         else:
-            tracing_logger.logger.warning(f"{internal_link.elem}")
-            tracing_logger.logger.warning(f"The internal link `{internal_link.url}` is invalid and will not be changed because no target header is found.")
+            tracing_logger.warning("hash_anchor_and_internal_link",f"{internal_link.elem}")
+            tracing_logger.warning("hash_anchor_and_internal_link",f"The internal link `{internal_link.url}` is invalid and will not be changed because no target header is found.")
 
 def hash_anchor_and_internal_link_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
     __finalize_hash_anchor_and_internal_link = functools.partial(_finalize_hash_anchor_and_internal_link,tracing_logger=TracingLogger(),**kwargs)
