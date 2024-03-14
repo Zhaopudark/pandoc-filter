@@ -2,7 +2,7 @@
 
 - Inputs(`./input.md`):
 
-  Refer to [`test_md2html_anchor_and_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2html_anchor_and_link.md).
+  Refer to [`test_md2html_header_anchor_and_link.md`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/inputs/test_md2html_header_anchor_and_link.md).
 
 - Coding:
 
@@ -12,4 +12,4 @@
   
 - Outputs(`./output.html`):
 
-  Refer to [`test_md2html_anchor_and_link.html`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2html_anchor_and_link.html).
+  Refer to [`test_md2html_header_anchor_and_link.html`](https://github.com/Zhaopudark/pandoc-filter/blob/main/resources/outputs/test_md2html_header_anchor_and_link.html).
