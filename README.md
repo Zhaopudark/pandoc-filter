@@ -93,6 +93,7 @@ Here are 2 basic types of examples
 ## Convert markdown to markdown (Normalization)
 
 - [Adapt AMS rule for math formula](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_adapt_ams_rule_for_math_formula.md)
+- [Convert Github style alert to Hexo style alert](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_convert_github_style_alert_to_hexo_style_alert_filter.md)
 - [Normalize footnotes](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_footnotes.md)
 - [Normalize internal link](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_internal_link.md)
 - [Sync local images to `Aliyun OSS`](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_sync_local_images_to_`Aliyun_OSS`.md)
