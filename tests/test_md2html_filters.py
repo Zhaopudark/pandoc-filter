@@ -65,3 +65,46 @@ def test_md2html_header_anchor_link_filter_pyio():
          pandoc_filter.md2html_enhance_link_like_filter,
          pandoc_filter.md2html_increase_header_level_filter])
     assert _compare_files(output_path,answer_path)
+    
+def test_md2html_header_anchor_link_filter_on_gfm():
+    file_path = _check_file_path("./resources/inputs/test_md2html_header_anchor_and_link_gfm.md")
+    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
+    output_path = pathlib.Path(f"./temp/{file_path.stem}.html")
+    answer_path = pathlib.Path(f"./resources/outputs/{file_path.stem}.html")
+    pandoc_command = [
+        'pandoc',
+        file_path,
+        '-o',
+        output_path,
+        '-f',
+        'markdown',
+        '-t',
+        'html',
+        '-s',
+        '--filter',
+        'md2md-norm-internal-link-filter',
+        '--filter',
+        'md2html-hash-anchor-and-internal-link-filter',
+        '--filter',
+        'md2html-enhance-link-like-filter',
+        '--filter',
+        'md2html-increase-header-level-filter',
+    ]
+    assert subprocess.run(pandoc_command, check=True).returncode == 0
+    assert _compare_files(output_path,answer_path)
+    
+def test_md2html_header_anchor_link_filter_on_gfm_pyio():
+    file_path = _check_file_path("./resources/inputs/test_md2html_header_anchor_and_link_gfm.md")
+    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
+    output_path = pathlib.Path(f"./temp/{file_path.stem}.html")
+    answer_path = pathlib.Path(f"./resources/outputs/{file_path.stem}.html")
+    
+    pandoc_filter.run_filters_pyio(
+        file_path,
+        output_path,
+        'markdown','html',
+        [pandoc_filter.md2md_norm_internal_link_filter,
+         pandoc_filter.md2html_hash_anchor_and_internal_link_filter,
+         pandoc_filter.md2html_enhance_link_like_filter,
+         pandoc_filter.md2html_increase_header_level_filter])
+    assert _compare_files(output_path,answer_path)

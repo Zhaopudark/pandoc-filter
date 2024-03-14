@@ -84,6 +84,7 @@ All filters with corresponding  registered command-line scripts, the specific fe
 | md2html_centralize_figure_filter                            | md2html-centralize-figure-filter                            | -                    | ==Deprecated==                                               | -                                                            |
 | md2html_enhance_link_like_filter                            | md2html-enhance-link-like-filter                            | -                    | Enhance the link-like string to a `link` element.            | -                                                            |
 | md2html_hash_anchor_and_internal_link_filter                | md2html-hash-anchor-and-internal-link-filter                | -                    | Hash both the anchor's `id` and the internal-link's `url ` simultaneously. | {'anchor_count':<anchor_count_dict>,'internal_link_record':<internal_link_record_list>} |
+| md2html_increase_header_level_filter                        | md2html-increase-header-level-filter                        | -                    | Increase the header level by `1`.                            | -                                                            |
 
 # Samples
 
