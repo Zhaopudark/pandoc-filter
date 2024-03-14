@@ -50,6 +50,7 @@ md2md-norm-internal-link-filter = "pandoc_filter:md2md_norm_internal_link_filter
 md2html-centralize-figure-filter = "pandoc_filter:md2html_centralize_figure_filter"
 md2html-enhance-link-like-filter = "pandoc_filter:md2html_enhance_link_like_filter"
 md2html-hash-anchor-and-internal-link-filter = "pandoc_filter:md2html_hash_anchor_and_internal_link_filter"
+md2html-increase-header-level-filter = "pandoc_filter:md2html_increase_header_level_filter"
 
 # OR
 [tool.setuptools.packages.find]

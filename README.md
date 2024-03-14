@@ -98,7 +98,7 @@ Here are 2 basic types of examples
 
 ## Convert markdown to html
 
-- [Normalize anchors, internal links and link-like strings](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2html_normalize_anchors_internal_links_and_link-like_strings.md)
+- [Normalize headers, anchors, internal links and link-like strings](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2html_normalize_headers_anchors_internal_links_and_link-like_strings.md)
 
 
 # Contribution

@@ -11,6 +11,7 @@ from .filters.md2md import upload_figure_to_aliyun_filter as md2md_upload_figure
 from .filters.md2html import centralize_figure_filter as md2html_centralize_figure_filter
 from .filters.md2html import enhance_link_like_filter as md2html_enhance_link_like_filter
 from .filters.md2html import hash_anchor_and_internal_link_filter as md2html_hash_anchor_and_internal_link_filter
+from .filters.md2html import increase_header_level_filter as md2html_increase_header_level_filter
 
 from .scripts import run_filters_pyio
 
