@@ -1,6 +1,9 @@
 # Pandoc-Filter 0.2.x
 ## Release 0.2.14
-Working on...
+
+- Modify `md2html_hash_anchor_and_internal_link_filter` to handle internal links within hexo tag plugins.
+    - Now, it will compulsorily modify internal_link's url, even though its target is not found.
+
 ## Release 0.2.13
 Add `md2html_increase_header_level_filter`, which will increase the header level by 1.
 ## Release 0.2.12
