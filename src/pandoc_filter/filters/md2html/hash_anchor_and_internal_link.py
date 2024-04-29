@@ -124,8 +124,12 @@ def _finalize_hash_anchor_and_internal_link(doc:pf.Doc,tracing_logger:TracingLog
         elif internal_link.guessed_url in id_set: # None is not in id_set
             internal_link.sub(f"{internal_link.guessed_url}",tracing_logger)
         else:
+            # According https://github.com/Zhaopudark/pandoc-filter/issues/1, 
+            # Even though the internal link's target is not found, we still modify it compulsorily, instead of do nothing.
+            # The warning message is just for reminding the user.
             tracing_logger.warning("hash_anchor_and_internal_link",f"{internal_link.elem}")
-            tracing_logger.warning("hash_anchor_and_internal_link",f"The internal link `{internal_link.url}` is invalid and will not be changed because no target header is found.")
+            tracing_logger.warning("hash_anchor_and_internal_link",f"The internal link `{internal_link.url}` may be invalid because no target header is found. But it will still be modified to `{internal_link.url}-1`.")
+            internal_link.sub(f"{internal_link.url}-1",tracing_logger)
 
 def hash_anchor_and_internal_link_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
     __finalize_hash_anchor_and_internal_link = functools.partial(_finalize_hash_anchor_and_internal_link,tracing_logger=TracingLogger(),**kwargs)
