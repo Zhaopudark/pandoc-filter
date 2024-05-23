@@ -19,7 +19,7 @@ def _norm_footnote(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwa
     """
     if isinstance(elem, pf.Note):
         tracing_logger.mark(elem)
-        elem = pf.Note(pf.Para(pf.Str(pf.stringify(elem))))
+        elem = pf.Note(pf.Para(pf.Str(pf.stringify(elem).strip(' \n'))))
         tracing_logger.check_and_log('footnote',elem)
         return elem
 
