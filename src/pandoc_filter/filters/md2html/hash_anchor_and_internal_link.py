@@ -77,6 +77,10 @@ def _hash_anchor_id(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kw
         header_text = pf.convert_text(elem,input_format='panflute',output_format='gfm',standalone=True).lstrip('#')
         text_hash = __text_hash_count(doc,header_text)
         elem.identifier = f"{text_hash}-{doc.runtime_dict['anchor_count'][text_hash]}"
+        # According to https://github.com/Zhaopudark/pandoc-filter/issues/3, add an invisible link in the header.
+        link_in_hearder = pf.Link(url=f"#{elem.identifier}",title=header_text,classes=['headerlink'])
+        elem.content.insert(0,link_in_hearder)
+        
         tracing_logger.check_and_log('headings anchor',elem)
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (raw_id_text:=get_html_id(elem.text)): # 获取id文本内容但不做任何剔除
         tracing_logger.mark(elem)
@@ -103,10 +107,12 @@ def _internal_link_recorder(elem:pf.Element,doc:pf.Doc,**kwargs)->None:
     [modify nothing]
     """
     if isinstance(elem, pf.Link) and elem.url.startswith('#'):
-        # Olny md internal links need to be decoded since it will be encoded by pandoc before filter.
-        decoded_url = decode_internal_link_url(elem.url) 
-        url,guessed_url_with_num = __url_hash_guess(decoded_url)
-        doc.runtime_dict['internal_link_record'].append(InternalLink(elem,url=url,guessed_url=guessed_url_with_num))
+        # Olny md internal links need to be decoded since it will be encoded by pandoc before filter.:
+        if 'headerlink' not in elem.classes: # pass the headerlink
+            decoded_url = decode_internal_link_url(elem.url) 
+            url,guessed_url_with_num = __url_hash_guess(decoded_url)
+            doc.runtime_dict['internal_link_record'].append(InternalLink(elem,url=url,guessed_url=guessed_url_with_num))
+
     elif isinstance(elem, pf.RawInline) and elem.format == 'html' and (old_href:=get_html_href(elem.text)) and old_href.startswith('#'):
         # raw-HTML internal links will not be encoded by pandoc before filter. So there is no need to decode it.
         url,guessed_url_with_num = __url_hash_guess(old_href)
@@ -124,7 +130,7 @@ def _finalize_hash_anchor_and_internal_link(doc:pf.Doc,tracing_logger:TracingLog
         elif internal_link.guessed_url in id_set: # None is not in id_set
             internal_link.sub(f"{internal_link.guessed_url}",tracing_logger)
         else:
-            # According https://github.com/Zhaopudark/pandoc-filter/issues/1, 
+            # According to https://github.com/Zhaopudark/pandoc-filter/issues/1, 
             # Even though the internal link's target is not found, we still modify it compulsorily, instead of do nothing.
             # The warning message is just for reminding the user.
             tracing_logger.warning("hash_anchor_and_internal_link",f"{internal_link.elem}")

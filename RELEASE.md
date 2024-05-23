@@ -1,8 +1,10 @@
 # Pandoc-Filter 0.2.x
 
 ## Release 0.2.15
-Working on...
-
+- Modify `md2html_hash_anchor_and_internal_link_filter` to add an invisible link for each header.
+    - Now, for each header, an invisible link that links to the header itself will be added to it.
+    - The added invisible link will be assigned the class of `headerlink`.
+    - This will be useful for generating anchors by some renderers/frameworks/tools, such as [hexo-theme-butterfly](https://butterfly.js.org/posts/4aa8abbe/?highlight=%25+endnote#%E9%A0%81%E9%9D%A2%E9%8C%A8%E9%BB%9E).
 ## Release 0.2.14
 
 - Modify `md2html_hash_anchor_and_internal_link_filter` to handle internal links within hexo tag plugins.
