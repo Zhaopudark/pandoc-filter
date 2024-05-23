@@ -7,7 +7,6 @@ Normalize the footnotes. Deal with the footnote content as follows:
     - Remove unnecessary `\n`.
     - Remove link.
     - Normalize many formats like emphasis(italic) and strong(bold).
-
 """
         
 def _norm_footnote(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->pf.Note|None:
@@ -16,7 +15,6 @@ def _norm_footnote(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwa
         - Remove unnecessary `\n`.
         - Remove link.
         - Normalize many formats like emphasis(italic) and strong(bold).
-    
     [replace elements]
     """
     if isinstance(elem, pf.Note):
