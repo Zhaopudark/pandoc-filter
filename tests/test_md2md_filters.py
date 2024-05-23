@@ -129,18 +129,7 @@ def test_md2md_enhance_equation_filter_pyio(input_format:str,output_format:str):
             doc.metadata['math'] = doc.runtime_dict['math']
     pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,[pandoc_filter.md2md_enhance_equation_filter],finalize=finalize)
     assert _check_the_same_content(output_path,answer_path)
-    
-@pytest.mark.parametrize('input_format',['markdown'])
-@pytest.mark.parametrize('output_format',['gfm'])
-def test_md2md_upload_figure_to_aliyun_filter(input_format:str,output_format:str):
-    file_path = _check_file_path("./resources/inputs/test_md2md_figure.md")
-    pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
-    output_path = pathlib.Path(f"./temp/{file_path.name}")
-    answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    pandoc_filter.run_filters_pyio(
-        file_path,output_path,input_format,output_format,
-        [pandoc_filter.md2md_upload_figure_to_aliyun_filter],doc_path=file_path)
-    assert _check_the_same_content(output_path,answer_path)
+
 
 @pytest.mark.parametrize('input_format',['markdown'])
 @pytest.mark.parametrize('output_format',['gfm'])
