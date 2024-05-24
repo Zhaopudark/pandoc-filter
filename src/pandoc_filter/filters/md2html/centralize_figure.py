@@ -1,7 +1,7 @@
 import logging
 import panflute as pf
 
-from ...utils import TracingLogger
+from ...utils.logging_helper import TracingLogger
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
 Centralize the `figure` element by setting inline styles.
@@ -67,5 +67,5 @@ def _centralize_figure(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,*
         elem.caption = pf.Caption(centered_div)
         tracing_logger.check_and_log('figure',elem)
 
-def centralize_figure_filter(doc:pf.Doc=None,**kwargs):
+def run_filter(doc:pf.Doc=None,**kwargs):
     return pf.run_filters(actions= [_centralize_figure],doc=doc,tracing_logger=TracingLogger(),**kwargs)

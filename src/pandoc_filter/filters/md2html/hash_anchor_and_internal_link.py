@@ -3,8 +3,12 @@ import functools
 
 import panflute as pf
 
-from ...utils import TracingLogger,DocRuntimeDict,InternalLink
-from ...utils import get_html_id,sub_html_id,get_html_href,get_text_hash,decode_internal_link_url
+from ...utils.logging_helper import TracingLogger
+
+from ...utils.panflute_helper import DocRuntimeDict,InternalLink
+from ...utils.panflute_helper import decode_internal_link_url
+from ...utils.hash_helper import get_text_hash
+from ...utils.html_helper import get_html_id,sub_html_id,get_html_href
 
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
@@ -137,7 +141,7 @@ def _finalize_hash_anchor_and_internal_link(doc:pf.Doc,tracing_logger:TracingLog
             tracing_logger.warning("hash_anchor_and_internal_link",f"The internal link `{internal_link.url}` may be invalid because no target header is found. But it will still be modified to `{internal_link.url}-1`.")
             internal_link.sub(f"{internal_link.url}-1",tracing_logger)
 
-def hash_anchor_and_internal_link_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
+def run_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
     __finalize_hash_anchor_and_internal_link = functools.partial(_finalize_hash_anchor_and_internal_link,tracing_logger=TracingLogger(),**kwargs)
     return pf.run_filters(
         actions= [_hash_anchor_id,_internal_link_recorder],

@@ -66,7 +66,7 @@ For an example, `md2md_enhance_equation_filter` in [enhance_equation.py](https:/
 
 **Runtime status** can be recorded. In **python mode**, any filter function will return a proposed panflute `Doc`. Some filter functions will add an instance attribute dict `runtime_dict` to the returned `Doc`, as a record for **runtime status**, which may be very useful for advanced users.  For an example,  `md2md_enhance_equation_filter`, will add an instance attribute dict `runtime_dict` to the returned `Doc`, which may contain a mapping `{'math':True}` if there is any math element in the `Doc`.
 
-All filters with corresponding  registered command-line scripts, the specific features, and the recorded **runtime status** are recorded in the following table:
+All filters with corresponding registered command-line scripts, the specific features, and the recorded **runtime status** are recorded as the following:
 
 > [!NOTE]
 >
@@ -74,17 +74,50 @@ All filters with corresponding  registered command-line scripts, the specific fe
 >
 > All filters support cascaded invoking.
 
-| Filter Functions                                            | Command Line                                                | Additional Arguments | Features                                                     | Runtime status (`doc.runtime_dict`)                          |
-| ----------------------------------------------------------- | ----------------------------------------------------------- | -------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ |
-| md2md_convert_github_style_alert_to_hexo_style_alert_filter | md2md-convert-github-style-alert-to-hexo-style-alert-filter | -                    | Convert the [github-style alert](https://github.com/orgs/community/discussions/16925) to hexo-style alert. | -                                                            |
-| md2md_enhance_equation_filter                               | md2md-enhance-equation-filter                               | -                    | Enhance math equations. Specifically, this filter will:  Adapt AMS rule for math formula.  Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora. Allow multiple tags, but only take the first one. Allow multiple labels, but only take the first one. | {'math':< bool >,'equations_count':<some_number>}            |
-| md2md_norm_footnote_filter                                  | md2md-norm-footnote-filter                                  | -                    | Normalize the footnotes.| -                                                            |
-| md2md_norm_internal_link_filter                             | md2md-norm-internal-link-filter                             | -                    | Normalize internal links' URLs. Decode the URL if it is URL-encoded. | -                                                            |
-| md2md_upload_figure_to_aliyun_filter                        | -                                                           | doc_path             | Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one. The following environment variables should be given in advance:  `$Env:OSS_ENDPOINT_NAME`, `$Env:OSS_BUCKET_NAME`,  `$Env:OSS_ACCESS_KEY_ID` , and `$Env:OSS_ACCESS_KEY_SECRET`. The doc_path should be given in advance. | {'doc_path':<doc_path>,'oss_helper':<Oss_Helper>}            |
-| md2html_centralize_figure_filter                            | md2html-centralize-figure-filter                            | -                    | ==Deprecated==                                               | -                                                            |
-| md2html_enhance_link_like_filter                            | md2html-enhance-link-like-filter                            | -                    | Enhance the link-like string to a `link` element.            | -                                                            |
-| md2html_hash_anchor_and_internal_link_filter                | md2html-hash-anchor-and-internal-link-filter                | -                    | Hash both the anchor's `id` and the internal-link's `url ` simultaneously. | {'anchor_count':<anchor_count_dict>,'internal_link_record':<internal_link_record_list>} |
-| md2html_increase_header_level_filter                        | md2html-increase-header-level-filter                        | -                    | Increase the header level by `1`.                            | -                                                            |
+- `pandoc_filter.filters.md2md.convert_github_style_alert_to_hexo_style_alert.run_filter`
+  - [source](./src/pandoc_filter/filters/md2md/convert_github_style_alert_to_hexo_style_alert.py)
+  - command-line: `md2md-convert-github-style-alert-to-hexo-style-alert-filter`
+  - main features: Convert the [github-style alert](https://github.com/orgs/community/discussions/16925) to hexo-style alert.
+- `pandoc_filter.filters.md2md.enhance_equation.run_filter`
+  - [source](./src/pandoc_filter/filters/md2md/enhance_equation.py)
+  - command-line: `md2md-enhance-equation-filter`
+  - main features: Enhance math equations.
+  - Runtime status (`doc.runtime_dict`): ` {'math':< bool >,'equations_count':<some_number>}`
+- `pandoc_filter.filters.md2md.norm_footnote.run_filter`
+  - [source](./src/pandoc_filter/filters/md2md/norm_internal_link.py)
+  - command-line: `md2md-norm-footnote-filter`
+  - main features: Normalize the footnotes.
+- `pandoc_filter.filters.md2md.norm_internal_link.run_filter`
+  - [source](./src/pandoc_filter/filters/md2md/norm_internal_link.py)
+  - command-line: `  md2md-norm-internal-link-filter`
+  - main features:  Normalize internal links' URLs.
+- `pandoc_filter.filters.md2md.upload_figure_to_aliyun.run_filter`
+  - [source](./src/pandoc_filter/filters/md2md/upload_figure_to_aliyun.py)
+  - command-line:  ==Unsupported.==
+  - Additional Arguments: `doc_path`
+  - main features: Auto upload local pictures to Aliyun OSS.
+  - Runtime status (`doc.runtime_dict`): {'doc_path':<doc_path>,'oss_helper':<Oss_Helper>}
+- `pandoc_filter.filters.md2html.centralize_figure.run_filter`
+  - [source](./src/pandoc_filter/filters/md2html/centralize_figure.py)
+  - command-line: `md2html-centralize-figure-filter`
+  - main features: ==Deprecated==
+- `pandoc_filter.filters.md2html.enhance_footnote.run_filter`
+  - [source](./src/pandoc_filter/filters/md2html/enhance_footnote.py)
+  - command-line: `md2html-enhance-footnote-filter`
+  - main features: Enhance the footnote.
+- `pandoc_filter.filters.md2html.enhance_link_like.run_filter`
+  - [source](./src/pandoc_filter/filters/md2html/enhance_link_like.py)
+  - command-line: `md2html-enhance-link-like-filter`
+  - main features: Enhance the link-like string to a `link` element.
+- `pandoc_filter.filters.md2html.hash_anchor_and_internal_link.run_filter`
+  - [source](./src/pandoc_filter/filters/md2html/hash_anchor_and_internal_link.py)
+  - command-line: `md2html-hash-anchor-and-internal-link-filter`
+  - main features: Hash both the anchor's `id` and the internal-link's `url ` simultaneously.
+  - Runtime status (`doc.runtime_dict`): `{'anchor_count':<anchor_count_dict>,'internal_link_record':<internal_link_record_list>}`
+- `pandoc_filter.filters.md2html.increase_header_level.run_filter`
+  - [source](./src/pandoc_filter/filters/md2html/increase_header_level.py)
+  - command-line: `md2html-increase-header-level-filter`
+  - main features: Increase the header level by `1`.
 
 # Samples
 

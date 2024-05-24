@@ -1,3 +1,6 @@
+---
+title: test_md2html_footnote
+---
 duplicate1.[^1]
 
 duplicate2.[^2]

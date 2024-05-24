@@ -1,6 +1,6 @@
 import panflute as pf
 import re
-from ...utils import TracingLogger
+from ...utils.logging_helper import TracingLogger
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Convert the [github-style alert](https://github.com/orgs/community/discussions/16925) to hexo-style alert.
@@ -75,5 +75,5 @@ def _convert_github_style_alert_to_hexo_style_alert(elem:pf.Element,doc:pf.Doc,t
             case _:
                 pass
 
-def convert_github_style_alert_to_hexo_style_alert_filter(doc:pf.Doc=None,**kwargs):
+def run_filter(doc:pf.Doc=None,**kwargs):
     return pf.run_filters(actions=[_convert_github_style_alert_to_hexo_style_alert],doc=doc,tracing_logger=TracingLogger(),**kwargs)
