@@ -47,7 +47,7 @@ There are 2 supported ways:
 -  **command-line-mode**: use non-parametric filters in command-lines with [pandoc](https://pandoc.org).
 - **python-mode**: use `run_filters_pyio`  function in python.
 
-For an example, `md2md_enhance_equation_filter` in [enhance_equation.py](https://github.com/Zhaopudark/pandoc-filter/blob/main/src/pandoc_filter/filters/md2md/enhance_equation.py) is a filter function as [panflute-user-guide ](http://scorreia.com/software/panflute/guide.html). And its registered command-line script is `md2md-enhance-equation-filter`. 
+For an example, `md2md_enhance_equation_filter` in [enhance_equation.py](./src/pandoc_filter/filters/md2md/enhance_equation.py) is a filter function as [panflute-user-guide ](http://scorreia.com/software/panflute/guide.html). And its registered command-line script is `md2md-enhance-equation-filter`. 
 
 - So, after the installation, one can use it in **command-line-mode**:
 
@@ -125,15 +125,15 @@ Here are 2 basic types of examples
 
 ## Convert markdown to markdown (Normalization)
 
-- [Adapt AMS rule for math formula](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_adapt_ams_rule_for_math_formula.md)
-- [Convert Github style alert to Hexo style alert](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_convert_github_style_alert_to_hexo_style_alert_filter.md)
-- [Normalize footnotes](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_footnotes.md)
-- [Normalize internal link](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_normalize_internal_link.md)
-- [Sync local images to `Aliyun OSS`](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2md_sync_local_images_to_`Aliyun_OSS`.md)
+- [Adapt AMS rule for math formula](./examples/md2md_adapt_ams_rule_for_math_formula.md)
+- [Convert Github style alert to Hexo style alert](./examples/md2md_convert_github_style_alert_to_hexo_style_alert_filter.md)
+- [Normalize footnotes](./examples/md2md_normalize_footnotes.md)
+- [Normalize internal link](./examples/md2md_normalize_internal_link.md)
+- [Sync local images to `Aliyun OSS`](./examples/md2md_sync_local_images_to_`Aliyun_OSS`.md)
 
 ## Convert markdown to html
 
-- [Normalize headers, anchors, internal links and link-like strings](https://github.com/Zhaopudark/pandoc-filter/blob/main/examples/md2html_normalize_headers_anchors_internal_links_and_link-like_strings.md)
+- [Normalize headers, anchors, internal links and link-like strings](./examples/md2html_normalize_headers_anchors_internal_links_and_link-like_strings.md)
 
 
 # Contribution
