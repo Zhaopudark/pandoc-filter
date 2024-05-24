@@ -36,5 +36,5 @@ def test_md2md_upload_figure_to_aliyun_filter(input_format:str,output_format:str
     answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
     pandoc_filter.run_filters_pyio(
         file_path,output_path,input_format,output_format,
-        [pandoc_filter.md2md_upload_figure_to_aliyun_filter],doc_path=file_path)
+        [pandoc_filter.filters.md2md.upload_figure_to_aliyun.run_filter,],doc_path=file_path)
     assert _check_the_same_content(output_path,answer_path)

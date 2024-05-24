@@ -6,6 +6,7 @@ import subprocess
 import panflute as pf
 import pytest
 import pandoc_filter
+import pandoc_filter.filters
 
 def _check_file_path(file_path:str)->pathlib.Path:
     file_path:pathlib.Path = pathlib.Path(file_path)
@@ -57,7 +58,8 @@ def test_md2md_norm_footnote_filter_pyio(input_format:str,output_format:str):
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
     answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,[pandoc_filter.md2md_norm_footnote_filter])
+    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,
+        [pandoc_filter.filters.md2md.norm_footnote.run_filter])
     assert _check_the_same_content(output_path,answer_path)
 
 @pytest.mark.parametrize('input_format',['markdown'])
@@ -90,7 +92,8 @@ def test_md2md_norm_internal_link_filter_pyio(input_format:str,output_format:str
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
     answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,[pandoc_filter.md2md_norm_internal_link_filter])
+    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,
+        [pandoc_filter.filters.md2md.norm_internal_link.run_filter])
     assert _check_the_same_content(output_path,answer_path)
 
 @pytest.mark.parametrize('input_format',['markdown','gfm'])
@@ -127,9 +130,9 @@ def test_md2md_enhance_equation_filter_pyio(input_format:str,output_format:str):
         runtime_dict:dict = doc.runtime_dict
         if runtime_dict.get('math'):
             doc.metadata['math'] = doc.runtime_dict['math']
-    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,[pandoc_filter.md2md_enhance_equation_filter],finalize=finalize)
+    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,
+        [pandoc_filter.filters.md2md.enhance_equation.run_filter],finalize=finalize)
     assert _check_the_same_content(output_path,answer_path)
-
 
 @pytest.mark.parametrize('input_format',['markdown'])
 @pytest.mark.parametrize('output_format',['gfm'])
@@ -161,5 +164,6 @@ def test_md2md_convert_github_style_alert_to_hexo_style_alert_filter_pyio(input_
     pathlib.Path("./temp").mkdir(parents=True, exist_ok=True)
     output_path = pathlib.Path(f"./temp/{file_path.name}")
     answer_path = pathlib.Path(f"./resources/outputs/{file_path.name}")
-    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,[pandoc_filter.md2md_convert_github_style_alert_to_hexo_style_alert_filter])
+    pandoc_filter.run_filters_pyio(file_path,output_path,input_format,output_format,
+        [pandoc_filter.filters.md2md.convert_github_style_alert_to_hexo_style_alert.run_filter])
     assert _check_the_same_content(output_path,answer_path)

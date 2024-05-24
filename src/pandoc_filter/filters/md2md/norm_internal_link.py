@@ -1,7 +1,10 @@
 import panflute as pf
 
-from ...utils import TracingLogger
-from ...utils import get_html_href,sub_html_href,decode_internal_link_url
+from ...utils.logging_helper import TracingLogger
+
+from ...utils.html_helper import get_html_href,sub_html_href
+
+from ...utils.panflute_helper import decode_internal_link_url
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Normalize internal links' URLs. Decode the URL if it is URL-encoded.
@@ -37,5 +40,5 @@ def _norm_internal_link(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,
         elem.text = sub_html_href(elem.text,decode_internal_link_url(old_href))
         tracing_logger.check_and_log('raw_anchor_links',elem)
 
-def norm_internal_link_filter(doc:pf.Doc=None,**kwargs):
+def run_filter(doc:pf.Doc=None,**kwargs):
     return pf.run_filters(actions=[_norm_internal_link],doc=doc,tracing_logger=TracingLogger(),**kwargs)

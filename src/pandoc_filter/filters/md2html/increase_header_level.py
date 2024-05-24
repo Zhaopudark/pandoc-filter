@@ -1,7 +1,7 @@
 import logging
 import panflute as pf
 
-from ...utils import TracingLogger
+from ...utils.logging_helper import TracingLogger
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
 Increase the header level by 1.
@@ -28,5 +28,5 @@ def _increase_header_level(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogg
         tracing_logger.check_and_log('header',elem)
         
 
-def increase_header_level_filter(doc:pf.Doc=None,**kwargs):
+def run_filter(doc:pf.Doc=None,**kwargs):
     return pf.run_filters(actions= [_increase_header_level],doc=doc,tracing_logger=TracingLogger(),**kwargs)

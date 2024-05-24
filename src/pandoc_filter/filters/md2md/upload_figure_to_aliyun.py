@@ -4,8 +4,15 @@ import pathlib
 
 import panflute as pf
 
-from ...utils import TracingLogger,OssHelper
-from ...utils import get_html_src,sub_html_src,decode_src_url
+from ...utils.logging_helper import TracingLogger
+
+from ...utils.oss_helper import OssHelper
+
+from ...utils.html_helper import get_html_src,sub_html_src
+
+from ...utils.panflute_helper import decode_src_url
+
+
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Auto upload local pictures to Aliyun OSS. Replace the original `src` with the new one.
@@ -37,7 +44,7 @@ def _upload_figure_to_aliyun(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLo
         elem.text = sub_html_src(elem.text,new_src)
         tracing_logger.check_and_log('raw_html_img',elem)
 
-def upload_figure_to_aliyun_filter(doc:pf.Doc=None,doc_path:pathlib.Path=None,**kwargs):
+def run_filter(doc:pf.Doc=None,doc_path:pathlib.Path=None,**kwargs):
     assert doc_path.exists(),f"doc_path: {doc_path} does not exist."
     assert os.environ['OSS_ENDPOINT_NAME'], "OSS_ENDPOINT_NAME is not given in environment variables."
     assert os.environ['OSS_BUCKET_NAME'], "OSS_BUCKET_NAME is not given in environment variables."

@@ -1,7 +1,9 @@
 import re
 import panflute as pf
 
-from ...utils import TracingLogger,DocRuntimeDict
+from ...utils.logging_helper import TracingLogger
+
+from ...utils.panflute_helper import DocRuntimeDict
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Enhance math equations.
@@ -68,5 +70,5 @@ def _enhance_equation(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**
             elem.text = f"\n{text.strip(" \n")}\n"
             tracing_logger.check_and_log('equation',elem)
 
-def enhance_equation_filter(doc:pf.Doc=None,**kwargs):
+def run_filter(doc:pf.Doc=None,**kwargs):
     return pf.run_filters(actions=[_enhance_equation],prepare=_prepare_enhance_equation,doc=doc,tracing_logger=TracingLogger(),**kwargs)

@@ -8,8 +8,14 @@
 
 - Modify `md2md-norm-footnote-filter`. Now, it deals with the footnote content as follows:
     - Remove unnecessary `\n`.
-    - Remove link.
-    - Normalize many formats like emphasis(italic) and strong(bold).
+    - Remove markdown link.
+    - Normalize many markdown formats like emphasis(italic) and strong(bold).
+
+- Add `md2html-enhance-footnote-filter`. This filter will enhance the footnote content as follows:
+    - upgrade the link like string to a `link` element.
+    - Remove unnecessary `\n`.
+    - Remove markdown link.
+    - Normalize many markdown formats like emphasis(italic) and strong(bold).
 
 ## Release 0.2.14
 

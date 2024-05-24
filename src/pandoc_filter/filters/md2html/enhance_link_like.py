@@ -1,6 +1,6 @@
 import panflute as pf
 
-from ...utils import TracingLogger
+from ...utils.logging_helper import TracingLogger
 
 r"""A pandoc filter that mainly for converting `markdown` to `html`.
 Enhance the link-like string to a `link` element.
@@ -19,6 +19,6 @@ def _enhance_link_like(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,*
         tracing_logger.check_and_log('link_like',elem)
         return link
 
-def enhance_link_like_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
+def run_filter(doc:pf.Doc=None,**kwargs)->pf.Doc:
     return pf.run_filters(actions=[_enhance_link_like],doc=doc,tracing_logger=TracingLogger(),**kwargs)
 

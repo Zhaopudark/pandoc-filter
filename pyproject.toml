@@ -43,15 +43,15 @@ dependencies = [
     "oauth2client"
 ]
 [project.scripts]
-md2md-convert-github-style-alert-to-hexo-style-alert-filter = "pandoc_filter:md2md_convert_github_style_alert_to_hexo_style_alert_filter"
-md2md-enhance-equation-filter = "pandoc_filter:md2md_enhance_equation_filter"
-md2md-norm-footnote-filter = "pandoc_filter:md2md_norm_footnote_filter"
-md2md-norm-internal-link-filter = "pandoc_filter:md2md_norm_internal_link_filter"
-md2html-centralize-figure-filter = "pandoc_filter:md2html_centralize_figure_filter"
-md2html-enhance-link-like-filter = "pandoc_filter:md2html_enhance_link_like_filter"
-md2html-hash-anchor-and-internal-link-filter = "pandoc_filter:md2html_hash_anchor_and_internal_link_filter"
-md2html-increase-header-level-filter = "pandoc_filter:md2html_increase_header_level_filter"
-
+md2md-convert-github-style-alert-to-hexo-style-alert-filter = "pandoc_filter.filters.md2md.convert_github_style_alert_to_hexo_style_alert:run_filter"
+md2md-enhance-equation-filter = "pandoc_filter.filters.md2md.enhance_equation:run_filter"
+md2md-norm-footnote-filter = "pandoc_filter.filters.md2md.norm_footnote:run_filter"
+md2md-norm-internal-link-filter = "pandoc_filter.filters.md2md.norm_internal_link:run_filter"
+md2html-centralize-figure-filter = "pandoc_filter.filters.md2html.centralize_figure:run_filter"
+md2html-enhance-footnote-filter = "pandoc_filter.filters.md2html.enhance_footnote:run_filter"
+md2html-enhance-link-like-filter = "pandoc_filter.filters.md2html.enhance_link_like:run_filter"
+md2html-hash-anchor-and-internal-link-filter = "pandoc_filter.filters.md2html.hash_anchor_and_internal_link:run_filter"
+md2html-increase-header-level-filter = "pandoc_filter.filters.md2html.increase_header_level:run_filter"
 # OR
 [tool.setuptools.packages.find]
 # # All the following settings are optional:
