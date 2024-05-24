@@ -10,9 +10,9 @@ Enhance the footnote.
 def _enhance_footnote(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->pf.Note|None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to process footnotes. Deal with the footnote content as follows:
-        - upgrade the link like string to a `link` element.
+        - upgrade the link-like string to a `link` element.
         - Remove unnecessary `\n`.
-        - Remove markdown link.
+        - Remove the markdown link.
         - Normalize many markdown formats like emphasis(italic) and strong(bold).
     [replace elements]
     """

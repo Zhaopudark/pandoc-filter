@@ -10,7 +10,7 @@ def _norm_footnote(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwa
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to process footnote. Deal with the footnote content as follows:
         - Remove unnecessary `\n`.
-        - Remove markdown link.
+        - Remove the markdown link.
         - Normalize many markdown formats like emphasis(italic) and strong(bold).
     [replace elements]
     """

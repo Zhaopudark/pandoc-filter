@@ -1,4 +1,6 @@
 # Pandoc-Filter 0.2.x
+## Release 0.2.16
+On Working...
 
 ## Release 0.2.15
 - Modify `md2html_hash_anchor_and_internal_link_filter` to add an invisible link for each header.
@@ -18,7 +20,6 @@
     - Normalize many markdown formats like emphasis(italic) and strong(bold).
 
 ## Release 0.2.14
-
 - Modify `md2html_hash_anchor_and_internal_link_filter` to handle internal links within hexo tag plugins.
     - Now, it will compulsorily modify internal_link's url, even though its target is not found.
 
