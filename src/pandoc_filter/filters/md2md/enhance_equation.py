@@ -7,11 +7,6 @@ from ...utils.panflute_helper import DocRuntimeDict
 
 r"""A pandoc filter that mainly for converting `markdown` to `markdown`.
 Enhance math equations.
-Specifically, this filter will:
-    - Adapt AMS rule for math formula.
-        - Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora.
-    - Allow multiple tags, but only take the first one.
-    - Allow multiple labels, but only take the first one.
 """
 
 def _prepare_enhance_equation(doc:pf.Doc):
@@ -22,6 +17,11 @@ def _prepare_enhance_equation(doc:pf.Doc):
 def _enhance_equation(elem:pf.Element,doc:pf.Doc,tracing_logger:TracingLogger,**kwargs)->None:
     r"""Follow the general procedure of [Panflute](http://scorreia.com/software/panflute/)
     An action to enhance math equations.
+    Specifically, it will:
+        - Adapt AMS rule for math formula.
+            - Auto numbering markdown formulations within \begin{equation} \end{equation}, as in Typora.
+        - Allow multiple tags, but only take the first one.
+        - Allow multiple labels, but only take the first one.
     [modify elements in place]
     
     To make equations recognized correctly, 
