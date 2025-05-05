@@ -3,3 +3,4 @@ from . import enhance_equation
 from . import norm_footnote
 from . import norm_internal_link
 from . import upload_figure_to_aliyun
+from . import move_figure_to_new_place
